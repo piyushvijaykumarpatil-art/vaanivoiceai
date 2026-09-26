@@ -24,5 +24,8 @@
     "piyush"
   ],
   "author": "Piyush (NIAT 1st Year Student)",
-  "license": "MIT"
+  "license": "MIT",
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.63.5"
+  }
 }
