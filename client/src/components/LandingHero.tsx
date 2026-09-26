@@ -4,7 +4,7 @@ import { ThemeSwitcher } from './ThemeSwitcher';
 import { LanguageSelector } from './LanguageSelector';
 import { LiveHudClock } from './LiveHudClock';
 import type { LuxuryThemeId } from '../types';
-import { Sparkles, ArrowRight, ShieldCheck, Cpu, Volume2 } from 'lucide-react';
+import { Sparkles, ArrowRight, ShieldCheck, Cpu, Volume2, Settings } from 'lucide-react';
 
 interface LandingHeroProps {
   currentTheme: LuxuryThemeId;
@@ -12,6 +12,7 @@ interface LandingHeroProps {
   currentLanguage: string;
   onLanguageSelect: (langId: string) => void;
   onEnterChamber: () => void;
+  onOpenSettings?: () => void;
   primaryColor?: string;
 }
 
@@ -21,6 +22,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
   currentLanguage,
   onLanguageSelect,
   onEnterChamber,
+  onOpenSettings,
   primaryColor = '#F59E0B'
 }) => {
   return (
@@ -39,8 +41,33 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
           </div>
         </div>
 
-        {/* Creator Attribution Badge */}
-        <CreatorBadge primaryColor={primaryColor} variant="compact" />
+        {/* Right side: Theme Switcher right by the side of Settings & Creator Attribution Badge */}
+        <div className="flex items-center gap-2.5 flex-wrap justify-center sm:justify-end">
+          {/* Theme Switcher side of Settings */}
+          <div className="imperial-glass px-2.5 py-1.5 rounded-2xl border border-white/10 flex items-center gap-2">
+            <span className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold hidden md:inline">Theme:</span>
+            <ThemeSwitcher
+              currentTheme={currentTheme}
+              onThemeSelect={onThemeSelect}
+              compact
+            />
+          </div>
+
+          {/* Settings Button */}
+          {onOpenSettings && (
+            <button
+              onClick={onOpenSettings}
+              title="Settings & Cloud Database Studio"
+              className="p-2 rounded-xl bg-black/40 border border-white/10 hover:border-white/30 text-slate-300 hover:text-white transition-all duration-200 flex items-center gap-1.5"
+            >
+              <Settings className="w-4 h-4" />
+              <span className="hidden sm:inline text-xs font-medium">Settings</span>
+            </button>
+          )}
+
+          {/* Creator Attribution Badge */}
+          <CreatorBadge primaryColor={primaryColor} variant="compact" />
+        </div>
       </header>
 
       {/* Main Hero Body */}
@@ -61,26 +88,18 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                 backgroundImage: `linear-gradient(to right, ${primaryColor}, #FFFFFF, ${primaryColor})`
               }}
             >
-              Pure Type-to-Voice.
+              Live Voice & Type Interaction.
             </span>
           </h2>
           <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
             Experience studio-grade human neural voice synthesis across 9 Indian languages and English.
-            No microphone required—type queries seamlessly while our 3D Chrono-Orb speaks answers with cultural grace.
+            Speak naturally via live microphone or type questions while our 3D Chrono-Orb speaks answers with cultural grace.
           </p>
         </div>
 
         {/* Live IST Clock & Calendar HUD */}
         <div className="w-full max-w-xl">
           <LiveHudClock primaryColor={primaryColor} />
-        </div>
-
-        {/* 1-Click Luxury Theme Switcher */}
-        <div className="w-full max-w-2xl imperial-glass p-4 rounded-3xl border border-white/10">
-          <ThemeSwitcher
-            currentTheme={currentTheme}
-            onThemeSelect={onThemeSelect}
-          />
         </div>
 
         {/* Multilingual Selector Cards */}

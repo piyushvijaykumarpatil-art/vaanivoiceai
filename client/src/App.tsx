@@ -13,7 +13,7 @@ import { LUXURY_THEMES, SUPPORTED_LANGUAGES } from './utils/constants';
 import type { LuxuryThemeId, ChatMessage } from './types';
 import { soundManager } from './audio/soundManager';
 import { sendChatMessage, fetchTtsAudio } from './utils/api';
-import { Database, MessageSquare, ArrowLeft } from 'lucide-react';
+import { MessageSquare, ArrowLeft, Settings } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<'landing' | 'chamber'>('landing');
@@ -203,6 +203,7 @@ export const App: React.FC = () => {
           currentLanguage={currentLanguage}
           onLanguageSelect={setCurrentLanguage}
           onEnterChamber={() => setCurrentView('chamber')}
+          onOpenSettings={() => setIsStudioOpen(true)}
           primaryColor={activeThemeConfig.primaryColor}
         />
       </div>
@@ -263,20 +264,24 @@ export const App: React.FC = () => {
             variant="dropdown"
           />
 
-          {/* Theme Switcher Compact */}
-          <ThemeSwitcher
-            currentTheme={currentTheme}
-            onThemeSelect={setCurrentTheme}
-            compact
-          />
+          {/* Theme Switcher directly by the side of Settings */}
+          <div className="imperial-glass px-2.5 py-1 rounded-2xl border border-white/10 flex items-center gap-1.5">
+            <span className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold hidden xl:inline">Theme:</span>
+            <ThemeSwitcher
+              currentTheme={currentTheme}
+              onThemeSelect={setCurrentTheme}
+              compact
+            />
+          </div>
 
-          {/* Database Studio Toggle */}
+          {/* Settings & Database Studio Toggle */}
           <button
             onClick={() => setIsStudioOpen(true)}
-            title="Open Database Studio"
-            className="p-2 rounded-xl bg-black/40 border border-white/10 hover:border-white/30 text-slate-300 hover:text-white transition-all duration-200"
+            title="Settings & Cloud Database"
+            className="p-2 rounded-xl bg-black/40 border border-white/10 hover:border-white/30 text-slate-300 hover:text-white transition-all duration-200 flex items-center gap-1.5"
           >
-            <Database className="w-4 h-4" />
+            <Settings className="w-4 h-4" />
+            <span className="hidden sm:inline text-xs font-medium">Settings</span>
           </button>
 
           {/* Transcript Drawer Toggle */}
