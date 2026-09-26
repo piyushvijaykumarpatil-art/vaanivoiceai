@@ -1,4 +1,7 @@
-const API_BASE = (import.meta as any).env?.VITE_API_BASE || '/api';
+const rawBase = (import.meta as any).env?.VITE_API_BASE || '/api';
+const API_BASE = rawBase === '/api' 
+  ? '/api' 
+  : (rawBase.replace(/\/+$/, '').endsWith('/api') ? rawBase.replace(/\/+$/, '') : `${rawBase.replace(/\/+$/, '')}/api`);
 
 export async function sendChatMessage(payload: {
   sessionId: string;
