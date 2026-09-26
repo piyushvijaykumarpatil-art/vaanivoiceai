@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "postinstall": "node -e \"if(process.platform==='linux'){try{require('child_process').execSync('npm i @rollup/rollup-linux-x64-gnu@4.63.5 --no-save',{stdio:'inherit'})}catch(e){}}\"",
+    "prebuild": "node -e \"if(process.platform==='linux'){try{require('child_process').execSync('npm i @rollup/rollup-linux-x64-gnu@4.63.5 --no-save',{stdio:'inherit'})}catch(e){}}\"",
     "build": "node -e \"if(process.platform==='linux'){try{require('child_process').execSync('npm i @rollup/rollup-linux-x64-gnu@4.63.5 --no-save',{stdio:'inherit'})}catch(e){}}\" && tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
