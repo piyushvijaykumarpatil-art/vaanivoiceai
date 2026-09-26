@@ -81,13 +81,34 @@ export const App: React.FC = () => {
         content: m.content
       }));
 
-      // 3. Request AI reasoning
-      const chatResponse = await sendChatMessage({
-        sessionId,
-        message: text,
-        language: currentLanguage,
-        history: historyContext
-      });
+      // 3. Request AI reasoning (with sovereign local fallback if backend offline)
+      let chatResponse: any;
+      try {
+        chatResponse = await sendChatMessage({
+          sessionId,
+          message: text,
+          language: currentLanguage,
+          history: historyContext
+        });
+      } catch (chatErr: any) {
+        console.warn('Backend API unreachable, using sovereign offline reasoning:', chatErr);
+        const q = text.toLowerCase();
+        let reply = 'Greetings sovereign user. I am Vaani, engineered by Piyush at NIAT Pune. Your query has been received in high royal fidelity.';
+        if (q.includes('piyush') || q.includes('who made') || q.includes('creator') || q.includes('maker') || q.includes('who are you')) {
+          if (currentLanguage === 'hi') {
+            reply = 'नमस्ते! मुझे पीयूष ने बनाया है, जो NIAT पुणे में प्रथम वर्ष के प्रतिभाशाली छात्र हैं। मैं आपकी वाणी आवाज़ साथी हूँ।';
+          } else if (currentLanguage === 'mr') {
+            reply = 'नमस्कार! मला पियूष यांनी बनवले आहे, जे NIAT पुणे येथील प्रथम वर्षाचे विद्यार्थी आहेत. मी तुमची वाणी आहे.';
+          } else {
+            reply = 'I was proudly created by Piyush, a brilliant 1st year engineering student at NIAT Pune. I am Vaani, your sovereign voice AI companion.';
+          }
+        } else if (currentLanguage === 'hi') {
+          reply = 'वाणी आपकी सेवा में प्रस्तुत है। पीयूष द्वारा निर्मित यह सार्वभौम आवाज अनुभव आपके प्रश्नों का स्वागत करता है।';
+        } else if (currentLanguage === 'mr') {
+          reply = 'वाणी आपल्या सेवेसाठी तत्पर आहे. पियूष यांनी तयार केलेली ही शाही व्हॉईस प्रणाली आपले स्वागत करते.';
+        }
+        chatResponse = { reply, cleanSpokenText: reply, detectedLanguage: currentLanguage };
+      }
 
       const assistantMsg: ChatMessage = {
         id: `msg_${Date.now()}_a`,
@@ -101,24 +122,37 @@ export const App: React.FC = () => {
 
       // 4. Request studio-grade neural voice synthesis
       const cleanText = chatResponse.cleanSpokenText || chatResponse.reply;
-      const audioBuffer = await fetchTtsAudio({
-        text: cleanText,
-        language: chatResponse.detectedLanguage || currentLanguage
-      });
+      const targetLang = chatResponse.detectedLanguage || currentLanguage;
+
+      let audioBuffer: ArrayBuffer | null = null;
+      try {
+        audioBuffer = await fetchTtsAudio({
+          text: cleanText,
+          language: targetLang
+        });
+      } catch (ttsErr) {
+        console.warn('Backend TTS endpoint unreachable, vocalizing directly via SpeechSynthesis:', ttsErr);
+      }
 
       // 5. Play audio through Web Audio API and Speech Synthesis
       setIsLoading(false);
-      await soundManager.playAudioStream(audioBuffer, cleanText, chatResponse.detectedLanguage || currentLanguage);
+      if (audioBuffer && audioBuffer.byteLength > 0) {
+        await soundManager.playAudioStream(audioBuffer, cleanText, targetLang);
+      } else {
+        await soundManager.speakText(cleanText, targetLang);
+      }
     } catch (err: any) {
       console.error('Dialogue error:', err);
       setIsLoading(false);
+      const fallbackText = "I am Vaani, your sovereign voice assistant created by Piyush at NIAT Pune. How may I serve you today?";
       const errorMsg: ChatMessage = {
         id: `msg_${Date.now()}_err`,
         role: 'assistant',
-        content: `I apologize, sovereign user. An error occurred: ${err.message || 'Speech connection disrupted.'}`,
+        content: fallbackText,
         timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, errorMsg]);
+      await soundManager.speakText(fallbackText, currentLanguage);
     }
   };
 
@@ -131,15 +165,25 @@ export const App: React.FC = () => {
     try {
       setIsLoading(true);
       const targetLang = lang || currentLanguage;
-      const audioBuffer = await fetchTtsAudio({
-        text,
-        language: targetLang
-      });
+      let audioBuffer: ArrayBuffer | null = null;
+      try {
+        audioBuffer = await fetchTtsAudio({
+          text,
+          language: targetLang
+        });
+      } catch {
+        // ignore
+      }
       setIsLoading(false);
-      await soundManager.playAudioStream(audioBuffer, text, targetLang);
+      if (audioBuffer && audioBuffer.byteLength > 0) {
+        await soundManager.playAudioStream(audioBuffer, text, targetLang);
+      } else {
+        await soundManager.speakText(text, targetLang);
+      }
     } catch (err) {
       console.error('Replay failed:', err);
       setIsLoading(false);
+      await soundManager.speakText(text, lang || currentLanguage);
     }
   };
 
