@@ -1,7 +1,10 @@
 /**
  * Web Audio API Sound Manager & Neural Voice Orchestrator
- * Connects Web Audio API AnalyserNode with audio stream playback and browser speech synthesis.
+ * Connects Web Audio API AnalyserNode with speech synthesis and custom voice models.
  */
+
+import type { VoiceSettings } from '../types';
+import { DEFAULT_VOICE_SETTINGS, VOICE_MODELS } from '../utils/constants';
 
 const LANG_CODE_MAP: Record<string, string> = {
   mr: 'mr-IN',
@@ -23,15 +26,60 @@ class SoundManager {
   private isPlaying: boolean = false;
   private onStateChangeCallback: ((speaking: boolean) => void) | null = null;
   private simulatedInterval: any = null;
+  private keepAliveInterval: any = null;
   private simulatedFrequencies: Uint8Array = new Uint8Array(20).fill(0);
   private cachedVoices: SpeechSynthesisVoice[] = [];
+  private voiceSettings: VoiceSettings;
 
   constructor() {
+    // Load voice settings from localStorage if available
+    let saved: VoiceSettings = DEFAULT_VOICE_SETTINGS;
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem('vaani_voice_settings');
+        if (stored) {
+          saved = { ...DEFAULT_VOICE_SETTINGS, ...JSON.parse(stored) };
+        }
+      } catch {
+        // use default
+      }
+    }
+    this.voiceSettings = saved;
+
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      this.refreshVoices();
+      window.speechSynthesis.onvoiceschanged = () => {
+        this.refreshVoices();
+      };
+    }
+  }
+
+  public refreshVoices(): SpeechSynthesisVoice[] {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       this.cachedVoices = window.speechSynthesis.getVoices();
-      window.speechSynthesis.onvoiceschanged = () => {
-        this.cachedVoices = window.speechSynthesis.getVoices();
-      };
+    }
+    return this.cachedVoices;
+  }
+
+  public getAvailableVoices(): SpeechSynthesisVoice[] {
+    if (this.cachedVoices.length === 0) {
+      this.refreshVoices();
+    }
+    return this.cachedVoices;
+  }
+
+  public getVoiceSettings(): VoiceSettings {
+    return { ...this.voiceSettings };
+  }
+
+  public updateVoiceSettings(newSettings: Partial<VoiceSettings>): void {
+    this.voiceSettings = { ...this.voiceSettings, ...newSettings };
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('vaani_voice_settings', JSON.stringify(this.voiceSettings));
+      } catch {
+        // ignore
+      }
     }
   }
 
@@ -54,6 +102,60 @@ class SoundManager {
 
     if (this.audioCtx && this.audioCtx.state === 'suspended') {
       this.audioCtx.resume().catch(() => {});
+    }
+  }
+
+  /**
+   * Sound effect: Pleasant ascending chime when mic activates
+   */
+  public playMicStartChime(): void {
+    try {
+      this.init();
+      if (!this.audioCtx) return;
+      const osc = this.audioCtx.createOscillator();
+      const gain = this.audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440, this.audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880, this.audioCtx.currentTime + 0.12);
+
+      gain.gain.setValueAtTime(0.08, this.audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 0.15);
+
+      osc.connect(gain);
+      gain.connect(this.audioCtx.destination);
+
+      osc.start();
+      osc.stop(this.audioCtx.currentTime + 0.15);
+    } catch {
+      // AudioContext might be blocked until gesture
+    }
+  }
+
+  /**
+   * Sound effect: Soft descending chime when mic stops
+   */
+  public playMicStopChime(): void {
+    try {
+      this.init();
+      if (!this.audioCtx) return;
+      const osc = this.audioCtx.createOscillator();
+      const gain = this.audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(660, this.audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(330, this.audioCtx.currentTime + 0.12);
+
+      gain.gain.setValueAtTime(0.06, this.audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 0.15);
+
+      osc.connect(gain);
+      gain.connect(this.audioCtx.destination);
+
+      osc.start();
+      osc.stop(this.audioCtx.currentTime + 0.15);
+    } catch {
+      // ignore
     }
   }
 
@@ -88,14 +190,14 @@ class SoundManager {
         return;
       }
       const data = new Uint8Array(20);
-      const now = Date.now() / 120;
+      const now = Date.now() / 110;
       for (let i = 0; i < 20; i++) {
-        const base = Math.sin(now + i * 0.4) * 0.5 + 0.5;
-        const noise = (Math.random() - 0.5) * 40;
-        data[i] = Math.min(255, Math.max(20, Math.floor(base * 180 + 40 + noise)));
+        const base = Math.sin(now + i * 0.42) * 0.5 + 0.5;
+        const noise = (Math.random() - 0.5) * 45;
+        data[i] = Math.min(255, Math.max(25, Math.floor(base * 190 + 40 + noise)));
       }
       this.simulatedFrequencies = data;
-    }, 40);
+    }, 35);
   }
 
   private stopSimulatedFrequencies(): void {
@@ -104,6 +206,13 @@ class SoundManager {
       this.simulatedInterval = null;
     }
     this.simulatedFrequencies = new Uint8Array(20).fill(0);
+  }
+
+  private clearKeepAlive(): void {
+    if (this.keepAliveInterval) {
+      clearInterval(this.keepAliveInterval);
+      this.keepAliveInterval = null;
+    }
   }
 
   public stopAudio(): void {
@@ -125,6 +234,7 @@ class SoundManager {
       }
     }
 
+    this.clearKeepAlive();
     this.stopSimulatedFrequencies();
     this.isPlaying = false;
     if (this.onStateChangeCallback) {
@@ -133,10 +243,14 @@ class SoundManager {
   }
 
   /**
-   * Primary Vocalizer: Speaks text aloud using crystal-clear browser neural speech synthesis,
-   * driving the 3D Chrono-Orb and Waveform Visualizer.
+   * Primary Vocalizer: Speaks text aloud using configured Voice Model and SpeechSynthesis.
+   * Directly drives the 3D Chrono-Orb and Waveform visualizers.
    */
-  public async speakText(text: string, language: string = 'en'): Promise<void> {
+  public async speakText(
+    text: string,
+    language: string = 'en',
+    customSettings?: Partial<VoiceSettings>
+  ): Promise<void> {
     if (!text || !text.trim()) return;
 
     this.init();
@@ -147,30 +261,83 @@ class SoundManager {
       return;
     }
 
+    const settings: VoiceSettings = {
+      ...this.voiceSettings,
+      ...customSettings
+    };
+
+    const activeModel = VOICE_MODELS.find(m => m.id === settings.modelId) || VOICE_MODELS[0];
+
     try {
-      // Unstick speech synthesis on Chromium
+      // Unstick Chromium speech synthesis
       window.speechSynthesis.cancel();
       window.speechSynthesis.resume();
 
       const utterance = new SpeechSynthesisUtterance(text.trim());
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
-      utterance.volume = 1.0;
+      utterance.rate = Math.max(0.7, Math.min(1.5, settings.rate || activeModel.rate));
+      utterance.pitch = Math.max(0.6, Math.min(1.4, settings.pitch || activeModel.pitch));
+      utterance.volume = Math.max(0.2, Math.min(1.0, settings.volume ?? 1.0));
 
       const targetLang = LANG_CODE_MAP[language] || language || 'en-US';
       utterance.lang = targetLang;
 
-      // Select best regional human voice
-      const voices = this.cachedVoices.length > 0 ? this.cachedVoices : window.speechSynthesis.getVoices();
-      const cleanLang = language.toLowerCase();
+      // Voice selection algorithm based on Model and System voices
+      const voices = this.getAvailableVoices();
+      let selectedVoice: SpeechSynthesisVoice | undefined;
 
-      const matchedVoice = voices.find(v => {
-        const vLang = v.lang.toLowerCase().replace('_', '-');
-        return vLang === targetLang.toLowerCase() || vLang.startsWith(cleanLang);
-      }) || voices.find(v => v.lang.startsWith('en'));
+      if (settings.systemVoiceName) {
+        selectedVoice = voices.find(v => v.name === settings.systemVoiceName);
+      }
 
-      if (matchedVoice) {
-        utterance.voice = matchedVoice;
+      if (!selectedVoice) {
+        const cleanLang = language.toLowerCase();
+        const targetLower = targetLang.toLowerCase();
+
+        // 1. First look for matching language voices
+        const matchingLangVoices = voices.filter(v => {
+          const vLang = v.lang.toLowerCase().replace('_', '-');
+          return vLang === targetLower || vLang.startsWith(cleanLang);
+        });
+
+        if (activeModel.persona === 'sovereign') {
+          // Sovereign: prefer deep/male voice
+          selectedVoice = matchingLangVoices.find(v => {
+            const name = v.name.toLowerCase();
+            return name.includes('male') || name.includes('david') || name.includes('mark') || name.includes('guy') || name.includes('ravi') || name.includes('hemant');
+          }) || matchingLangVoices[0];
+
+          if (!selectedVoice) {
+            selectedVoice = voices.find(v => {
+              const name = v.name.toLowerCase();
+              return (name.includes('male') || name.includes('david') || name.includes('guy')) && v.lang.startsWith('en');
+            });
+          }
+        } else if (activeModel.persona === 'imperial' || activeModel.persona === 'studio') {
+          // Imperial / Studio: prefer warm female voice
+          selectedVoice = matchingLangVoices.find(v => {
+            const name = v.name.toLowerCase();
+            return name.includes('female') || name.includes('zira') || name.includes('samantha') || name.includes('swara') || name.includes('aarohi') || name.includes('jenny');
+          }) || matchingLangVoices[0];
+
+          if (!selectedVoice) {
+            selectedVoice = voices.find(v => {
+              const name = v.name.toLowerCase();
+              return (name.includes('female') || name.includes('zira') || name.includes('samantha')) && v.lang.startsWith('en');
+            });
+          }
+        } else {
+          // Regional / Natural: strictly prefer native language match
+          selectedVoice = matchingLangVoices[0];
+        }
+
+        // Ultimate fallback
+        if (!selectedVoice) {
+          selectedVoice = voices.find(v => v.lang.startsWith('en')) || voices[0];
+        }
+      }
+
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
       }
 
       this.isPlaying = true;
@@ -179,7 +346,16 @@ class SoundManager {
       }
       this.startSimulatedFrequencies();
 
+      // Chromium keep-alive ticker: prevents speech synthesis pausing after 15s
+      this.keepAliveInterval = setInterval(() => {
+        if (this.isPlaying && typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
+          window.speechSynthesis.pause();
+          window.speechSynthesis.resume();
+        }
+      }, 5000);
+
       utterance.onend = () => {
+        this.clearKeepAlive();
         this.isPlaying = false;
         this.stopSimulatedFrequencies();
         if (this.onStateChangeCallback) {
@@ -188,7 +364,8 @@ class SoundManager {
       };
 
       utterance.onerror = (e) => {
-        console.warn('SpeechSynthesis error:', e);
+        console.warn('SpeechSynthesis event notice:', e);
+        this.clearKeepAlive();
         this.isPlaying = false;
         this.stopSimulatedFrequencies();
         if (this.onStateChangeCallback) {
@@ -199,6 +376,7 @@ class SoundManager {
       window.speechSynthesis.speak(utterance);
     } catch (err) {
       console.error('Failed to vocalize speech:', err);
+      this.clearKeepAlive();
       this.isPlaying = false;
       this.stopSimulatedFrequencies();
       if (this.onStateChangeCallback) {
@@ -208,7 +386,7 @@ class SoundManager {
   }
 
   /**
-   * Dual-Pipeline: Plays decoded audio buffer while ensuring speech synthesis vocalization
+   * Dual-Pipeline: Plays decoded audio buffer while driving visualizer
    */
   public async playAudioStream(
     audioArrayBuffer: ArrayBuffer,
@@ -255,16 +433,8 @@ class SoundManager {
       };
 
       source.start(0);
-
-      // Also speak speech text if provided
-      if (spokenText && 'speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(spokenText);
-        utterance.rate = 1.0;
-        utterance.lang = LANG_CODE_MAP[language] || 'en-US';
-        window.speechSynthesis.speak(utterance);
-      }
     } catch (err) {
-      console.warn('AudioBuffer decode error, falling back to direct speech:', err);
+      console.warn('AudioBuffer decode error, falling back to direct speech synthesis:', err);
       if (spokenText) {
         await this.speakText(spokenText, language);
       }

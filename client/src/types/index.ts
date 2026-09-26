@@ -75,3 +75,29 @@ export interface FeedbackRecord {
   user_name: string;
   created_at: string;
 }
+
+export type VoiceGender = 'female' | 'male';
+export type VoicePersona = 'imperial' | 'sovereign' | 'studio' | 'natural';
+
+export interface VoiceModelConfig {
+  id: string;
+  name: string;
+  tag: string;
+  gender: VoiceGender;
+  persona: VoicePersona;
+  pitch: number;
+  rate: number;
+  description: string;
+  sampleText: string;
+  avatar: string;
+}
+
+export interface VoiceSettings {
+  modelId: string;
+  pitch: number;
+  rate: number;
+  volume: number;
+  handsFreeAutoSend: boolean;
+  systemVoiceName?: string;
+}
+

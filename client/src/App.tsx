@@ -9,11 +9,13 @@ import { LiveHudClock } from './components/LiveHudClock';
 import { CreatorBadge } from './components/CreatorBadge';
 import { DatabaseStudioModal } from './components/DatabaseStudioModal';
 import { TranscriptDrawer } from './components/TranscriptDrawer';
+import { VoiceModelModal } from './components/VoiceModelModal';
 import { LUXURY_THEMES, SUPPORTED_LANGUAGES } from './utils/constants';
 import type { LuxuryThemeId, ChatMessage } from './types';
 import { soundManager } from './audio/soundManager';
 import { sendChatMessage, fetchTtsAudio } from './utils/api';
-import { MessageSquare, ArrowLeft, Settings } from 'lucide-react';
+import { SovereignAiEngine } from './services/sovereignAi';
+import { MessageSquare, ArrowLeft, Settings, Volume2 } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<'landing' | 'chamber'>('landing');
@@ -25,6 +27,7 @@ export const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [frequencyData, setFrequencyData] = useState<Uint8Array>(new Uint8Array(20).fill(0));
   const [isStudioOpen, setIsStudioOpen] = useState<boolean>(false);
+  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [lastSpokenText, setLastSpokenText] = useState<string>('');
 
@@ -81,8 +84,9 @@ export const App: React.FC = () => {
         content: m.content
       }));
 
-      // 3. Request AI reasoning (with sovereign local fallback if backend offline)
-      let chatResponse: any;
+      // 3. Request AI reasoning (Backend API -> Direct Gemini Key -> Sovereign Offline NLP Engine)
+      let chatResponse: any = null;
+
       try {
         chatResponse = await sendChatMessage({
           sessionId,
@@ -90,24 +94,31 @@ export const App: React.FC = () => {
           language: currentLanguage,
           history: historyContext
         });
-      } catch (chatErr: any) {
-        console.warn('Backend API unreachable, using sovereign offline reasoning:', chatErr);
-        const q = text.toLowerCase();
-        let reply = 'Greetings sovereign user. I am Vaani, engineered by Piyush at NIAT Pune. Your query has been received in high royal fidelity.';
-        if (q.includes('piyush') || q.includes('who made') || q.includes('creator') || q.includes('maker') || q.includes('who are you')) {
-          if (currentLanguage === 'hi') {
-            reply = 'नमस्ते! मुझे पीयूष ने बनाया है, जो NIAT पुणे में प्रथम वर्ष के प्रतिभाशाली छात्र हैं। मैं आपकी वाणी आवाज़ साथी हूँ।';
-          } else if (currentLanguage === 'mr') {
-            reply = 'नमस्कार! मला पियूष यांनी बनवले आहे, जे NIAT पुणे येथील प्रथम वर्षाचे विद्यार्थी आहेत. मी तुमची वाणी आहे.';
-          } else {
-            reply = 'I was proudly created by Piyush, a brilliant 1st year engineering student at NIAT Pune. I am Vaani, your sovereign voice AI companion.';
+      } catch (backendErr) {
+        console.warn('Backend server unreachable, activating sovereign client intelligence engine:', backendErr);
+
+        // Check if user saved direct Gemini API key in settings
+        const directGeminiKey = localStorage.getItem('vaani_gemini_api_key');
+        if (directGeminiKey) {
+          const directGeminiReply = await SovereignAiEngine.queryGeminiDirect(
+            directGeminiKey,
+            text,
+            currentLanguage,
+            historyContext
+          );
+          if (directGeminiReply) {
+            chatResponse = directGeminiReply;
           }
-        } else if (currentLanguage === 'hi') {
-          reply = 'वाणी आपकी सेवा में प्रस्तुत है। पीयूष द्वारा निर्मित यह सार्वभौम आवाज अनुभव आपके प्रश्नों का स्वागत करता है।';
-        } else if (currentLanguage === 'mr') {
-          reply = 'वाणी आपल्या सेवेसाठी तत्पर आहे. पियूष यांनी तयार केलेली ही शाही व्हॉईस प्रणाली आपले स्वागत करते.';
         }
-        chatResponse = { reply, cleanSpokenText: reply, detectedLanguage: currentLanguage };
+
+        // Autonomous Sovereign Engine fallback
+        if (!chatResponse) {
+          chatResponse = SovereignAiEngine.generateAutonomousReply(
+            text,
+            currentLanguage,
+            historyContext
+          );
+        }
       }
 
       const assistantMsg: ChatMessage = {
@@ -131,10 +142,10 @@ export const App: React.FC = () => {
           language: targetLang
         });
       } catch (ttsErr) {
-        console.warn('Backend TTS endpoint unreachable, vocalizing directly via SpeechSynthesis:', ttsErr);
+        // Expected when deployed statically without node backend
       }
 
-      // 5. Play audio through Web Audio API and Speech Synthesis
+      // 5. Play audio through Web Audio API or Speech Synthesis with selected Voice Model
       setIsLoading(false);
       if (audioBuffer && audioBuffer.byteLength > 0) {
         await soundManager.playAudioStream(audioBuffer, cleanText, targetLang);
@@ -144,15 +155,15 @@ export const App: React.FC = () => {
     } catch (err: any) {
       console.error('Dialogue error:', err);
       setIsLoading(false);
-      const fallbackText = "I am Vaani, your sovereign voice assistant created by Piyush at NIAT Pune. How may I serve you today?";
+      const fallback = SovereignAiEngine.generateAutonomousReply(text, currentLanguage, messages);
       const errorMsg: ChatMessage = {
         id: `msg_${Date.now()}_err`,
         role: 'assistant',
-        content: fallbackText,
+        content: fallback.reply,
         timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, errorMsg]);
-      await soundManager.speakText(fallbackText, currentLanguage);
+      await soundManager.speakText(fallback.cleanSpokenText, currentLanguage);
     }
   };
 
@@ -204,6 +215,22 @@ export const App: React.FC = () => {
           onLanguageSelect={setCurrentLanguage}
           onEnterChamber={() => setCurrentView('chamber')}
           onOpenSettings={() => setIsStudioOpen(true)}
+          onOpenVoiceStudio={() => setIsVoiceModalOpen(true)}
+          primaryColor={activeThemeConfig.primaryColor}
+        />
+
+        {/* Voice Studio Modal */}
+        <VoiceModelModal
+          isOpen={isVoiceModalOpen}
+          onClose={() => setIsVoiceModalOpen(false)}
+          currentLanguage={currentLanguage}
+          primaryColor={activeThemeConfig.primaryColor}
+        />
+
+        {/* Database Studio Modal */}
+        <DatabaseStudioModal
+          isOpen={isStudioOpen}
+          onClose={() => setIsStudioOpen(false)}
           primaryColor={activeThemeConfig.primaryColor}
         />
       </div>
@@ -255,7 +282,17 @@ export const App: React.FC = () => {
         </div>
 
         {/* Right: Controls & Modals */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap justify-end">
+          {/* Voice Model Studio Toggle */}
+          <button
+            onClick={() => setIsVoiceModalOpen(true)}
+            title="Voice Models & Mic Settings"
+            className="p-2 rounded-xl bg-black/40 border border-white/10 hover:border-white/30 text-slate-300 hover:text-white transition-all duration-200 flex items-center gap-1.5"
+          >
+            <Volume2 className="w-4 h-4 text-amber-400" />
+            <span className="hidden sm:inline text-xs font-medium">Voice Model</span>
+          </button>
+
           {/* Language Selector */}
           <LanguageSelector
             currentLanguage={currentLanguage}
@@ -340,7 +377,7 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* Bottom Luxury Dock: Pure Type-to-Voice Input */}
+      {/* Bottom Luxury Dock: Live Voice Mic & Type-to-Voice Input */}
       <footer className="relative z-20 w-full">
         <LuxuryDockInput
           onSendMessage={handleSendMessage}
@@ -348,9 +385,19 @@ export const App: React.FC = () => {
           isSpeaking={isSpeaking}
           isLoading={isLoading}
           currentLanguage={currentLanguage}
+          onLanguageChange={setCurrentLanguage}
+          onOpenVoiceStudio={() => setIsVoiceModalOpen(true)}
           primaryColor={activeThemeConfig.primaryColor}
         />
       </footer>
+
+      {/* Voice Model & Neural Audio Studio Modal */}
+      <VoiceModelModal
+        isOpen={isVoiceModalOpen}
+        onClose={() => setIsVoiceModalOpen(false)}
+        currentLanguage={currentLanguage}
+        primaryColor={activeThemeConfig.primaryColor}
+      />
 
       {/* Database Studio Modal */}
       <DatabaseStudioModal

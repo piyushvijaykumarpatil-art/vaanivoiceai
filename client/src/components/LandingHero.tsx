@@ -13,6 +13,7 @@ interface LandingHeroProps {
   onLanguageSelect: (langId: string) => void;
   onEnterChamber: () => void;
   onOpenSettings?: () => void;
+  onOpenVoiceStudio?: () => void;
   primaryColor?: string;
 }
 
@@ -23,6 +24,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
   onLanguageSelect,
   onEnterChamber,
   onOpenSettings,
+  onOpenVoiceStudio,
   primaryColor = '#F59E0B'
 }) => {
   return (
@@ -43,6 +45,18 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
 
         {/* Right side: Theme Switcher right by the side of Settings & Creator Attribution Badge */}
         <div className="flex items-center gap-2.5 flex-wrap justify-center sm:justify-end">
+          {/* Voice Model Studio Button */}
+          {onOpenVoiceStudio && (
+            <button
+              onClick={onOpenVoiceStudio}
+              title="Voice Models & Neural Mic Studio"
+              className="p-2 rounded-xl bg-black/40 border border-white/10 hover:border-white/30 text-slate-300 hover:text-white transition-all duration-200 flex items-center gap-1.5"
+            >
+              <Volume2 className="w-4 h-4 text-amber-400" />
+              <span className="hidden sm:inline text-xs font-medium">Voice Model</span>
+            </button>
+          )}
+
           {/* Theme Switcher side of Settings */}
           <div className="imperial-glass px-2.5 py-1.5 rounded-2xl border border-white/10 flex items-center gap-2">
             <span className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold hidden md:inline">Theme:</span>

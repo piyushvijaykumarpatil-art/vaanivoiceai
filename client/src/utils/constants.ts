@@ -1,4 +1,4 @@
-import type { ThemeConfig, VoiceLanguage } from '../types';
+import type { ThemeConfig, VoiceLanguage, VoiceModelConfig, VoiceSettings } from '../types';
 
 export const LUXURY_THEMES: ThemeConfig[] = [
   {
@@ -158,3 +158,63 @@ export const DEFAULT_SUGGESTIONS: Record<string, string[]> = {
     "एस.जी.यू (SGU) आणि शिवरायांच्या इतिहासाबद्दल सांगा"
   ]
 };
+
+export const VOICE_MODELS: VoiceModelConfig[] = [
+  {
+    id: 'vaani-empress',
+    name: 'Vaani Imperial',
+    tag: 'Empress • Royal Melodic',
+    gender: 'female',
+    persona: 'imperial',
+    pitch: 1.08,
+    rate: 0.98,
+    avatar: '👑',
+    description: 'Warm, melodious, royal and culturally resonant female cadence.',
+    sampleText: 'Greetings, sovereign seeker. I am Vaani Imperial, honoring Piyush from NIAT Pune.'
+  },
+  {
+    id: 'vaani-sovereign',
+    name: 'Vaani Sovereign',
+    tag: 'King • Deep Command',
+    gender: 'male',
+    persona: 'sovereign',
+    pitch: 0.84,
+    rate: 0.95,
+    avatar: '⚡',
+    description: 'Deep, commanding, authoritative and powerful masculine timbre.',
+    sampleText: 'Stand tall. I am Vaani Sovereign, your commanding voice AI companion.'
+  },
+  {
+    id: 'neural-studio',
+    name: 'Studio Neural',
+    tag: 'Ultra-Clear • Balanced',
+    gender: 'female',
+    persona: 'studio',
+    pitch: 1.0,
+    rate: 1.02,
+    avatar: '🔮',
+    description: 'Crisp, crystal-clear, modern studio-grade neural precision.',
+    sampleText: 'Studio Neural voice model online with ultra-low latency response.'
+  },
+  {
+    id: 'regional-maestro',
+    name: 'Regional Maestro',
+    tag: 'Native Accent • Cultural',
+    gender: 'female',
+    persona: 'natural',
+    pitch: 1.0,
+    rate: 1.0,
+    avatar: '🌐',
+    description: 'Native Indian phonetic inflection tailored for Marathi, Hindi, Telugu & more.',
+    sampleText: 'नमस्कार, मी वाणी आहे. पियूष यांनी मला अतिशय कुशलतेने तयार केले आहे.'
+  }
+];
+
+export const DEFAULT_VOICE_SETTINGS: VoiceSettings = {
+  modelId: 'vaani-empress',
+  pitch: 1.08,
+  rate: 0.98,
+  volume: 1.0,
+  handsFreeAutoSend: true
+};
+
