@@ -13,6 +13,8 @@ interface LuxuryDockInputProps {
   onLanguageChange?: (langId: string) => void;
   onOpenVoiceStudio?: () => void;
   primaryColor?: string;
+  isContinuousLiveMode?: boolean;
+  onToggleContinuousLiveMode?: () => void;
 }
 
 export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
@@ -23,7 +25,9 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
   currentLanguage,
   onLanguageChange,
   onOpenVoiceStudio,
-  primaryColor = '#F59E0B'
+  primaryColor = '#F59E0B',
+  isContinuousLiveMode = false,
+  onToggleContinuousLiveMode
 }) => {
   const [inputText, setInputText] = useState('');
   const [isMicListening, setIsMicListening] = useState(false);
@@ -44,7 +48,7 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
     }
   };
 
-  // Called continuously as user speaks into VoiceMicButton
+  // Real-time live speech transcription handler
   const handleTranscriptUpdate = (transcript: string) => {
     if (transcript) {
       setInputText(transcript);
@@ -70,6 +74,32 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 pb-4">
+      {/* Real-Time Live Speech Floating HUD Banner (Appears dynamically while speaking into default mic) */}
+      {isMicListening && (
+        <div className="mb-2 px-4 py-2.5 rounded-2xl bg-black/85 border border-amber-500/40 backdrop-blur-xl shadow-2xl flex items-center justify-between gap-3 animate-fadeIn">
+          <div className="flex items-center gap-2.5 flex-1 min-w-0">
+            <span className="flex h-2.5 w-2.5 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
+            </span>
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-red-400 shrink-0">
+              LIVE TRANSCRIBING ({currentLanguage.toUpperCase()}):
+            </span>
+            <span className="text-xs sm:text-sm text-amber-200 font-medium truncate italic">
+              {inputText ? `"${inputText}"` : "Listening to default microphone... speak naturally"}
+            </span>
+          </div>
+          {inputText && (
+            <button
+              onClick={handleSend}
+              className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-black transition-transform hover:scale-105 shrink-0 shadow"
+            >
+              Send Now ↵
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Multilingual Suggestion Chips */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none no-scrollbar">
         <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-slate-400 font-semibold shrink-0 pl-1">
@@ -101,7 +131,7 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
             type="button"
             onClick={onOpenVoiceStudio}
             title={`Active Voice Model: ${activeVoiceModel.name}. Click to customize voice timbre, pitch, rate & mic.`}
-            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/25 transition-all hover:scale-105 active:scale-95 text-xs text-slate-200 group"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/25 transition-all hover:scale-105 active:scale-95 text-xs text-slate-200 group shrink-0"
           >
             <span>{activeVoiceModel.avatar}</span>
             <span className="font-semibold text-[11px] hidden lg:inline text-amber-300">
@@ -111,8 +141,25 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
           </button>
         )}
 
+        {/* Live Speaking Mode Continuous Toggle */}
+        {onToggleContinuousLiveMode && (
+          <button
+            type="button"
+            onClick={onToggleContinuousLiveMode}
+            title={isContinuousLiveMode ? "Continuous Live Speaking Mode is ACTIVE" : "Click to enable Continuous Live Speaking Mode"}
+            className={`hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold transition-all shrink-0 ${
+              isContinuousLiveMode
+                ? 'bg-amber-500/25 border-amber-400 text-amber-300 animate-pulse'
+                : 'bg-black/30 border-white/10 text-slate-400 hover:text-white'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: isContinuousLiveMode ? primaryColor : '#64748b' }} />
+            <span>Live Mode</span>
+          </button>
+        )}
+
         {/* Status Indicator */}
-        <div className="hidden sm:flex items-center gap-1.5 pl-1">
+        <div className="hidden sm:flex items-center gap-1.5 pl-1 shrink-0">
           {isLoading ? (
             <div className="flex items-center gap-1.5 text-xs text-amber-300">
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -130,7 +177,7 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
                   style={{ backgroundColor: primaryColor }}
                 />
               </span>
-              <span className="hidden md:inline">Listening ({currentLanguage.toUpperCase()})...</span>
+              <span className="hidden md:inline">Transcribing ({currentLanguage.toUpperCase()})...</span>
             </div>
           ) : isSpeaking ? (
             <div className="flex items-center gap-1.5 text-xs text-emerald-400">
@@ -140,12 +187,12 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
           ) : (
             <div className="flex items-center gap-1 text-xs text-slate-400">
               <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
-              <span className="hidden md:inline font-mono">Voice AI</span>
+              <span className="hidden md:inline font-mono">Live Mic</span>
             </div>
           )}
         </div>
 
-        {/* Input Field: Displays live speech transcript and allows keyboard editing */}
+        {/* Input Field: Displays live speech transcript in real-time and allows keyboard editing */}
         <input
           type="text"
           value={inputText}
@@ -155,10 +202,10 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
             isLoading
               ? "Synthesizing sovereign neural response..."
               : isMicListening
-              ? "🎙️ Listening to your voice... Speak now (auto-sends on pause)!"
+              ? "🎙️ Live speaking into default mic... Transcribing real-time!"
               : isSpeaking
               ? "Speaking royal response... Speak or type next question"
-              : `Speak via Mic (${currentLanguage.toUpperCase()}) or type question here...`
+              : `Speak via Default Mic (${currentLanguage.toUpperCase()}) or type here...`
           }
           disabled={isLoading}
           className="flex-1 bg-transparent px-3 py-2 text-sm md:text-base text-white placeholder-slate-400 focus:outline-none min-w-0"
@@ -166,7 +213,7 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
 
         {/* Quick Language Toggle (MR / HI / EN) */}
         {onLanguageChange && (
-          <div className="hidden sm:flex items-center bg-black/40 border border-white/10 rounded-xl p-0.5 text-[11px] font-mono">
+          <div className="hidden sm:flex items-center bg-black/40 border border-white/10 rounded-xl p-0.5 text-[11px] font-mono shrink-0">
             {['mr', 'hi', 'en'].map((lang) => (
               <button
                 key={lang}
@@ -201,7 +248,7 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
             </button>
           )}
 
-          {/* 🎙️ Live Voice Microphone (Speech-to-Text) Button */}
+          {/* 🎙️ Default Microphone Hardware Button with Real-Time Transcription */}
           <VoiceMicButton
             currentLanguage={currentLanguage}
             onTranscriptUpdate={handleTranscriptUpdate}
@@ -209,7 +256,7 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
             onSpeechEnd={handleSpeechEnd}
             primaryColor={primaryColor}
             disabled={isLoading}
-            autoSendDelayMs={voiceSettings.handsFreeAutoSend ? 1300 : 0}
+            autoSendDelayMs={voiceSettings.handsFreeAutoSend ? 1400 : 0}
           />
 
           {/* Send Button */}

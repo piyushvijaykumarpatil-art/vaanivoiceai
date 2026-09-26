@@ -7,10 +7,11 @@ export interface VoiceMicButtonProps {
   onTranscriptUpdate: (transcript: string) => void;
   onListeningChange?: (isListening: boolean) => void;
   onSpeechEnd?: (finalTranscript: string) => void;
+  onAudioRecorded?: (audioBlob: Blob) => void;
   primaryColor?: string;
   disabled?: boolean;
   className?: string;
-  autoSendDelayMs?: number; // e.g. 1300ms for hands-free auto-send
+  autoSendDelayMs?: number;
 }
 
 const SPEECH_LANG_MAP: Record<string, string> = {
@@ -30,19 +31,24 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
   onTranscriptUpdate,
   onListeningChange,
   onSpeechEnd,
+  onAudioRecorded,
   primaryColor = '#F59E0B',
   disabled = false,
   className = '',
-  autoSendDelayMs = 1300
+  autoSendDelayMs = 1400
 }) => {
   const [isListening, setIsListening] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [liveVolume, setLiveVolume] = useState<number>(0);
 
   const recognitionRef = useRef<any>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
   const activeTranscriptRef = useRef<string>('');
   const silenceTimerRef = useRef<any>(null);
+  const volumePollRef = useRef<any>(null);
 
-  // Clear silence timer
   const clearSilenceTimer = () => {
     if (silenceTimerRef.current) {
       clearTimeout(silenceTimerRef.current);
@@ -50,10 +56,36 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
     }
   };
 
+  const stopVolumePoll = () => {
+    if (volumePollRef.current) {
+      clearInterval(volumePollRef.current);
+      volumePollRef.current = null;
+    }
+    setLiveVolume(0);
+  };
+
+  // Stop media stream tracks cleanly
+  const stopHardwareMic = () => {
+    if (mediaStreamRef.current) {
+      mediaStreamRef.current.getTracks().forEach((track) => {
+        try {
+          track.stop();
+        } catch {
+          // ignore
+        }
+      });
+      mediaStreamRef.current = null;
+    }
+    soundManager.disconnectMicStream();
+    stopVolumePoll();
+  };
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
       clearSilenceTimer();
+      stopVolumePoll();
+      stopHardwareMic();
       if (recognitionRef.current) {
         try {
           recognitionRef.current.abort();
@@ -66,6 +98,17 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
 
   const stopRecognition = () => {
     clearSilenceTimer();
+    stopVolumePoll();
+
+    // Stop MediaRecorder and produce audio blob if available
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      try {
+        mediaRecorderRef.current.stop();
+      } catch {
+        // ignore
+      }
+    }
+
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
@@ -73,16 +116,20 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
         // ignore
       }
     }
+
+    stopHardwareMic();
+
     setIsListening(false);
     onListeningChange?.(false);
     soundManager.playMicStopChime();
+
     const final = activeTranscriptRef.current.trim();
     if (final) {
       onSpeechEnd?.(final);
     }
   };
 
-  const toggleListening = () => {
+  const toggleListening = async () => {
     if (disabled) return;
 
     if (isListening) {
@@ -96,19 +143,76 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
         : null;
 
     if (!SpeechRecognitionAPI) {
-      const msg = 'Speech Recognition is not supported in this browser. Please use Google Chrome or Microsoft Edge for live microphone speech input.';
+      const msg = 'Speech Recognition is not supported in this browser. Please open in Google Chrome or Microsoft Edge for live microphone speech input.';
       setErrorMessage(msg);
       setTimeout(() => setErrorMessage(null), 6000);
       return;
     }
 
     try {
-      soundManager.stopAudio(); // stop any playing TTS
+      soundManager.stopAudio(); // stop any active TTS response
+
+      // 1. Request access to the default microphone hardware stream
+      let stream: MediaStream | null = null;
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+              echoCancellation: true,
+              noiseSuppression: true,
+              autoGainControl: true
+            }
+          });
+          mediaStreamRef.current = stream;
+
+          // Connect stream to soundManager so 3D Chrono-Orb & Equalizer react to live speaking
+          soundManager.connectMicStream(stream);
+
+          // Poll live volume level (0 - 100) for real-time visualization
+          volumePollRef.current = setInterval(() => {
+            const vol = soundManager.getMicVolumeLevel();
+            setLiveVolume(vol);
+          }, 60);
+
+          // Setup MediaRecorder to record audio while user speaks
+          recordedChunksRef.current = [];
+          if (typeof MediaRecorder !== 'undefined') {
+            try {
+              const recorder = new MediaRecorder(stream);
+              recorder.ondataavailable = (e) => {
+                if (e.data && e.data.size > 0) {
+                  recordedChunksRef.current.push(e.data);
+                }
+              };
+              recorder.onstop = () => {
+                if (recordedChunksRef.current.length > 0 && onAudioRecorded) {
+                  const blob = new Blob(recordedChunksRef.current, { type: recorder.mimeType || 'audio/webm' });
+                  onAudioRecorded(blob);
+                }
+              };
+              recorder.start(250);
+              mediaRecorderRef.current = recorder;
+            } catch (recErr) {
+              console.warn('MediaRecorder not available or failed to start:', recErr);
+            }
+          }
+        } catch (mediaErr: any) {
+          console.warn('Microphone stream access notice:', mediaErr);
+          if (mediaErr.name === 'NotAllowedError' || mediaErr.name === 'PermissionDeniedError') {
+            setErrorMessage('Default microphone permission denied. Please allow microphone permissions in your browser URL bar.');
+            setTimeout(() => setErrorMessage(null), 6000);
+            return;
+          }
+        }
+      }
+
       soundManager.playMicStartChime();
 
+      // 2. Initialize real-time continuous SpeechRecognition
       const recognition = new SpeechRecognitionAPI();
       recognition.continuous = true;
       recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
       recognition.lang = SPEECH_LANG_MAP[currentLanguage] || 'en-US';
 
       recognition.onstart = () => {
@@ -118,22 +222,27 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
         activeTranscriptRef.current = '';
       };
 
+      // 3. Real-Time Transcription Accumulator: preserves all previous finalized phrases
       recognition.onresult = (event: any) => {
-        let interim = '';
-        let final = '';
+        let finalAccumulated = '';
+        let interimAccumulated = '';
 
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          if (event.results[i].isFinal) {
-            final += event.results[i][0].transcript;
-          } else {
-            interim += event.results[i][0].transcript;
+        for (let i = 0; i < event.results.length; ++i) {
+          const result = event.results[i];
+          if (result && result[0]) {
+            if (result.isFinal) {
+              finalAccumulated += result[0].transcript + ' ';
+            } else {
+              interimAccumulated += result[0].transcript;
+            }
           }
         }
 
-        const currentSpoken = (final || interim).trim();
-        if (currentSpoken) {
-          activeTranscriptRef.current = currentSpoken;
-          onTranscriptUpdate(currentSpoken);
+        const liveTranscript = (finalAccumulated + interimAccumulated).trim();
+        if (liveTranscript) {
+          activeTranscriptRef.current = liveTranscript;
+          // Instantly send real-time transcription to input dock
+          onTranscriptUpdate(liveTranscript);
 
           // Reset silence timer for hands-free auto-send
           if (autoSendDelayMs > 0) {
@@ -148,20 +257,20 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
       };
 
       recognition.onerror = (event: any) => {
-        console.warn('SpeechRecognition error:', event.error);
+        console.warn('SpeechRecognition event notice:', event.error);
         clearSilenceTimer();
         if (event.error === 'not-allowed') {
-          setErrorMessage('Microphone access denied. Please click the lock icon in your browser URL bar and allow microphone permissions.');
+          setErrorMessage('Microphone access denied. Please click the lock/settings icon in your browser URL bar and allow microphone permissions.');
+          stopRecognition();
         } else if (event.error !== 'no-speech') {
           setErrorMessage(`Microphone notice: ${event.error}`);
         }
-        setIsListening(false);
-        onListeningChange?.(false);
         setTimeout(() => setErrorMessage(null), 6000);
       };
 
       recognition.onend = () => {
         clearSilenceTimer();
+        stopHardwareMic();
         setIsListening(false);
         onListeningChange?.(false);
         const final = activeTranscriptRef.current.trim();
@@ -175,17 +284,18 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
     } catch (err: any) {
       console.error('Failed to start speech recognition:', err);
       clearSilenceTimer();
+      stopHardwareMic();
       setIsListening(false);
       onListeningChange?.(false);
-      setErrorMessage('Could not activate microphone. Please check your browser audio settings.');
+      setErrorMessage('Could not activate default microphone. Please check your browser audio permissions.');
       setTimeout(() => setErrorMessage(null), 6000);
     }
   };
 
   const langCode = (SPEECH_LANG_MAP[currentLanguage] || 'en-US').toUpperCase();
   const tooltipText = isListening
-    ? `Listening (${langCode})... Click to finish or pause to auto-send`
-    : `Click to speak (${langCode})`;
+    ? `🎙️ Recording from Default Mic (${langCode}) - Real-time transcription active. Click to send or pause to auto-send`
+    : `Click to speak using default microphone (${langCode})`;
 
   return (
     <div className={`relative inline-flex items-center ${className}`}>
@@ -217,10 +327,20 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
         {isListening ? (
           <div className="flex items-center gap-1.5">
             <Mic className="w-5 h-5 relative z-10 animate-bounce" />
-            <div className="flex items-center gap-0.5 h-4">
-              <span className="w-0.5 h-3 bg-black rounded-full animate-[bounce_0.6s_ease-in-out_infinite]" />
-              <span className="w-0.5 h-4 bg-black rounded-full animate-[bounce_0.5s_ease-in-out_infinite_0.1s]" />
-              <span className="w-0.5 h-2.5 bg-black rounded-full animate-[bounce_0.7s_ease-in-out_infinite_0.2s]" />
+            {/* Live dynamic sound wave bars that scale with liveVolume */}
+            <div className="flex items-end gap-0.5 h-4">
+              <span
+                className="w-1 bg-black rounded-full transition-all duration-75"
+                style={{ height: `${Math.max(4, Math.min(16, (liveVolume / 100) * 16 + 4))}px` }}
+              />
+              <span
+                className="w-1 bg-black rounded-full transition-all duration-75"
+                style={{ height: `${Math.max(6, Math.min(16, (liveVolume / 100) * 20 + 6))}px` }}
+              />
+              <span
+                className="w-1 bg-black rounded-full transition-all duration-75"
+                style={{ height: `${Math.max(4, Math.min(16, (liveVolume / 100) * 14 + 4))}px` }}
+              />
             </div>
           </div>
         ) : (
@@ -230,7 +350,7 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
 
       {/* Inline Error Toast */}
       {errorMessage && (
-        <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 w-72 p-2.5 rounded-xl bg-red-950/95 border border-red-500/50 text-red-200 text-xs flex items-center gap-2 shadow-2xl z-50 animate-fadeIn backdrop-blur-md">
+        <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 w-80 p-2.5 rounded-xl bg-red-950/95 border border-red-500/50 text-red-200 text-xs flex items-center gap-2 shadow-2xl z-50 animate-fadeIn backdrop-blur-md">
           <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
           <span className="flex-1 leading-tight">{errorMessage}</span>
           <button

@@ -1,6 +1,6 @@
 /**
  * Web Audio API Sound Manager & Neural Voice Orchestrator
- * Connects Web Audio API AnalyserNode with speech synthesis and custom voice models.
+ * Connects Web Audio API AnalyserNode with speech synthesis, default microphone live stream, and voice models.
  */
 
 import type { VoiceSettings } from '../types';
@@ -21,6 +21,9 @@ const LANG_CODE_MAP: Record<string, string> = {
 class SoundManager {
   private audioCtx: AudioContext | null = null;
   private analyser: AnalyserNode | null = null;
+  private micAnalyser: AnalyserNode | null = null;
+  private micSourceNode: MediaStreamAudioSourceNode | null = null;
+  private isMicActive: boolean = false;
   private currentSource: AudioBufferSourceNode | null = null;
   private gainNode: GainNode | null = null;
   private isPlaying: boolean = false;
@@ -32,7 +35,6 @@ class SoundManager {
   private voiceSettings: VoiceSettings;
 
   constructor() {
-    // Load voice settings from localStorage if available
     let saved: VoiceSettings = DEFAULT_VOICE_SETTINGS;
     if (typeof window !== 'undefined') {
       try {
@@ -92,6 +94,10 @@ class SoundManager {
         this.analyser.fftSize = 64;
         this.analyser.smoothingTimeConstant = 0.8;
 
+        this.micAnalyser = this.audioCtx.createAnalyser();
+        this.micAnalyser.fftSize = 64;
+        this.micAnalyser.smoothingTimeConstant = 0.7;
+
         this.gainNode = this.audioCtx.createGain();
         this.gainNode.gain.value = 0.9;
 
@@ -103,6 +109,56 @@ class SoundManager {
     if (this.audioCtx && this.audioCtx.state === 'suspended') {
       this.audioCtx.resume().catch(() => {});
     }
+  }
+
+  /**
+   * Connects the hardware default microphone stream to Web Audio Analyser
+   * (Without connecting to speakers, avoiding feedback echo)
+   */
+  public connectMicStream(stream: MediaStream): void {
+    try {
+      this.init();
+      if (!this.audioCtx || !this.micAnalyser) return;
+
+      this.disconnectMicStream();
+
+      this.micSourceNode = this.audioCtx.createMediaStreamSource(stream);
+      this.micSourceNode.connect(this.micAnalyser);
+      this.isMicActive = true;
+    } catch (err) {
+      console.warn('Failed to connect mic stream to Web Audio API:', err);
+    }
+  }
+
+  public disconnectMicStream(): void {
+    if (this.micSourceNode) {
+      try {
+        this.micSourceNode.disconnect();
+      } catch {
+        // ignore
+      }
+      this.micSourceNode = null;
+    }
+    this.isMicActive = false;
+  }
+
+  public isMicrophoneActive(): boolean {
+    return this.isMicActive;
+  }
+
+  /**
+   * Calculates live microphone input volume level (0 - 100)
+   */
+  public getMicVolumeLevel(): number {
+    if (!this.isMicActive || !this.micAnalyser) return 0;
+    const data = new Uint8Array(this.micAnalyser.frequencyBinCount);
+    this.micAnalyser.getByteFrequencyData(data);
+    let sum = 0;
+    for (let i = 0; i < data.length; i++) {
+      sum += data[i];
+    }
+    const avg = sum / data.length;
+    return Math.min(100, Math.round((avg / 255) * 100));
   }
 
   /**
@@ -167,7 +223,20 @@ class SoundManager {
     return this.isPlaying;
   }
 
+  /**
+   * Real-time audio frequency data for 3D Chrono-Orb & Waveform Visualizer:
+   * Actively responds to BOTH live speaking microphone input and AI voice speech output!
+   */
   public getFrequencyData(): Uint8Array {
+    // 1. If mic is active and user is speaking, analyze microphone input
+    if (this.isMicActive && this.micAnalyser) {
+      const bufferLength = this.micAnalyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      this.micAnalyser.getByteFrequencyData(dataArray);
+      return dataArray.slice(0, 20);
+    }
+
+    // 2. If AI audio source buffer is playing
     if (this.currentSource && this.analyser && this.isPlaying) {
       const bufferLength = this.analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
@@ -175,6 +244,7 @@ class SoundManager {
       return dataArray.slice(0, 20);
     }
 
+    // 3. If SpeechSynthesis vocal is active
     if (this.isPlaying) {
       return this.simulatedFrequencies;
     }
@@ -269,7 +339,6 @@ class SoundManager {
     const activeModel = VOICE_MODELS.find(m => m.id === settings.modelId) || VOICE_MODELS[0];
 
     try {
-      // Unstick Chromium speech synthesis
       window.speechSynthesis.cancel();
       window.speechSynthesis.resume();
 
@@ -293,14 +362,12 @@ class SoundManager {
         const cleanLang = language.toLowerCase();
         const targetLower = targetLang.toLowerCase();
 
-        // 1. First look for matching language voices
         const matchingLangVoices = voices.filter(v => {
           const vLang = v.lang.toLowerCase().replace('_', '-');
           return vLang === targetLower || vLang.startsWith(cleanLang);
         });
 
         if (activeModel.persona === 'sovereign') {
-          // Sovereign: prefer deep/male voice
           selectedVoice = matchingLangVoices.find(v => {
             const name = v.name.toLowerCase();
             return name.includes('male') || name.includes('david') || name.includes('mark') || name.includes('guy') || name.includes('ravi') || name.includes('hemant');
@@ -313,7 +380,6 @@ class SoundManager {
             });
           }
         } else if (activeModel.persona === 'imperial' || activeModel.persona === 'studio') {
-          // Imperial / Studio: prefer warm female voice
           selectedVoice = matchingLangVoices.find(v => {
             const name = v.name.toLowerCase();
             return name.includes('female') || name.includes('zira') || name.includes('samantha') || name.includes('swara') || name.includes('aarohi') || name.includes('jenny');
@@ -326,11 +392,9 @@ class SoundManager {
             });
           }
         } else {
-          // Regional / Natural: strictly prefer native language match
           selectedVoice = matchingLangVoices[0];
         }
 
-        // Ultimate fallback
         if (!selectedVoice) {
           selectedVoice = voices.find(v => v.lang.startsWith('en')) || voices[0];
         }
@@ -346,7 +410,6 @@ class SoundManager {
       }
       this.startSimulatedFrequencies();
 
-      // Chromium keep-alive ticker: prevents speech synthesis pausing after 15s
       this.keepAliveInterval = setInterval(() => {
         if (this.isPlaying && typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
           window.speechSynthesis.pause();

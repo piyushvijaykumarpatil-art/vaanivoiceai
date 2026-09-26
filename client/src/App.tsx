@@ -29,6 +29,7 @@ export const App: React.FC = () => {
   const [isStudioOpen, setIsStudioOpen] = useState<boolean>(false);
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [isContinuousLiveMode, setIsContinuousLiveMode] = useState<boolean>(false);
   const [lastSpokenText, setLastSpokenText] = useState<string>('');
 
   const activeThemeConfig = LUXURY_THEMES.find(t => t.id === currentTheme) || LUXURY_THEMES[0];
@@ -388,6 +389,8 @@ export const App: React.FC = () => {
           onLanguageChange={setCurrentLanguage}
           onOpenVoiceStudio={() => setIsVoiceModalOpen(true)}
           primaryColor={activeThemeConfig.primaryColor}
+          isContinuousLiveMode={isContinuousLiveMode}
+          onToggleContinuousLiveMode={() => setIsContinuousLiveMode(prev => !prev)}
         />
       </footer>
 
