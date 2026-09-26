@@ -7,8 +7,12 @@
     "client": "npm --prefix client run dev",
     "build:client": "npm --prefix client run build",
     "build:server": "npm --prefix server run build",
-    "build": "npm run build:server && npm run build:client"
+    "build": "cd client && npm install && npm run build"
   },
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "keywords": [
     "vaani",
     "voice-ai",
