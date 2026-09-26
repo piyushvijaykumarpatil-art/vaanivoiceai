@@ -1,5 +1,5 @@
 const rawBase = (import.meta as any).env?.VITE_API_BASE || '/api';
-const API_BASE = rawBase === '/api' 
+export const API_BASE = rawBase === '/api' 
   ? '/api' 
   : (rawBase.replace(/\/+$/, '').endsWith('/api') ? rawBase.replace(/\/+$/, '') : `${rawBase.replace(/\/+$/, '')}/api`);
 

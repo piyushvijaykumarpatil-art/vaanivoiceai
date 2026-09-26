@@ -67,6 +67,16 @@ export const App: React.FC = () => {
   const handleSendMessage = async (text: string) => {
     if (!text.trim() || isLoading) return;
 
+    // Immediately awaken Web Audio & SpeechSynthesis on direct user interaction
+    soundManager.init();
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.resume();
+      } catch {
+        // ignore
+      }
+    }
+
     // 1. Append user message to history
     const userMsg: ChatMessage = {
       id: `msg_${Date.now()}_u`,
@@ -174,6 +184,15 @@ export const App: React.FC = () => {
   };
 
   const handleReplayAudio = async (text: string, lang?: string) => {
+    soundManager.init();
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.resume();
+      } catch {
+        // ignore
+      }
+    }
+
     try {
       setIsLoading(true);
       const targetLang = lang || currentLanguage;

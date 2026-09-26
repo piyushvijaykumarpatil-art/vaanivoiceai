@@ -5,6 +5,7 @@
 
 import type { VoiceSettings } from '../types';
 import { DEFAULT_VOICE_SETTINGS, VOICE_MODELS } from '../utils/constants';
+import { API_BASE } from '../utils/api';
 
 const LANG_CODE_MAP: Record<string, string> = {
   mr: 'mr-IN',
@@ -25,6 +26,7 @@ class SoundManager {
   private micSourceNode: MediaStreamAudioSourceNode | null = null;
   private isMicActive: boolean = false;
   private currentSource: AudioBufferSourceNode | null = null;
+  private currentAudioElem: HTMLAudioElement | null = null;
   private gainNode: GainNode | null = null;
   private isPlaying: boolean = false;
   private onStateChangeCallback: ((speaking: boolean) => void) | null = null;
@@ -296,6 +298,16 @@ class SoundManager {
       this.currentSource = null;
     }
 
+    if (this.currentAudioElem) {
+      try {
+        this.currentAudioElem.pause();
+        this.currentAudioElem.currentTime = 0;
+      } catch {
+        // ignore
+      }
+      this.currentAudioElem = null;
+    }
+
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       try {
         window.speechSynthesis.cancel();
@@ -326,10 +338,8 @@ class SoundManager {
     this.init();
     this.stopAudio();
 
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-      console.warn('SpeechSynthesis is not supported in this browser environment');
-      return;
-    }
+    const isIndic = /[\u0900-\u097F\u0C00-\u0C7F\u0B80-\u0BFF\u0C80-\u0CFF\u0A80-\u0AFF\u0980-\u09FF\u0A00-\u0A7F]/.test(text) ||
+      ['mr', 'hi', 'te', 'ta', 'kn', 'gu', 'bn', 'pa'].includes(language.toLowerCase());
 
     const settings: VoiceSettings = {
       ...this.voiceSettings,
@@ -338,114 +348,133 @@ class SoundManager {
 
     const activeModel = VOICE_MODELS.find(m => m.id === settings.modelId) || VOICE_MODELS[0];
 
-    try {
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.resume();
+    // If SpeechSynthesis is available in browser
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try {
+        if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+          window.speechSynthesis.cancel();
+          await new Promise(r => setTimeout(r, 60));
+        }
+        window.speechSynthesis.resume();
 
-      const utterance = new SpeechSynthesisUtterance(text.trim());
-      utterance.rate = Math.max(0.7, Math.min(1.5, settings.rate || activeModel.rate));
-      utterance.pitch = Math.max(0.6, Math.min(1.4, settings.pitch || activeModel.pitch));
-      utterance.volume = Math.max(0.2, Math.min(1.0, settings.volume ?? 1.0));
+        const utterance = new SpeechSynthesisUtterance(text.trim());
+        utterance.rate = Math.max(0.7, Math.min(1.5, settings.rate || activeModel.rate));
+        utterance.pitch = Math.max(0.6, Math.min(1.4, settings.pitch || activeModel.pitch));
+        utterance.volume = Math.max(0.2, Math.min(1.0, settings.volume ?? 1.0));
 
-      const targetLang = LANG_CODE_MAP[language] || language || 'en-US';
-      utterance.lang = targetLang;
+        const targetLang = LANG_CODE_MAP[language] || language || 'en-US';
+        utterance.lang = targetLang;
 
-      // Voice selection algorithm based on Model and System voices
-      const voices = this.getAvailableVoices();
-      let selectedVoice: SpeechSynthesisVoice | undefined;
+        // Smart Voice Matching
+        const voices = this.getAvailableVoices();
+        let selectedVoice: SpeechSynthesisVoice | undefined;
 
-      if (settings.systemVoiceName) {
-        selectedVoice = voices.find(v => v.name === settings.systemVoiceName);
-      }
-
-      if (!selectedVoice) {
-        const cleanLang = language.toLowerCase();
-        const targetLower = targetLang.toLowerCase();
-
-        const matchingLangVoices = voices.filter(v => {
-          const vLang = v.lang.toLowerCase().replace('_', '-');
-          return vLang === targetLower || vLang.startsWith(cleanLang);
-        });
-
-        if (activeModel.persona === 'sovereign') {
-          selectedVoice = matchingLangVoices.find(v => {
-            const name = v.name.toLowerCase();
-            return name.includes('male') || name.includes('david') || name.includes('mark') || name.includes('guy') || name.includes('ravi') || name.includes('hemant');
-          }) || matchingLangVoices[0];
-
-          if (!selectedVoice) {
-            selectedVoice = voices.find(v => {
-              const name = v.name.toLowerCase();
-              return (name.includes('male') || name.includes('david') || name.includes('guy')) && v.lang.startsWith('en');
-            });
-          }
-        } else if (activeModel.persona === 'imperial' || activeModel.persona === 'studio') {
-          selectedVoice = matchingLangVoices.find(v => {
-            const name = v.name.toLowerCase();
-            return name.includes('female') || name.includes('zira') || name.includes('samantha') || name.includes('swara') || name.includes('aarohi') || name.includes('jenny');
-          }) || matchingLangVoices[0];
-
-          if (!selectedVoice) {
-            selectedVoice = voices.find(v => {
-              const name = v.name.toLowerCase();
-              return (name.includes('female') || name.includes('zira') || name.includes('samantha')) && v.lang.startsWith('en');
-            });
-          }
-        } else {
-          selectedVoice = matchingLangVoices[0];
+        if (settings.systemVoiceName) {
+          selectedVoice = voices.find(v => v.name === settings.systemVoiceName);
         }
 
         if (!selectedVoice) {
-          selectedVoice = voices.find(v => v.lang.startsWith('en')) || voices[0];
+          const cleanLang = language.toLowerCase();
+          const targetLower = targetLang.toLowerCase();
+
+          // Search directly for voice matching target language
+          let matchingLangVoices = voices.filter(v => {
+            const vLang = v.lang.toLowerCase().replace('_', '-');
+            return vLang === targetLower || vLang.startsWith(cleanLang);
+          });
+
+          // Marathi & Hindi share Devanagari script; a Hindi voice can speak Marathi if Marathi voice isn't installed
+          if (matchingLangVoices.length === 0 && (cleanLang === 'mr' || cleanLang === 'hi' || isIndic)) {
+            matchingLangVoices = voices.filter(v => {
+              const vLang = v.lang.toLowerCase().replace('_', '-');
+              const name = v.name.toLowerCase();
+              return vLang.startsWith('hi') || vLang.startsWith('mr') || name.includes('hindi') || name.includes('marathi') || name.includes('kalpana') || name.includes('hemant') || name.includes('india');
+            });
+          }
+
+          if (matchingLangVoices.length > 0) {
+            if (activeModel.persona === 'sovereign') {
+              selectedVoice = matchingLangVoices.find(v => {
+                const name = v.name.toLowerCase();
+                return name.includes('male') || name.includes('david') || name.includes('mark') || name.includes('guy') || name.includes('ravi') || name.includes('hemant') || name.includes('madhur');
+              }) || matchingLangVoices[0];
+            } else if (activeModel.persona === 'imperial' || activeModel.persona === 'studio') {
+              selectedVoice = matchingLangVoices.find(v => {
+                const name = v.name.toLowerCase();
+                return name.includes('female') || name.includes('zira') || name.includes('samantha') || name.includes('swara') || name.includes('aarohi') || name.includes('kalpana') || name.includes('neerja');
+              }) || matchingLangVoices[0];
+            } else {
+              selectedVoice = matchingLangVoices[0];
+            }
+          } else if (!isIndic) {
+            // ONLY fallback to English voices if the text is English / Latin!
+            if (activeModel.persona === 'sovereign') {
+              selectedVoice = voices.find(v => {
+                const name = v.name.toLowerCase();
+                return (name.includes('male') || name.includes('david') || name.includes('guy')) && v.lang.startsWith('en');
+              });
+            } else if (activeModel.persona === 'imperial' || activeModel.persona === 'studio') {
+              selectedVoice = voices.find(v => {
+                const name = v.name.toLowerCase();
+                return (name.includes('female') || name.includes('zira') || name.includes('samantha')) && v.lang.startsWith('en');
+              });
+            }
+            if (!selectedVoice) {
+              selectedVoice = voices.find(v => v.lang.startsWith('en')) || voices[0];
+            }
+          }
         }
-      }
 
-      if (selectedVoice) {
-        utterance.voice = selectedVoice;
-      }
-
-      this.isPlaying = true;
-      if (this.onStateChangeCallback) {
-        this.onStateChangeCallback(true);
-      }
-      this.startSimulatedFrequencies();
-
-      this.keepAliveInterval = setInterval(() => {
-        if (this.isPlaying && typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
-          window.speechSynthesis.pause();
-          window.speechSynthesis.resume();
+        // CRITICAL: Only assign utterance.voice if a voice was safely chosen
+        // For Devanagari text when no Indic voice is installed on Windows, leaving utterance.voice undefined
+        // allows the browser to utilize its online neural speech engine for the language tag!
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
         }
-      }, 5000);
 
-      utterance.onend = () => {
-        this.clearKeepAlive();
-        this.isPlaying = false;
-        this.stopSimulatedFrequencies();
+        this.isPlaying = true;
         if (this.onStateChangeCallback) {
-          this.onStateChangeCallback(false);
+          this.onStateChangeCallback(true);
         }
-      };
+        this.startSimulatedFrequencies();
 
-      utterance.onerror = (e) => {
-        console.warn('SpeechSynthesis event notice:', e);
-        this.clearKeepAlive();
-        this.isPlaying = false;
-        this.stopSimulatedFrequencies();
-        if (this.onStateChangeCallback) {
-          this.onStateChangeCallback(false);
-        }
-      };
+        this.keepAliveInterval = setInterval(() => {
+          if (this.isPlaying && typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
+            window.speechSynthesis.pause();
+            window.speechSynthesis.resume();
+          }
+        }, 5000);
 
-      window.speechSynthesis.speak(utterance);
-    } catch (err) {
-      console.error('Failed to vocalize speech:', err);
-      this.clearKeepAlive();
-      this.isPlaying = false;
-      this.stopSimulatedFrequencies();
-      if (this.onStateChangeCallback) {
-        this.onStateChangeCallback(false);
+        utterance.onend = () => {
+          this.clearKeepAlive();
+          this.isPlaying = false;
+          this.stopSimulatedFrequencies();
+          if (this.onStateChangeCallback) {
+            this.onStateChangeCallback(false);
+          }
+        };
+
+        utterance.onerror = (e) => {
+          console.warn('SpeechSynthesis event notice:', e);
+          this.clearKeepAlive();
+          this.isPlaying = false;
+          this.stopSimulatedFrequencies();
+          if (this.onStateChangeCallback) {
+            this.onStateChangeCallback(false);
+          }
+          // Attempt direct streaming fallback
+          this.playFromStream(text, language).catch(() => {});
+        };
+
+        window.speechSynthesis.speak(utterance);
+        return;
+      } catch (err) {
+        console.error('Failed to vocalize speech with SpeechSynthesis, attempting stream fallback:', err);
       }
     }
+
+    // Direct streaming fallback
+    await this.playFromStream(text, language);
   }
 
   /**
@@ -474,7 +503,13 @@ class SoundManager {
     }
 
     try {
-      const decodedBuffer = await this.audioCtx.decodeAudioData(audioArrayBuffer.slice(0));
+      if (this.audioCtx.state === 'suspended') {
+        await this.audioCtx.resume().catch(() => {});
+      }
+
+      // decodeAudioData detaches the buffer, pass a copy
+      const copy = audioArrayBuffer.slice(0);
+      const decodedBuffer = await this.audioCtx.decodeAudioData(copy);
       const source = this.audioCtx.createBufferSource();
       source.buffer = decodedBuffer;
       source.connect(this.analyser);
@@ -501,6 +536,53 @@ class SoundManager {
       if (spokenText) {
         await this.speakText(spokenText, language);
       }
+    }
+  }
+
+  /**
+   * Streaming Fallback: Streams synthesized neural audio from the backend
+   */
+  public async playFromStream(text: string, language: string = 'en'): Promise<void> {
+    try {
+      this.init();
+      this.stopAudio();
+
+      const streamUrl = `${API_BASE}/tts/stream?text=${encodeURIComponent(text.trim())}&language=${encodeURIComponent(language)}`;
+      const audio = new Audio(streamUrl);
+      this.currentAudioElem = audio;
+
+      this.isPlaying = true;
+      if (this.onStateChangeCallback) {
+        this.onStateChangeCallback(true);
+      }
+      this.startSimulatedFrequencies();
+
+      audio.onended = () => {
+        this.isPlaying = false;
+        this.currentAudioElem = null;
+        this.stopSimulatedFrequencies();
+        if (this.onStateChangeCallback) {
+          this.onStateChangeCallback(false);
+        }
+      };
+
+      audio.onerror = () => {
+        this.isPlaying = false;
+        this.currentAudioElem = null;
+        this.stopSimulatedFrequencies();
+        if (this.onStateChangeCallback) {
+          this.onStateChangeCallback(false);
+        }
+      };
+
+      await audio.play();
+    } catch (err) {
+      this.isPlaying = false;
+      this.stopSimulatedFrequencies();
+      if (this.onStateChangeCallback) {
+        this.onStateChangeCallback(false);
+      }
+      console.warn('[SoundManager] Stream audio playback notice:', err);
     }
   }
 }
