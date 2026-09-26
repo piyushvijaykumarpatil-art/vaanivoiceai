@@ -5,8 +5,8 @@
   "scripts": {
     "server": "npm --prefix server run dev",
     "client": "npm --prefix client run dev",
-    "build:client": "npm --prefix client run build",
-    "build:server": "npm --prefix server run build",
+    "build:client": "cd client && npm install && npm run build",
+    "build:server": "echo \"Server build skipped for static deployment\"",
     "build": "cd client && npm install && npm run build"
   },
   "workspaces": [
