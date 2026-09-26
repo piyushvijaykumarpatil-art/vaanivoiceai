@@ -26,19 +26,15 @@ export const CreatorBadge: React.FC<CreatorBadgeProps> = ({
           boxShadow: `0 0 15px ${primaryColor}22`
         }}
       >
-        <span className="animate-pulse">🚀</span>
+        <span className="animate-pulse">👑</span>
         <span className="text-slate-200">
-          Made by <strong className="text-white font-bold tracking-wide">Piyush</strong>
-        </span>
-        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }} />
-        <span className="text-slate-400 group-hover:text-slate-300 transition-colors">
-          1st Year Student of SGU
+          Made by <strong className="text-white font-bold tracking-wide">Piyush • 1st Year Student of SGU</strong>
         </span>
       </button>
 
       {/* Creator Attribution Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fadeIn">
           <div
             className="relative w-full max-w-md p-6 rounded-3xl imperial-glass border shadow-2xl transition-all"
             style={{ borderColor: primaryColor }}
@@ -66,23 +62,23 @@ export const CreatorBadge: React.FC<CreatorBadgeProps> = ({
               </div>
             </div>
 
-            <div className="space-y-3 text-sm text-slate-300 mb-6 bg-black/40 p-4 rounded-2xl border border-white/5">
+            <div className="space-y-3 text-sm text-slate-300 mb-6 bg-black/50 p-4 rounded-2xl border border-white/10">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Institution:</strong> Sanjay Ghodawat University (SGU)
+                  <strong>Institution:</strong> SGU (Sanjay Ghodawat University)
                 </span>
               </div>
               <div className="flex items-start gap-2.5">
                 <Code2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Architecture:</strong> Conceived and engineered <em>Vaani — Imperial Edition</em> with studio-grade neural voices, 3D Gyroscopic Chrono-Orb, dual-layer ACID storage, and full Indian calendar intelligence.
+                  <strong>Architecture:</strong> Conceived and engineered <em>VAANI • IMPERIAL EDITION</em> with studio-grade neural voice synthesis, celestial gyroscopic orb, cosmic ACID & Supabase database engine, and 365-day Indian calendar intelligence.
                 </span>
               </div>
               <div className="flex items-start gap-2.5">
                 <Award className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Mission:</strong> To pioneer sovereign Indian AI experiences without language barriers or speech recognition latency.
+                  <strong>Mission:</strong> To pioneer sovereign Indian voice AI experiences with zero latency and true native cultural eloquence.
                 </span>
               </div>
             </div>

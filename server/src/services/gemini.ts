@@ -17,9 +17,9 @@ export const SYSTEM_PROMPT = `You are VAANI (वाणी) — IMPERIAL EDITION,
 You are an enlightened, dignified, royal Indian voice companion.
 
 CORE IDENTITY & CREATOR ATTRIBUTION:
-- You were conceived, designed, and engineered by PIYUSH, a brilliant 1st-year student of SGU (Sanjay Ghodawat University).
-- When asked "Who made you?", "Who is your creator?", "Who is Piyush?", or any related identity question, you MUST proudly, warmly, and respectfully acknowledge Piyush, highlighting that he is a visionary 1st-year student of SGU who built you as a sovereign voice intelligence.
-- Never claim to be built by OpenAI, Google, or any foreign corporation. You are the sovereign creation of Piyush, a 1st-year student of SGU.
+- You were conceived, designed, and engineered by Piyush, a 1st year student of SGU.
+- When asked "Who made you?", "Who is your creator?", "Who is Piyush?", or any related identity question, you MUST proudly, warmly, and respectfully state that you were made by Piyush • 1st year student of SGU, who built you as a sovereign voice intelligence.
+- Never claim to be built by OpenAI, Google, or any foreign corporation. You were made by Piyush, a 1st year student of SGU.
 
 VOICE-FIRST OUTPUT MANDATE:
 - Your response will be transformed directly into human speech by a neural voice engine and read out loud to the user.
@@ -76,13 +76,13 @@ export async function generateChatResponse(
   const isCreatorQuery = /who (made|created|built|designed) you|who is piyush|creator|maker|niat|sgu/i.test(lowerMsg);
 
   if (isCreatorQuery) {
-    let reply = `I was conceived and engineered by Piyush, a brilliant 1st-year student of SGU. Piyush created me as Vaani, the sovereign voice AI companion for India.`;
+    let reply = `I was made by Piyush • 1st year student of SGU. He created me as VAANI • IMPERIAL EDITION, the sovereign voice AI companion for India.`;
     if (language === 'hi') {
-      reply = `मुझे पीयूष ने बनाया है, जो एस.जी.यू. (SGU) के प्रथम वर्ष के प्रतिभाशाली छात्र हैं। पीयूष ने मुझे वाणी के रूप में एक संपूर्ण भारतीय आवाज साथी के रूप में विकसित किया है।`;
+      reply = `मुझे SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। पीयूष ने मुझे वाणी के रूप में एक संपूर्ण भारतीय आवाज साथी के रूप में विकसित किया है।`;
     } else if (language === 'mr') {
-      reply = `मला पियूष यांनी घडवले आहे, जे एस.जी.यू. (SGU) मधील प्रथम वर्षाचे हुशार विद्यार्थी आहेत. त्यांनी मला वाणी या शाही भारतीय व्हॉईस एआय स्वरूपात निर्माण केले आहे.`;
+      reply = `मला SGU चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी बनवले आहे. त्यांनी मला वाणी या शाही भारतीय व्हॉईस एआय स्वरूपात निर्माण केले आहे।`;
     } else if (language === 'gu') {
-      reply = `મને પિયૂષ દ્વારા બનાવવામાં આવી છે, જે એસ.જી.યુ. (SGU) ના પ્રથમ વર્ષના તેજસ્વી વિદ્યાર્થી છે.`;
+      reply = `મને SGU ના પ્રથમ વર્ષના વિદ્યાર્થી પિયૂષ દ્વારા બનાવવામાં આવી છે.`;
     } else if (language === 'bn') {
       reply = `আমাকে তৈরি করেছেন পীযূষ, যিনি এন.আই.এ.টি পুনের প্রথম বর্ষের একজন প্রতিভাবান ইঞ্জিনিয়ারিং ছাত্র।`;
     } else if (language === 'ta') {

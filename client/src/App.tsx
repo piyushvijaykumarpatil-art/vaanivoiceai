@@ -16,11 +16,12 @@ import { soundManager } from './audio/soundManager';
 import { sendChatMessage, fetchTtsAudio } from './utils/api';
 import { SovereignAiEngine } from './services/sovereignAi';
 import { MessageSquare, ArrowLeft, Settings, Volume2 } from 'lucide-react';
+import { CelestialNebulaBackground } from './components/CelestialNebulaBackground';
 
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<'landing' | 'chamber'>('landing');
   const [currentTheme, setCurrentTheme] = useState<LuxuryThemeId>('gold');
-  const [currentLanguage, setCurrentLanguage] = useState<string>('en');
+  const [currentLanguage, setCurrentLanguage] = useState<string>('mr');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [sessionId, setSessionId] = useState<string>(() => `session_${Date.now()}`);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
@@ -33,7 +34,7 @@ export const App: React.FC = () => {
   const [lastSpokenText, setLastSpokenText] = useState<string>('');
 
   const activeThemeConfig = LUXURY_THEMES.find(t => t.id === currentTheme) || LUXURY_THEMES[0];
-  const activeLangConfig = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage) || SUPPORTED_LANGUAGES[2];
+  const activeLangConfig = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage) || SUPPORTED_LANGUAGES[0];
 
   // Sync theme to root element data-theme attribute
   useEffect(() => {
@@ -227,7 +228,10 @@ export const App: React.FC = () => {
   // If in Landing Portal view
   if (currentView === 'landing') {
     return (
-      <div className="relative min-h-screen">
+      <div className="relative min-h-screen bg-[#02040A] text-slate-100">
+        {/* Deep Space Void with Teal-and-Purple Nebula & High-Tech Circuit/Node Grid */}
+        <CelestialNebulaBackground primaryColor={activeThemeConfig.primaryColor} />
+
         <LandingHero
           currentTheme={currentTheme}
           onThemeSelect={setCurrentTheme}
@@ -259,14 +263,9 @@ export const App: React.FC = () => {
 
   // Sovereign Chamber View
   return (
-    <div className="relative min-h-screen flex flex-col justify-between overflow-hidden">
-      {/* Dynamic Background Glow */}
-      <div
-        className="fixed inset-0 pointer-events-none transition-all duration-700 opacity-25"
-        style={{
-          background: `radial-gradient(circle at 50% 40%, ${activeThemeConfig.primaryColor} 0%, transparent 65%)`
-        }}
-      />
+    <div className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#02040A] text-slate-100">
+      {/* Deep Space Void with Teal-and-Purple Nebula & High-Tech Circuit/Node Grid */}
+      <CelestialNebulaBackground primaryColor={activeThemeConfig.primaryColor} />
 
       {/* Top Sovereign Navigation Bar */}
       <header className="relative z-20 flex items-center justify-between px-4 md:px-8 py-3.5 border-b border-white/10 imperial-glass">
@@ -286,10 +285,10 @@ export const App: React.FC = () => {
             <span className="text-xl">👑</span>
             <div>
               <h1 className="text-sm md:text-base font-black font-cinzel text-white tracking-wider flex items-center gap-1.5">
-                VAANI <span style={{ color: activeThemeConfig.primaryColor }}>• IMPERIAL</span>
+                VAANI <span style={{ color: activeThemeConfig.primaryColor }}>• IMPERIAL EDITION</span>
               </h1>
-              <p className="text-[10px] text-slate-400 uppercase tracking-widest hidden sm:block">
-                The Sovereign Voice AI Experience
+              <p className="text-[10px] text-slate-400 uppercase tracking-widest hidden sm:block font-medium">
+                THE SOVEREIGN VOICE AI EXPERIENCE
               </p>
             </div>
           </div>

@@ -132,6 +132,15 @@ export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
     voiceName: 'gu-IN-DhwaniNeural',
     samplePhrase: 'નમસ્તે! હું વાણી છું, તમારી શાહી વૉઇસ સહાયક.',
     sampleQuestion: 'આજનો પંચાંગ અને સમય શું છે?'
+  },
+  {
+    id: 'ml',
+    name: 'Malayalam',
+    nativeName: 'മലയാളം',
+    flag: '🇮🇳',
+    voiceName: 'ml-IN-SobhanaNeural',
+    samplePhrase: 'നമസ്കാരം! ഞാൻ വാണിയാണ്, നിങ്ങളുടെ രാജകീയ വോയ്സ് എഐ സഹചാരി.',
+    sampleQuestion: 'നിങ്ങളെ ആരാണ് നിർമ്മിച്ചത്?'
   }
 ];
 
@@ -170,7 +179,7 @@ export const VOICE_MODELS: VoiceModelConfig[] = [
     rate: 0.98,
     avatar: '👑',
     description: 'Warm, melodious, royal and culturally resonant female cadence.',
-    sampleText: 'Greetings, sovereign seeker. I am Vaani Imperial, honoring Piyush from NIAT Pune.'
+    sampleText: 'Greetings, sovereign seeker. I am VAANI • IMPERIAL EDITION, made by Piyush • 1st year student of SGU.'
   },
   {
     id: 'vaani-sovereign',

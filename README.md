@@ -1,15 +1,15 @@
 # 👑 VAANI • IMPERIAL EDITION ("The Sovereign Voice AI Experience")
 
-> **🚀 Made by Piyush • NIAT 1st Year Student**  
-> *A Sovereign Real-Time Voice AI Companion engineered with studio-grade human neural voice output, pure Type-to-Voice interaction, 3D Gyroscopic Royal Chrono-Orb, Google Assistant-level conversational memory, 365-day Indian calendar intelligence, and dual-layer ACID + Supabase persistence.*
+> **👑 Made by Piyush • 1st Year Student of SGU**  
+> *A Sovereign Real-Time Voice AI Companion engineered with studio-grade human neural voice output, live voice and type interaction, 3D Gyroscopic Royal Chrono-Orb, Google Assistant-level conversational memory, 365-day Indian calendar intelligence, and dual-layer ACID + Supabase persistence.*
 
 ---
 
 ## 🌟 Key Innovations & Features
 
-### 1. 🚀 Creator Attribution & Royal Persona
-- **Prominent Attribution**: Honoring **Piyush, 1st Year Innovator at NIAT (Pune, Maharashtra)** across the top navigation bar, the imperial landing hero, and conversational identity responses.
-- **Conversational Identity**: When asked *"Who made you?"*, *"Who is your creator?"*, or *"Who is Piyush?"*, Vaani warmly and proudly acknowledges Piyush from NIAT Pune in all 10 supported languages.
+### 1. 👑 Creator Attribution & Royal Persona
+- **Prominent Attribution**: Honoring **Piyush • 1st Year Student of SGU** across the top navigation bar, the imperial landing hero, and conversational identity responses.
+- **Conversational Identity**: When asked *"Who made you?"*, *"Who is your creator?"*, or *"Who is Piyush?"*, VAANI warmly and proudly acknowledges Piyush (1st Year Student of SGU) in all 10 supported languages.
 
 ### 2. 🎙️ Pure Type-to-Voice Interaction Model
 - **Zero Microphone Dependency**: Completely eliminates speech-to-text transcription latency, accent mismatches, and microphone permission barriers.

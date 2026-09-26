@@ -16,7 +16,8 @@ export const LANGUAGE_VOICES: Record<string, VoiceLanguageMap> = {
   pa: { primary: 'pa-IN-GurpreetNeural', fallback: 'pa-IN-OjasNeural', googleLang: 'pa' },
   ta: { primary: 'ta-IN-PallaviNeural', fallback: 'ta-IN-ValluvarNeural', googleLang: 'ta' },
   bn: { primary: 'bn-IN-TanishaaNeural', fallback: 'bn-IN-BashkarNeural', googleLang: 'bn' },
-  gu: { primary: 'gu-IN-DhwaniNeural', fallback: 'gu-IN-NiranjanNeural', googleLang: 'gu' }
+  gu: { primary: 'gu-IN-DhwaniNeural', fallback: 'gu-IN-NiranjanNeural', googleLang: 'gu' },
+  ml: { primary: 'ml-IN-SobhanaNeural', fallback: 'ml-IN-MidhunNeural', googleLang: 'ml' }
 };
 
 const audioCache = new Map<string, { buffer: Buffer; contentType: string }>();

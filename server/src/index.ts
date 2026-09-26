@@ -44,8 +44,8 @@ app.get('/api/health', async (req, res) => {
     const db = await localDb.readDatabase();
     res.json({
       status: 'online',
-      edition: 'Vaani — Imperial Edition (The Sovereign Voice AI Experience)',
-      creator: 'Piyush • NIAT 1st Year Student',
+      edition: 'VAANI • IMPERIAL EDITION (The Sovereign Voice AI Experience)',
+      creator: 'Made by Piyush • 1st Year Student of SGU',
       timestamp: new Date().toISOString(),
       stats: {
         sessionCount: db.sessions.length,
@@ -90,7 +90,7 @@ server.listen(PORT, () => {
   console.log(`
   ═══════════════════════════════════════════════════════════════
   👑 VAANI • IMPERIAL EDITION — "The Sovereign Voice AI Experience"
-  🚀 Made by Piyush • NIAT 1st Year Student
+  🚀 Made by Piyush • 1st Year Student of SGU
   ═══════════════════════════════════════════════════════════════
   📡 Backend Server running on http://localhost:${PORT}
   🔊 Neural TTS Pipeline: Active (msedge-tts + Google Fallback)

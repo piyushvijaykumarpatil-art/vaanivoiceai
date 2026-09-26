@@ -106,10 +106,10 @@ export class SovereignAiEngine {
         parts: [{ text: message }]
       });
 
-      const systemPrompt = `You are Vaani (Imperial Edition) — a Sovereign Real-Time Voice AI Companion proudly engineered by Piyush, a brilliant 1st-year engineering innovator at NIAT Pune, Maharashtra.
+      const systemPrompt = `You are VAANI • IMPERIAL EDITION — a Sovereign Real-Time Voice AI Companion proudly made by Piyush, a 1st year student of SGU.
 Respond respectfully, intellectually, and with cultural warmth.
 Current language requested: ${language}.
-Always honor Piyush from NIAT Pune whenever the user inquires about your creator, origins, or developer.
+Always state that you were made by Piyush • 1st year student of SGU whenever the user inquires about your creator, origins, or developer.
 Keep responses concise, natural, and conversational for spoken voice playback. Avoid markdown symbols like asterisks or hashtags.`;
 
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
@@ -166,18 +166,19 @@ Keep responses concise, natural, and conversational for spoken voice playback. A
       q.includes('kon banavla') ||
       q.includes('kisne banaya') ||
       q.includes('kon aahe') ||
+      q.includes('sgu') ||
       q.includes('niat');
 
     if (isCreatorQuery) {
       if (language === 'mr') {
-        const reply = `मी वाणी आहे — पियूष यांनी मला अतिशय कुशलतेने तयार केले आहे, जे NIAT पुणे येथील प्रथम वर्षाचे तंत्रज्ञान विद्यार्थी आहेत. त्यांनी मला थेट व्हॉईस मॉडेल, 3D क्रोनो-ऑर्ब आणि अत्याधुनिक मल्टिलिंग्युअल तंत्रज्ञानाने सुसज्ज केले आहे.`;
+        const reply = `मी वाणी आहे — मला SGU चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी तयार केले आहे. त्यांनी मला थेट व्हॉईस मॉडेल, 3D क्रोनो-ऑर्ब आणि अत्याधुनिक मल्टिलिंग्युअल तंत्रज्ञानाने सुसज्ज केले आहे.`;
         return { reply, cleanSpokenText: reply, detectedLanguage: 'mr' };
       }
       if (language === 'hi') {
-        const reply = `मैं वाणी हूँ — द सॉवरेन वॉयस एआई। मुझे एनआईएटी पुणे के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष ने बड़े गर्व से विकसित किया है। उन्होंने मेरे भीतर लाइव माइक्रोफोन, न्यूरल वॉयस और बहुभाषी ज्ञान समाहित किया है।`;
+        const reply = `मैं वाणी हूँ — द सॉवरेन वॉयस एआई। मुझे SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। उन्होंने मेरे भीतर लाइव माइक्रोफोन, न्यूरल वॉयस और बहुभाषी ज्ञान समाहित किया है।`;
         return { reply, cleanSpokenText: reply, detectedLanguage: 'hi' };
       }
-      const reply = `I am Vaani Imperial Edition — sovereign real-time Voice AI companion. I was engineered with royal precision by Piyush, a brilliant 1st-year engineering innovator at NIAT Pune, Maharashtra. He built my neural voice models, live audio mic, 3D Chrono-Orb, and multilingual intelligence.`;
+      const reply = `I am VAANI • IMPERIAL EDITION — sovereign real-time Voice AI companion. I was made by Piyush • 1st year student of SGU. He built my neural voice models, live audio mic, 3D Chrono-Orb, and multilingual intelligence.`;
       return { reply, cleanSpokenText: reply, detectedLanguage: 'en' };
     }
 
@@ -242,14 +243,14 @@ Keep responses concise, natural, and conversational for spoken voice playback. A
 
     if (isGreeting) {
       if (language === 'mr') {
-        const reply = `नमस्कार! वाणीच्या शाही दालनात आपले सहर्ष स्वागत आहे. पियूष यांनी मला आपल्या सेवेसाठी तयार केले आहे. आज मी आपल्याला कशी मदत करू?`;
+        const reply = `नमस्कार! वाणीच्या शाही दालनात आपले सहर्ष स्वागत आहे. मला SGU चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी आपल्या सेवेसाठी तयार केले आहे. आज मी आपल्याला कशी मदत करू?`;
         return { reply, cleanSpokenText: reply, detectedLanguage: 'mr' };
       }
       if (language === 'hi') {
-        const reply = `नमस्ते! वाणी के इस सार्वभौम राजसी अनुभव में आपका स्वागत है। पीयूष द्वारा निर्मित यह वॉयस एआई आपकी सेवा में प्रस्तुत है। बताइए मैं क्या मदद करूँ?`;
+        const reply = `नमस्ते! वाणी के इस सार्वभौम राजसी अनुभव में आपका स्वागत है। मुझे SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। बताइए मैं क्या मदद करूँ?`;
         return { reply, cleanSpokenText: reply, detectedLanguage: 'hi' };
       }
-      const reply = `Greetings and welcome to Vaani's imperial sanctuary. Crafted by Piyush at NIAT Pune, I am ready to converse, answer queries, or calculate for you. How may I serve you?`;
+      const reply = `Greetings and welcome to VAANI's imperial sanctuary. Made by Piyush • 1st year student of SGU, I am ready to converse, answer queries, or calculate for you. How may I serve you?`;
       return { reply, cleanSpokenText: reply, detectedLanguage: 'en' };
     }
 
@@ -269,15 +270,15 @@ Keep responses concise, natural, and conversational for spoken voice playback. A
 
     // 7. Rich General Knowledge / Default Response
     if (language === 'mr') {
-      const reply = `आपला प्रश्न मला समजला आहे: "${query}". वाणी ही एक प्रगत व्हॉईस प्रणाली आहे जी पियूष यांनी विकसित केली आहे. आपण मला गणित, वेळ, इतिहास, किंवा इतर कोणतेही प्रश्न विचारू शकता.`;
+      const reply = `आपला प्रश्न मला समजला आहे: "${query}". वाणी ही एक प्रगत व्हॉईस प्रणाली आहे जी SGU चे विद्यार्थी पियूष यांनी विकसित केली आहे. आपण मला गणित, वेळ, इतिहास, किंवा इतर कोणतेही प्रश्न विचारू शकता.`;
       return { reply, cleanSpokenText: reply, detectedLanguage: 'mr' };
     }
     if (language === 'hi') {
-      const reply = `मैंने आपका प्रश्न समझा: "${query}". पीयूष द्वारा निर्मित वाणी आपके हर प्रश्न पर विचार कर सटीक उत्तर देने के लिए तत्पर है। आप बेझिझक आगे पूछें।`;
+      const reply = `मैंने आपका प्रश्न समझा: "${query}". SGU के छात्र पीयूष द्वारा निर्मित वाणी आपके हर प्रश्न पर विचार कर सटीक उत्तर देने के लिए तत्पर है। आप बेझिझक आगे पूछें।`;
       return { reply, cleanSpokenText: reply, detectedLanguage: 'hi' };
     }
 
-    const reply = `I have received your inquiry regarding "${query}". As your sovereign voice companion engineered by Piyush at NIAT Pune, I stand ready to assist you across all domains of science, calculations, and Indian heritage. What would you like to explore next?`;
+    const reply = `I have received your inquiry regarding "${query}". As your sovereign voice companion made by Piyush • 1st year student of SGU, I stand ready to assist you across all domains of science, calculations, and Indian heritage. What would you like to explore next?`;
     return { reply, cleanSpokenText: reply, detectedLanguage: 'en' };
   }
 }
