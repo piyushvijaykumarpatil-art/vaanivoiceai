@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #F59E0B;
+  --color-primary-rgb: 245, 158, 11;
+  --color-primary-glow: rgba(245, 158, 11, 0.4);
+  --color-bg-base: #05070B;
+  --color-surface: rgba(18, 22, 33, 0.75);
+  --color-border: rgba(245, 158, 11, 0.3);
+  --color-text-main: #FDFDFE;
+  --color-text-muted: #9CA3AF;
+  --theme-font-accent: 'Cinzel', serif;
+}
+
+:root[data-theme="gold"] {
+  --color-primary: #F59E0B;
+  --color-primary-rgb: 245, 158, 11;
+  --color-primary-glow: rgba(245, 158, 11, 0.45);
+  --color-bg-base: #05070B;
+  --color-surface: rgba(21, 26, 38, 0.8);
+  --color-border: rgba(245, 158, 11, 0.3);
+  --color-text-main: #FFFBEB;
+  --color-text-muted: #D1D5DB;
+}
+
+:root[data-theme="emerald"] {
+  --color-primary: #10B981;
+  --color-primary-rgb: 16, 185, 129;
+  --color-primary-glow: rgba(16, 185, 129, 0.45);
+  --color-bg-base: #040A07;
+  --color-surface: rgba(6, 31, 20, 0.8);
+  --color-border: rgba(16, 185, 129, 0.3);
+  --color-text-main: #ECFDF5;
+  --color-text-muted: #A7F3D0;
+}
+
+:root[data-theme="sapphire"] {
+  --color-primary: #3B82F6;
+  --color-primary-rgb: 59, 130, 246;
+  --color-primary-glow: rgba(59, 130, 246, 0.45);
+  --color-bg-base: #040714;
+  --color-surface: rgba(8, 22, 51, 0.8);
+  --color-border: rgba(59, 130, 246, 0.3);
+  --color-text-main: #EFF6FF;
+  --color-text-muted: #BFDBFE;
+}
+
+:root[data-theme="ruby"] {
+  --color-primary: #F43F5E;
+  --color-primary-rgb: 244, 63, 94;
+  --color-primary-glow: rgba(244, 63, 94, 0.45);
+  --color-bg-base: #0C0407;
+  --color-surface: rgba(43, 11, 22, 0.8);
+  --color-border: rgba(244, 63, 94, 0.3);
+  --color-text-main: #FFF1F2;
+  --color-text-muted: #FECDD3;
+}
+
+:root[data-theme="amethyst"] {
+  --color-primary: #A855F7;
+  --color-primary-rgb: 168, 85, 247;
+  --color-primary-glow: rgba(168, 85, 247, 0.45);
+  --color-bg-base: #080411;
+  --color-surface: rgba(30, 14, 56, 0.8);
+  --color-border: rgba(168, 85, 247, 0.3);
+  --color-text-main: #FAF5FF;
+  --color-text-muted: #E9D5FF;
+}
+
+:root[data-theme="cyan"] {
+  --color-primary: #06B6D4;
+  --color-primary-rgb: 6, 182, 212;
+  --color-primary-glow: rgba(6, 182, 212, 0.45);
+  --color-bg-base: #030A0D;
+  --color-surface: rgba(6, 29, 38, 0.8);
+  --color-border: rgba(6, 182, 212, 0.3);
+  --color-text-main: #ECFEFF;
+  --color-text-muted: #A5F3FC;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  font-family: 'Outfit', sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  min-height: 100vh;
+}
+
+/* Glassmorphism custom classes */
+.imperial-glass {
+  background: var(--color-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.imperial-glow {
+  box-shadow: 0 0 25px var(--color-primary-glow);
+}
+
+.imperial-glow-text {
+  text-shadow: 0 0 15px var(--color-primary-glow);
+}
+
+.imperial-border {
+  border-color: var(--color-border);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}

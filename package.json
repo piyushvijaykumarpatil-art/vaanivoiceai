@@ -1,0 +1,24 @@
+{
+  "name": "vaani-imperial-edition",
+  "version": "1.0.0",
+  "description": "Vaani — Imperial Edition: The Sovereign Voice AI Experience (Made by Piyush • NIAT 1st Year Student)",
+  "scripts": {
+    "server": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "build:client": "npm --prefix client run build",
+    "build:server": "npm --prefix server run build",
+    "build": "npm run build:server && npm run build:client"
+  },
+  "keywords": [
+    "vaani",
+    "voice-ai",
+    "sovereign",
+    "imperial-edition",
+    "type-to-voice",
+    "neural-voice",
+    "niat-pune",
+    "piyush"
+  ],
+  "author": "Piyush (NIAT 1st Year Student)",
+  "license": "MIT"
+}

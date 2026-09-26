@@ -1,0 +1,160 @@
+import type { ThemeConfig, VoiceLanguage } from '../types';
+
+export const LUXURY_THEMES: ThemeConfig[] = [
+  {
+    id: 'gold',
+    name: '24K Gold',
+    subtitle: 'Imperial Onyx & Gold Radiance',
+    primaryColor: '#F59E0B',
+    bgColor: '#05070B',
+    icon: '👑'
+  },
+  {
+    id: 'emerald',
+    name: 'Royal Emerald',
+    subtitle: 'Sovereign Royal Jade Glassmorphism',
+    primaryColor: '#10B981',
+    bgColor: '#040A07',
+    icon: '💎'
+  },
+  {
+    id: 'sapphire',
+    name: 'Celestial Sapphire',
+    subtitle: 'Midnight Deep Blue Astral Radiance',
+    primaryColor: '#3B82F6',
+    bgColor: '#040714',
+    icon: '🌌'
+  },
+  {
+    id: 'ruby',
+    name: 'Crimson Ruby',
+    subtitle: 'Velvet Crimson Glow & Sovereignty',
+    primaryColor: '#F43F5E',
+    bgColor: '#0C0407',
+    icon: '🌹'
+  },
+  {
+    id: 'amethyst',
+    name: 'Cyber Amethyst',
+    subtitle: 'Mystic Purple Cosmic Aura',
+    primaryColor: '#A855F7',
+    bgColor: '#080411',
+    icon: '🔮'
+  },
+  {
+    id: 'cyan',
+    name: 'Titanium Cyan',
+    subtitle: 'Aurora Titanium Cyber Brilliance',
+    primaryColor: '#06B6D4',
+    bgColor: '#030A0D',
+    icon: '⚡'
+  }
+];
+
+export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
+  {
+    id: 'mr',
+    name: 'Marathi',
+    nativeName: 'मराठी',
+    flag: '🇮🇳',
+    voiceName: 'mr-IN-AarohiNeural',
+    samplePhrase: 'नमस्कार! मी वाणी आहे, आपली शाही व्हॉईस सहाय्यक.',
+    sampleQuestion: 'पियूष कोण आहेत आणि त्यांनी तुला कसे बनवले?'
+  },
+  {
+    id: 'hi',
+    name: 'Hindi',
+    nativeName: 'हिन्दी',
+    flag: '🇮🇳',
+    voiceName: 'hi-IN-SwaraNeural',
+    samplePhrase: 'नमस्ते! मैं वाणी हूँ, आपकी सार्वभौम आवाज साथी।',
+    sampleQuestion: 'आज का पंचांग और तिथि क्या है?'
+  },
+  {
+    id: 'en',
+    name: 'English',
+    nativeName: 'English',
+    flag: '🌐',
+    voiceName: 'en-US-JennyNeural',
+    samplePhrase: 'Greetings! I am Vaani, your sovereign voice AI companion.',
+    sampleQuestion: 'Who created you and what is your royal origin?'
+  },
+  {
+    id: 'te',
+    name: 'Telugu',
+    nativeName: 'తెలుగు',
+    flag: '🇮🇳',
+    voiceName: 'te-IN-ShrutiNeural',
+    samplePhrase: 'నమస్కారం! నేను మీ రాజ వాయిస్ ఏఐ సహచరిణి వాణిని.',
+    sampleQuestion: 'ఈ రోజు తిథి మరియు పంచాంగం ఏమిటి?'
+  },
+  {
+    id: 'kn',
+    name: 'Kannada',
+    nativeName: 'ಕನ್ನಡ',
+    flag: '🇮🇳',
+    voiceName: 'kn-IN-SapnaNeural',
+    samplePhrase: 'ನಮಸ್ಕಾರ! ನಾನು ವಾಣಿ, ನಿಮ್ಮ ಧ್ವನಿ ಸಹಚರಿ.',
+    sampleQuestion: 'ನಿಮ್ಮನ್ನು ಯಾರು ರಚಿಸಿದರು?'
+  },
+  {
+    id: 'pa',
+    name: 'Punjabi',
+    nativeName: 'ਪੰਜਾਬੀ',
+    flag: '🇮🇳',
+    voiceName: 'pa-IN-GurpreetNeural',
+    samplePhrase: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਵਾਣੀ ਹਾਂ, ਤੁਹਾਡੀ ਸ਼ਾਹੀ ਸਾਥੀ।',
+    sampleQuestion: 'ਪਿਊਸ਼ ਕੌਣ ਹੈ ਅਤੇ ਉਹ ਕਿੱਥੇ ਪੜ੍ਹਦਾ ਹੈ?'
+  },
+  {
+    id: 'ta',
+    name: 'Tamil',
+    nativeName: 'தமிழ்',
+    flag: '🇮🇳',
+    voiceName: 'ta-IN-PallaviNeural',
+    samplePhrase: 'வணக்கம்! நான் வாணி, உங்கள் அரச குரல் AI துணை.',
+    sampleQuestion: 'இன்றைய நல்ல நேரம் மற்றும் திதி என்ன?'
+  },
+  {
+    id: 'bn',
+    name: 'Bengali',
+    nativeName: 'বাংলা',
+    flag: '🇮🇳',
+    voiceName: 'bn-IN-TanishaaNeural',
+    samplePhrase: 'নমস্কার! আমি বাণী, আপনার রাজকীয় ভয়েস সঙ্গী।',
+    sampleQuestion: 'পীযূষ কে এবং তিনি তোমাকে কীভাবে তৈরি করেছেন?'
+  },
+  {
+    id: 'gu',
+    name: 'Gujarati',
+    nativeName: 'ગુજરાતી',
+    flag: '🇮🇳',
+    voiceName: 'gu-IN-DhwaniNeural',
+    samplePhrase: 'નમસ્તે! હું વાણી છું, તમારી શાહી વૉઇસ સહાયક.',
+    sampleQuestion: 'આજનો પંચાંગ અને સમય શું છે?'
+  }
+];
+
+export const DEFAULT_SUGGESTIONS: Record<string, string[]> = {
+  en: [
+    "Who is Piyush and how did he engineer you?",
+    "What is today's Indian Calendar Tithi and Shravan season?",
+    "What was my last question to you?",
+    "Calculate 145 multiplied by 38",
+    "Tell me an ancient sovereign legend from Indian history"
+  ],
+  hi: [
+    "पीयूष कौन हैं और उन्होंने आपको कैसे बनाया?",
+    "आज का भारतीय पंचांग और तिथि बताइए?",
+    "मेरा पिछला सवाल क्या था?",
+    "श्रावण मास का क्या आध्यात्मिक महत्व है?",
+    "पुणे और महाराष्ट्र के ऐतिहासिक गौरव के बारे में बताएं"
+  ],
+  mr: [
+    "पियूष कोण आहेत आणि त्यांनी तुला कसे बनवले?",
+    "आजची तिथी, पंचांग आणि वेळ काय आहे?",
+    "याआधी मी तुला काय विचारले होते?",
+    "श्रावण महिन्याचे महत्त्व सांगा",
+    "एस.जी.यू (SGU) आणि शिवरायांच्या इतिहासाबद्दल सांगा"
+  ]
+};

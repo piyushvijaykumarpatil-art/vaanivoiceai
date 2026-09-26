@@ -1,0 +1,181 @@
+{
+  "sessions": [
+    {
+      "id": "test_sess_1",
+      "title": "Who made you?",
+      "started_at": "2026-09-26T08:27:59.450Z",
+      "ended_at": "2026-09-26T08:27:59.450Z",
+      "duration_seconds": 0,
+      "language": "en",
+      "personality": "imperial",
+      "messages": [
+        {
+          "id": "msg_1790411279449_u",
+          "role": "user",
+          "content": "Who made you?",
+          "timestamp": "2026-09-26T08:27:59.449Z",
+          "language": "en"
+        },
+        {
+          "id": "msg_1790411279449_a",
+          "role": "assistant",
+          "content": "I was conceived and engineered by Piyush, a brilliant 1st-year engineering student at NIAT Pune. Piyush created me as Vaani, the sovereign voice AI companion for India.",
+          "timestamp": "2026-09-26T08:27:59.449Z",
+          "language": "en"
+        }
+      ],
+      "message_count": 2,
+      "created_at": "2026-09-26T08:27:59.450Z"
+    },
+    {
+      "id": "test_sess_2",
+      "title": "Who is Piyush?",
+      "started_at": "2026-09-26T08:28:09.327Z",
+      "ended_at": "2026-09-26T08:28:09.327Z",
+      "duration_seconds": 0,
+      "language": "mr",
+      "personality": "imperial",
+      "messages": [
+        {
+          "id": "msg_1790411289327_u",
+          "role": "user",
+          "content": "Who is Piyush?",
+          "timestamp": "2026-09-26T08:28:09.327Z",
+          "language": "mr"
+        },
+        {
+          "id": "msg_1790411289327_a",
+          "role": "assistant",
+          "content": "मला पियूष यांनी घडवले आहे, जे एन.आय.ए.टी. पुणे येथील प्रथम वर्षाचे हुशार अभियांत्रिकी विद्यार्थी आहेत. त्यांनी मला वाणी या शाही भारतीय व्हॉईस एआय स्वरूपात निर्माण केले आहे.",
+          "timestamp": "2026-09-26T08:28:09.327Z",
+          "language": "mr"
+        }
+      ],
+      "message_count": 2,
+      "created_at": "2026-09-26T08:28:09.327Z"
+    },
+    {
+      "id": "test_sess_3",
+      "title": "What was my last question?",
+      "started_at": "2026-09-26T08:28:59.272Z",
+      "ended_at": "2026-09-26T08:28:59.272Z",
+      "duration_seconds": 0,
+      "language": "en",
+      "personality": "imperial",
+      "messages": [
+        {
+          "id": "msg_1790411339272_u",
+          "role": "user",
+          "content": "What was my last question?",
+          "timestamp": "2026-09-26T08:28:59.272Z",
+          "language": "en"
+        },
+        {
+          "id": "msg_1790411339272_a",
+          "role": "assistant",
+          "content": "Earlier, you asked: \"Tell me about Shravan Maas\". Before that, we were conversing seamlessly. What would you like to explore next?",
+          "timestamp": "2026-09-26T08:28:59.272Z",
+          "language": "en"
+        }
+      ],
+      "message_count": 2,
+      "created_at": "2026-09-26T08:28:59.272Z"
+    },
+    {
+      "id": "session_1790412222613",
+      "title": "hi",
+      "started_at": "2026-09-26T08:44:10.206Z",
+      "ended_at": "2026-09-26T08:45:18.272Z",
+      "duration_seconds": 0,
+      "language": "en",
+      "personality": "imperial",
+      "messages": [
+        {
+          "id": "msg_1790412250206_u",
+          "role": "user",
+          "content": "hi",
+          "timestamp": "2026-09-26T08:44:10.206Z",
+          "language": "en"
+        },
+        {
+          "id": "msg_1790412250206_a",
+          "role": "assistant",
+          "content": "I hear your query regarding hi. As your sovereign voice companion, I am at your service. You can ask me about the Indian calendar, Tithis, mathematical calculations, or Indian cultural heritage.",
+          "timestamp": "2026-09-26T08:44:10.206Z",
+          "language": "en"
+        },
+        {
+          "id": "msg_1790412291114_u",
+          "role": "user",
+          "content": "hi",
+          "timestamp": "2026-09-26T08:44:51.114Z",
+          "language": "en"
+        },
+        {
+          "id": "msg_1790412291114_a",
+          "role": "assistant",
+          "content": "I hear your query regarding hi. As your sovereign voice companion, I am at your service. You can ask me about the Indian calendar, Tithis, mathematical calculations, or Indian cultural heritage.",
+          "timestamp": "2026-09-26T08:44:51.114Z",
+          "language": "en"
+        },
+        {
+          "id": "msg_1790412318272_u",
+          "role": "user",
+          "content": "who made you who is yur developer",
+          "timestamp": "2026-09-26T08:45:18.272Z",
+          "language": "en"
+        },
+        {
+          "id": "msg_1790412318272_a",
+          "role": "assistant",
+          "content": "I was conceived and engineered by Piyush, a brilliant 1st-year engineering student at NIAT Pune. Piyush created me as Vaani, the sovereign voice AI companion for India.",
+          "timestamp": "2026-09-26T08:45:18.272Z",
+          "language": "en"
+        }
+      ],
+      "message_count": 6,
+      "created_at": "2026-09-26T08:44:10.206Z"
+    }
+  ],
+  "memories": [
+    {
+      "id": "mem_creator_piyush",
+      "content": "Vaani was created by Piyush, a 1st year engineering student at NIAT Pune.",
+      "category": "creator",
+      "created_at": "2026-09-26T08:27:14.057Z",
+      "updated_at": "2026-09-26T08:27:14.059Z"
+    }
+  ],
+  "settings": [
+    {
+      "id": "default_user",
+      "config": {
+        "theme": "gold",
+        "language": "en",
+        "supabaseUrl": "https://zjqkcyrsqkzkvztgrcnx.supabase.co",
+        "supabaseKey": "",
+        "voicePitch": "+0Hz",
+        "voiceRate": "+0%"
+      },
+      "updated_at": "2026-09-26T08:27:14.059Z"
+    }
+  ],
+  "feedbacks": [],
+  "knowledge": [
+    {
+      "id": "know_creator_lore",
+      "title": "Creator Lore - Piyush",
+      "keywords": [
+        "piyush",
+        "creator",
+        "niat",
+        "engineer",
+        "author"
+      ],
+      "summary": "Engineered by Piyush, 1st Year Innovator at NIAT Pune. Designed as a Sovereign Voice AI companion.",
+      "category": "identity",
+      "language": "en",
+      "created_at": "2026-09-26T08:27:14.059Z"
+    }
+  ]
+}

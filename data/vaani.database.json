@@ -1,0 +1,49 @@
+{
+  "sessions": [],
+  "memories": [
+    {
+      "id": "mem_default_creator",
+      "content": "Vaani was created by Piyush, a brilliant 1st year engineering student at NIAT Pune.",
+      "category": "identity",
+      "createdAt": "2026-09-26T08:00:00.000Z",
+      "updatedAt": "2026-09-26T08:00:00.000Z"
+    },
+    {
+      "id": "mem_default_persona",
+      "content": "Vaani speaks in a royal, imperial, respectful cadence with deep Indian cultural knowledge.",
+      "category": "preference",
+      "createdAt": "2026-09-26T08:00:00.000Z",
+      "updatedAt": "2026-09-26T08:00:00.000Z"
+    }
+  ],
+  "settings": {
+    "theme": "gold",
+    "language": "en",
+    "voicePitch": "+0Hz",
+    "voiceRate": "+0%",
+    "supabaseUrl": "https://zjqkcyrsqkzkvztgrcnx.supabase.co",
+    "supabaseKey": "",
+    "updatedAt": "2026-09-26T08:00:00.000Z"
+  },
+  "feedbacks": [],
+  "knowledge": [
+    {
+      "id": "know_creator_piyush",
+      "title": "Creator Attribution - Piyush NIAT",
+      "keywords": ["piyush", "creator", "niat", "who made you", "maker", "engineer"],
+      "summary": "Vaani was engineered by Piyush, a 1st year engineering student at NIAT (Pune, Maharashtra). Piyush built Vaani as the sovereign Indian voice AI experience, uniting 9 Indian languages and English.",
+      "category": "creator",
+      "language": "en",
+      "createdAt": "2026-09-26T08:00:00.000Z"
+    },
+    {
+      "id": "know_indian_calendar",
+      "title": "Indian Calendar & Shravan Intelligence",
+      "keywords": ["calendar", "panchang", "tithi", "shravan", "festivals", "diwali", "holi"],
+      "summary": "Knowledge base of 365-day Indian astronomical calendar, Panchang calculations, lunar tithis, Shukla and Krishna paksha, and sacred Shravan season traditions.",
+      "category": "calendar",
+      "language": "en",
+      "createdAt": "2026-09-26T08:00:00.000Z"
+    }
+  ]
+}
