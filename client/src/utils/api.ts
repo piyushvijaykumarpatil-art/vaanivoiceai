@@ -6,6 +6,7 @@ export const API_BASE = rawBase === '/api'
 export async function sendChatMessage(payload: {
   sessionId: string;
   message: string;
+  image?: string;
   language: string;
   history: Array<{ role: 'user' | 'assistant'; content: string }>;
 }) {

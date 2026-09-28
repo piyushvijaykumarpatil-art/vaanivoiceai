@@ -37,7 +37,6 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
   primaryColor = '#F59E0B',
   disabled = false,
   className = '',
-  autoSendDelayMs = 1400,
   autoStart = false
 }) => {
   const [isListening, setIsListening] = useState(false);
@@ -221,9 +220,9 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
 
       soundManager.playMicStartChime();
 
-      // 2. Initialize real-time continuous SpeechRecognition
+      // 2. Initialize Web Speech API with automatic silence detection (continuous = false)
       const recognition = new SpeechRecognitionAPI();
-      recognition.continuous = true;
+      recognition.continuous = false; // Automatically stops when user pauses talking
       recognition.interimResults = true;
       recognition.maxAlternatives = 1;
       recognition.lang = SPEECH_LANG_MAP[currentLanguage] || 'en-US';
@@ -235,37 +234,20 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
         activeTranscriptRef.current = '';
       };
 
-      // 3. Real-Time Transcription Accumulator: preserves all previous finalized phrases
+      // 3. Real-Time Transcription: captures transcript and automatically finalizes on speech pause
       recognition.onresult = (event: any) => {
-        let finalAccumulated = '';
-        let interimAccumulated = '';
-
+        let transcript = '';
         for (let i = 0; i < event.results.length; ++i) {
-          const result = event.results[i];
-          if (result && result[0]) {
-            if (result.isFinal) {
-              finalAccumulated += result[0].transcript + ' ';
-            } else {
-              interimAccumulated += result[0].transcript;
-            }
+          const res = event.results[i];
+          if (res && res[0]) {
+            transcript += res[0].transcript;
           }
         }
 
-        const liveTranscript = (finalAccumulated + interimAccumulated).trim();
+        const liveTranscript = transcript.trim();
         if (liveTranscript) {
           activeTranscriptRef.current = liveTranscript;
-          // Instantly send real-time transcription to input dock
           onTranscriptUpdate(liveTranscript);
-
-          // Reset silence timer for hands-free auto-send
-          if (autoSendDelayMs > 0) {
-            clearSilenceTimer();
-            silenceTimerRef.current = setTimeout(() => {
-              if (activeTranscriptRef.current.trim()) {
-                stopRecognition();
-              }
-            }, autoSendDelayMs);
-          }
         }
       };
 

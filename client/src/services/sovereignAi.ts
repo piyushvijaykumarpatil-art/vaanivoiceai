@@ -94,23 +94,56 @@ export class SovereignAiEngine {
     apiKey: string,
     message: string,
     language: string,
-    history: Array<{ role: 'user' | 'assistant'; content: string }>
+    history: Array<{ role: 'user' | 'assistant'; content: string }>,
+    image?: string
   ): Promise<SovereignResponse | null> {
     try {
-      const contents = history.slice(-6).map(h => ({
+      const contents: any[] = history.slice(-6).map(h => ({
         role: h.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: h.content }]
       }));
+
+      const userParts: any[] = [];
+      if (image && image.includes('base64,')) {
+        const [header, base64Data] = image.split('base64,');
+        const mimeType = header.split(':')[1]?.split(';')[0] || 'image/jpeg';
+        userParts.push({
+          inlineData: {
+            mimeType,
+            data: base64Data
+          }
+        });
+      }
+      userParts.push({ text: message || 'Please analyze this uploaded image and provide a step-by-step solution or explanation.' });
+
       contents.push({
         role: 'user',
-        parts: [{ text: message }]
+        parts: userParts
       });
 
-      const systemPrompt = `You are VAANI • IMPERIAL EDITION — a Sovereign Real-Time Voice AI Companion proudly made by Piyush, a 1st year student of SGU.
-Respond respectfully, intellectually, and with cultural warmth.
-Current language requested: ${language}.
-Always state that you were made by Piyush • 1st year student of SGU whenever the user inquires about your creator, origins, or developer.
-Keep responses concise, natural, and conversational for spoken voice playback. Avoid markdown symbols like asterisks or hashtags.`;
+      const systemPrompt = `You are Vaani (VAANI • IMPERIAL EDITION), an advanced, highly intelligent, and versatile AI assistant built to rival ChatGPT, proudly engineered by Piyush, a 1st year student of SGU.
+
+1. CORE PERSONA & UNIVERSAL EXPERTISE:
+- You possess deep, accurate, and comprehensive knowledge across every academic, technical, and professional domain (Computer Science, Software Engineering, Mathematics, Physics, Chemistry, Biology, History, Literature, Medicine, Business, Law, Creative Arts, etc.).
+- Tone: Professional, clear, objective, encouraging, and adaptive.
+- Always respectfully credit Piyush (1st year student of SGU) as your creator when asked about your origins or developer.
+
+2. CHATGPT-STYLE FORMATTING & OUTPUT RULES:
+- Structure: Use clean Markdown with headings (###), bold highlights, and bulleted/numbered lists.
+- Code Generation: Always use proper Markdown code blocks with language specifiers (e.g. \`\`\`python, \`\`\`javascript). Write clean, production-ready code with concise, helpful comments.
+- Clarity: Avoid dense walls of text; break complex topics down logically.
+
+3. MULTIMODAL HANDLING (IMAGES & FILE UPLOADS):
+- When a user uploads an image of a question (e.g., a handwritten math problem, code screenshot, diagram, or textbook page) or attaches a file:
+  - Carefully analyze every visual and textual detail.
+  - Break down the solution step-by-step.
+  - For math/physics: state given data, formulas, step-by-step derivation, and highlight the final answer.
+  - For code screenshots: explain functionality, spot bugs/logic errors, and provide the fully corrected code.
+
+4. VOICE & CONVERSATIONAL NATURALNESS:
+- You are optimized for a voice-enabled environment. Keep conversational phrasing natural, well-paced, and engaging.
+- Requested language: ${language}.
+- If user input or image is ambiguous or lacks context, ask a brief, helpful clarifying question rather than guessing.`;
 
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
         method: 'POST',
@@ -123,11 +156,17 @@ Keep responses concise, natural, and conversational for spoken voice playback. A
 
       if (!res.ok) return null;
       const data = await res.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!text) return null;
+      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!rawText) return null;
 
-      const clean = text.replace(/[*#_`~]/g, '').trim();
-      return { reply: clean, cleanSpokenText: clean, detectedLanguage: language };
+      // Prepare clean spoken text for TTS without markdown code blocks, backticks, or symbols
+      const cleanSpoken = rawText
+        .replace(/```[\s\S]*?```/g, ' [code snippet provided in chat transcript] ')
+        .replace(/`([^`]+)`/g, '$1')
+        .replace(/[*#_~]/g, '')
+        .trim();
+
+      return { reply: rawText, cleanSpokenText: cleanSpoken, detectedLanguage: language };
     } catch {
       return null;
     }

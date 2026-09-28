@@ -1,6 +1,7 @@
 import React from 'react';
 import type { ChatMessage } from '../types';
 import { Volume2, Copy, Check, MessageSquare, X, Trash2 } from 'lucide-react';
+import { MarkdownContent } from './MarkdownContent';
 
 interface TranscriptDrawerProps {
   isOpen: boolean;
@@ -86,12 +87,26 @@ export const TranscriptDrawer: React.FC<TranscriptDrawerProps> = ({
               >
                 <div className="flex items-center justify-between text-[11px] text-slate-400 mb-1.5">
                   <span className="font-semibold flex items-center gap-1">
-                    {isUser ? '👤 You (Type)' : '👑 Vaani (Neural Voice)'}
+                    {isUser ? '👤 You' : '👑 Vaani (Neural Voice)'}
                   </span>
                   <span>{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
 
-                <p className="leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                {msg.image && (
+                  <div className="mb-2">
+                    <img
+                      src={msg.image}
+                      alt="Uploaded attachment"
+                      className="max-h-48 max-w-full rounded-xl border border-white/20 object-contain shadow"
+                    />
+                  </div>
+                )}
+
+                {isUser ? (
+                  <p className="leading-relaxed whitespace-pre-wrap text-sm">{msg.content}</p>
+                ) : (
+                  <MarkdownContent content={msg.content} primaryColor={primaryColor} />
+                )}
 
                 {!isUser && (
                   <div className="flex items-center justify-end gap-2 mt-2 pt-2 border-t border-white/5">

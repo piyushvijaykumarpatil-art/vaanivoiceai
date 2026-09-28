@@ -23,6 +23,7 @@ export interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  image?: string;
   timestamp: string;
   language?: string;
 }

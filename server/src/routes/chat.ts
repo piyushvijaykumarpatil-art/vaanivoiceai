@@ -8,8 +8,9 @@ export const chatRouter = Router();
 
 const ChatRequestSchema = z.object({
   sessionId: z.string().min(1),
-  message: z.string().min(1).max(2000),
-  language: z.enum(['mr', 'hi', 'en', 'te', 'kn', 'pa', 'ta', 'bn', 'gu']).default('en'),
+  message: z.string().default(''),
+  image: z.string().optional(),
+  language: z.enum(['mr', 'hi', 'en', 'te', 'kn', 'pa', 'ta', 'bn', 'gu', 'ml']).default('en'),
   history: z.array(z.object({
     role: z.enum(['user', 'assistant']),
     content: z.string()
@@ -24,10 +25,10 @@ chatRouter.post('/', async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const { sessionId, message, language, history } = parseResult.data;
+    const { sessionId, message, image, language, history } = parseResult.data;
 
-    // Generate intelligent AI response
-    const aiResult = await generateChatResponse(message, language, history);
+    // Generate intelligent AI response with multimodal support
+    const aiResult = await generateChatResponse(message, language, history, image);
     const cleanSpoken = sanitizeTextForTTS(aiResult.reply);
 
     // Save to local ACID database session
@@ -35,7 +36,7 @@ chatRouter.post('/', async (req: Request, res: Response): Promise<void> => {
     const userMsg = {
       id: `msg_${Date.now()}_u`,
       role: 'user' as const,
-      content: message,
+      content: message || (image ? '📷 [Attached Image Analysis]' : ''),
       timestamp: new Date().toISOString(),
       language
     };

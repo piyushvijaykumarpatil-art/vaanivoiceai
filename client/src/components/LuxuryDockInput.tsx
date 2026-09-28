@@ -1,11 +1,11 @@
-import React, { useState, type KeyboardEvent } from 'react';
-import { Send, Square, Sparkles, Volume2, Loader2, Sliders } from 'lucide-react';
+import React, { useState, useRef, type KeyboardEvent } from 'react';
+import { Send, Square, Sparkles, Volume2, Loader2, Sliders, Plus, Image as ImageIcon } from 'lucide-react';
 import { DEFAULT_SUGGESTIONS, VOICE_MODELS } from '../utils/constants';
 import { VoiceMicButton } from './VoiceMicButton';
 import { soundManager } from '../audio/soundManager';
 
 interface LuxuryDockInputProps {
-  onSendMessage: (text: string) => void;
+  onSendMessage: (text: string, image?: string) => void;
   onStopAudio: () => void;
   isSpeaking: boolean;
   isLoading: boolean;
@@ -35,14 +35,28 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
 }) => {
   const [inputText, setInputText] = useState('');
   const [isMicListening, setIsMicListening] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const voiceSettings = soundManager.getVoiceSettings();
   const activeVoiceModel = VOICE_MODELS.find(m => m.id === voiceSettings.modelId) || VOICE_MODELS[0];
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSend = () => {
-    if (!inputText.trim() || isLoading) return;
-    onSendMessage(inputText.trim());
+    if ((!inputText.trim() && !selectedImage) || isLoading) return;
+    onSendMessage(inputText.trim(), selectedImage || undefined);
     setInputText('');
+    setSelectedImage(null);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -61,9 +75,10 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
 
   // Called when speech recognition finishes (user paused or clicked stop)
   const handleSpeechEnd = (finalTranscript: string) => {
-    if (finalTranscript.trim() && voiceSettings.handsFreeAutoSend && !isLoading) {
-      onSendMessage(finalTranscript.trim());
+    if ((finalTranscript.trim() || selectedImage) && !isLoading) {
+      onSendMessage(finalTranscript.trim(), selectedImage || undefined);
       setInputText('');
+      setSelectedImage(null);
     }
   };
 
@@ -101,6 +116,32 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
               Send Now ↵
             </button>
           )}
+        </div>
+      )}
+
+      {/* Multimodal Attached Image Preview Thumbnail */}
+      {selectedImage && (
+        <div className="mb-2 relative inline-flex items-center gap-3 px-3 py-2 rounded-2xl bg-black/85 border border-amber-500/50 backdrop-blur-xl shadow-2xl animate-fadeIn">
+          <img
+            src={selectedImage}
+            alt="Upload preview"
+            className="h-14 w-14 object-cover rounded-xl border border-white/20 shadow-md"
+          />
+          <div className="text-left">
+            <span className="text-xs font-mono text-amber-300 font-bold flex items-center gap-1.5">
+              <ImageIcon className="w-3.5 h-3.5 text-amber-400" />
+              <span>Image Attached</span>
+            </span>
+            <span className="text-[10px] text-slate-300">Multimodal question analysis active</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setSelectedImage(null)}
+            className="ml-2 w-6 h-6 rounded-full bg-red-600/90 hover:bg-red-500 text-white flex items-center justify-center text-xs font-bold shadow transition-transform hover:scale-110"
+            title="Remove image"
+          >
+            ✕
+          </button>
         </div>
       )}
 
@@ -196,6 +237,25 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
           )}
         </div>
 
+        {/* Hidden file input for question images (math, diagrams, code screenshots) */}
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleImageChange}
+          className="hidden"
+        />
+
+        {/* Upload Image Button (+) */}
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all shrink-0 flex items-center justify-center group active:scale-95"
+          title="Upload image of question (handwritten math, code screenshot, textbook, diagram)"
+        >
+          <Plus className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform" />
+        </button>
+
         {/* Input Field: Displays live speech transcript in real-time and allows keyboard editing */}
         <input
           type="text"
@@ -273,16 +333,16 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
           <button
             type="button"
             onClick={handleSend}
-            disabled={!inputText.trim() || isLoading}
+            disabled={(!inputText.trim() && !selectedImage) || isLoading}
             title="Send query"
             className={`flex items-center justify-center p-2.5 rounded-xl transition-all duration-300 font-semibold shadow-lg ${
-              !inputText.trim() || isLoading
+              (!inputText.trim() && !selectedImage) || isLoading
                 ? 'opacity-40 cursor-not-allowed bg-white/10 text-slate-400'
                 : 'hover:scale-105 active:scale-95 text-black'
             }`}
             style={{
-              backgroundColor: inputText.trim() && !isLoading ? primaryColor : undefined,
-              boxShadow: inputText.trim() && !isLoading ? `0 0 15px ${primaryColor}66` : undefined
+              backgroundColor: (inputText.trim() || selectedImage) && !isLoading ? primaryColor : undefined,
+              boxShadow: (inputText.trim() || selectedImage) && !isLoading ? `0 0 15px ${primaryColor}66` : undefined
             }}
           >
             {isLoading ? (

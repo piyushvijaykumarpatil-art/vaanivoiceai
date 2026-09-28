@@ -66,8 +66,8 @@ export const App: React.FC = () => {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  const handleSendMessage = async (text: string) => {
-    if (!text.trim() || isLoading) return;
+  const handleSendMessage = async (text: string, image?: string) => {
+    if ((!text.trim() && !image) || isLoading) return;
 
     // Immediately awaken Web Audio & SpeechSynthesis on direct user interaction
     soundManager.init();
@@ -79,16 +79,23 @@ export const App: React.FC = () => {
       }
     }
 
+    const promptText = text.trim() || (image ? 'Please analyze this uploaded image and provide a step-by-step solution or explanation.' : '');
+
     // 1. Append user message to history
     const userMsg: ChatMessage = {
       id: `msg_${Date.now()}_u`,
       role: 'user',
-      content: text,
+      content: promptText,
+      image,
       timestamp: new Date().toISOString(),
       language: currentLanguage
     };
     setMessages(prev => [...prev, userMsg]);
     setIsLoading(true);
+
+    if (image) {
+      setIsDrawerOpen(true);
+    }
 
     try {
       // 2. Prepare past context for Google Assistant-grade memory
@@ -103,7 +110,8 @@ export const App: React.FC = () => {
       try {
         chatResponse = await sendChatMessage({
           sessionId,
-          message: text,
+          message: promptText,
+          image,
           language: currentLanguage,
           history: historyContext
         });
@@ -115,9 +123,10 @@ export const App: React.FC = () => {
         if (directGeminiKey) {
           const directGeminiReply = await SovereignAiEngine.queryGeminiDirect(
             directGeminiKey,
-            text,
+            promptText,
             currentLanguage,
-            historyContext
+            historyContext,
+            image
           );
           if (directGeminiReply) {
             chatResponse = directGeminiReply;
@@ -127,7 +136,7 @@ export const App: React.FC = () => {
         // Autonomous Sovereign Engine fallback
         if (!chatResponse) {
           chatResponse = SovereignAiEngine.generateAutonomousReply(
-            text,
+            promptText,
             currentLanguage,
             historyContext
           );
@@ -142,7 +151,7 @@ export const App: React.FC = () => {
         language: chatResponse.detectedLanguage || currentLanguage
       };
       setMessages(prev => [...prev, assistantMsg]);
-      setLastSpokenText(chatResponse.reply);
+      setLastSpokenText(chatResponse.cleanSpokenText || chatResponse.reply);
 
       // 4. Request studio-grade neural voice synthesis
       const cleanText = chatResponse.cleanSpokenText || chatResponse.reply;
@@ -168,7 +177,7 @@ export const App: React.FC = () => {
     } catch (err: any) {
       console.error('Dialogue error:', err);
       setIsLoading(false);
-      const fallback = SovereignAiEngine.generateAutonomousReply(text, currentLanguage, messages);
+      const fallback = SovereignAiEngine.generateAutonomousReply(promptText, currentLanguage, messages);
       const errorMsg: ChatMessage = {
         id: `msg_${Date.now()}_err`,
         role: 'assistant',
@@ -252,9 +261,10 @@ export const App: React.FC = () => {
         {/* Live Luxury Voice & Microphone Dock directly accessible on landing screen */}
         <div className="relative z-20 w-full pb-4">
           <LuxuryDockInput
-            onSendMessage={async (text) => {
+            onSendMessage={async (text, image) => {
               setCurrentView('chamber');
-              await handleSendMessage(text);
+              if (image) setIsDrawerOpen(true);
+              await handleSendMessage(text, image);
             }}
             onStopAudio={handleStopAudio}
             isSpeaking={isSpeaking}
