@@ -50,6 +50,76 @@ export const CelestialNebulaBackground: React.FC<CelestialNebulaBackgroundProps>
         ))}
       </svg>
 
+      {/* 2b. Subtle Constellation & Node Lines on the Right */}
+      <svg
+        className="absolute top-0 right-0 w-full md:w-[60vw] h-full pointer-events-none z-[1]"
+        viewBox="0 0 800 900"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <filter id="constellation-glow-teal" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="constellation-glow-purple" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Constellation Link Lines on the Right */}
+        <g strokeOpacity="0.45" strokeWidth="1">
+          <line x1="420" y1="110" x2="540" y2="150" stroke="#06B6D4" strokeDasharray="3 2" />
+          <line x1="540" y1="150" x2="680" y2="120" stroke="#A855F7" />
+          <line x1="680" y1="120" x2="740" y2="210" stroke="#06B6D4" strokeDasharray="4 2" />
+          <line x1="540" y1="150" x2="580" y2="260" stroke="#C084FC" />
+          <line x1="580" y1="260" x2="490" y2="340" stroke="#22D3EE" />
+          <line x1="490" y1="340" x2="590" y2="420" stroke="#A855F7" strokeDasharray="3 3" />
+          <line x1="580" y1="260" x2="690" y2="310" stroke="#06B6D4" />
+          <line x1="690" y1="310" x2="740" y2="210" stroke="#A855F7" />
+          <line x1="690" y1="310" x2="720" y2="450" stroke="#C084FC" strokeDasharray="4 3" />
+          <line x1="590" y1="420" x2="720" y2="450" stroke="#22D3EE" />
+          
+          <line x1="590" y1="420" x2="510" y2="520" stroke="#06B6D4" strokeDasharray="2 2" />
+          <line x1="510" y1="520" x2="630" y2="590" stroke="#A855F7" />
+          <line x1="630" y1="590" x2="750" y2="540" stroke="#22D3EE" />
+          <line x1="720" y1="450" x2="750" y2="540" stroke="#C084FC" />
+          <line x1="630" y1="590" x2="670" y2="700" stroke="#06B6D4" strokeDasharray="3 2" />
+          <line x1="670" y1="700" x2="760" y2="670" stroke="#A855F7" />
+        </g>
+
+        {/* Luminous Constellation Star Nodes */}
+        <g>
+          <circle cx="420" cy="110" r="3" fill="#67E8F9" filter="url(#constellation-glow-teal)" />
+          <circle cx="420" cy="110" r="1.5" fill="#FFFFFF" />
+          <circle cx="540" cy="150" r="4" fill="#C084FC" filter="url(#constellation-glow-purple)" />
+          <circle cx="540" cy="150" r="2" fill="#FFFFFF" />
+          <circle cx="680" cy="120" r="3.5" fill="#22D3EE" filter="url(#constellation-glow-teal)" />
+          <circle cx="680" cy="120" r="1.5" fill="#FFFFFF" />
+          <circle cx="740" cy="210" r="3" fill="#E879F9" filter="url(#constellation-glow-purple)" />
+          <circle cx="580" cy="260" r="4.5" fill="#F59E0B" filter="url(#constellation-glow-teal)" />
+          <circle cx="580" cy="260" r="2.2" fill="#FFFFFF" />
+          <circle cx="490" cy="340" r="3" fill="#67E8F9" filter="url(#constellation-glow-teal)" />
+          <circle cx="690" cy="310" r="3.8" fill="#C084FC" filter="url(#constellation-glow-purple)" />
+          <circle cx="690" cy="310" r="1.8" fill="#FFFFFF" />
+          <circle cx="590" cy="420" r="3.5" fill="#22D3EE" filter="url(#constellation-glow-teal)" />
+          <circle cx="720" cy="450" r="4" fill="#E879F9" filter="url(#constellation-glow-purple)" />
+          <circle cx="720" cy="450" r="2" fill="#FFFFFF" />
+          <circle cx="510" cy="520" r="2.8" fill="#67E8F9" filter="url(#constellation-glow-teal)" />
+          <circle cx="630" cy="590" r="3.5" fill="#C084FC" filter="url(#constellation-glow-purple)" />
+          <circle cx="750" cy="540" r="3.2" fill="#22D3EE" filter="url(#constellation-glow-teal)" />
+          <circle cx="670" cy="700" r="3" fill="#67E8F9" filter="url(#constellation-glow-teal)" />
+          <circle cx="760" cy="670" r="3.2" fill="#E879F9" filter="url(#constellation-glow-purple)" />
+        </g>
+      </svg>
+
       {/* 3. Soft Glowing Teal-and-Purple Cosmic Nebula Clouds */}
       <div className="absolute inset-0 filter blur-[80px] sm:blur-[95px] opacity-75 sm:opacity-85 mix-blend-screen animate-nebulaBreathe">
         {/* Soft Glowing Teal Nebula Cloud (Left-Center) */}

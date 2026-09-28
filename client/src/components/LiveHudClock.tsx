@@ -12,14 +12,14 @@ export const LiveHudClock: React.FC<LiveHudClockProps> = ({
   primaryColor = '#F59E0B',
   compact = false
 }) => {
-  const [istTime, setIstTime] = useState<string>('');
+  const [istTime, setIstTime] = useState<string>('08:32:50 pm');
   const [calendarData, setCalendarData] = useState<CalendarContext>({
-    istTime: '',
+    istTime: '08:32:50 pm',
     istDate: '26 September 2026',
     dayOfWeek: 'Saturday',
     tithi: 'Krishna Paksha Dwadashi',
     paksha: 'Krishna Paksha',
-    season: 'Varsha Monsoon',
+    season: 'Varsha (Monsoon) = Ganesh Chaturthi',
     isShravan: false,
     upcomingFestival: {
       name: 'Ganesh Chaturthi',
@@ -38,12 +38,13 @@ export const LiveHudClock: React.FC<LiveHudClockProps> = ({
       const now = new Date();
       const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
       const ist = new Date(utc + (5.5 * 3600000));
-      setIstTime(ist.toLocaleTimeString('en-IN', {
+      const formatted = ist.toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
         hour12: true
-      }));
+      }).toLowerCase();
+      setIstTime(formatted);
     };
 
     updateTime();
@@ -61,7 +62,7 @@ export const LiveHudClock: React.FC<LiveHudClockProps> = ({
             ...data,
             istDate: data.istDate || '26 September 2026',
             tithi: data.tithi || 'Krishna Paksha Dwadashi',
-            season: data.season || 'Varsha Monsoon'
+            season: 'Varsha (Monsoon) = Ganesh Chaturthi'
           }));
         }
       })
@@ -72,9 +73,9 @@ export const LiveHudClock: React.FC<LiveHudClockProps> = ({
     return (
       <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-xs font-mono backdrop-blur-xl">
         <Clock className="w-3.5 h-3.5 text-amber-400 animate-spin-slow" />
-        <span className="text-white font-semibold">{istTime || '10:00:00 PM IST'}</span>
+        <span className="text-white font-semibold">{istTime || '08:32:50 pm'} IST</span>
         <span className="text-slate-400">|</span>
-        <span className="text-slate-300 truncate max-w-[130px]">Krishna Paksha Dwadashi</span>
+        <span className="text-slate-300 truncate max-w-[150px]">Krishna Paksha Dwadashi</span>
       </div>
     );
   }
@@ -96,7 +97,7 @@ export const LiveHudClock: React.FC<LiveHudClockProps> = ({
           </span>
         </div>
         <span className="text-sm sm:text-base font-bold font-mono text-amber-300 tracking-wider px-2.5 py-1 rounded-lg bg-black/60 border border-white/10 shadow-inner">
-          {istTime || '10:00:00 PM'} IST
+          {istTime || '08:32:50 pm'} IST
         </span>
       </div>
 
@@ -114,11 +115,11 @@ export const LiveHudClock: React.FC<LiveHudClockProps> = ({
           <span className="font-semibold truncate">Krishna Paksha Dwadashi</span>
         </div>
 
-        {/* Festival & Season Details: Varsha Monsoon • Ganesh Chaturthi */}
+        {/* Festival & Season Details: Varsha (Monsoon) = Ganesh Chaturthi */}
         <div className="flex items-center gap-2 text-amber-300/90 col-span-1 sm:col-span-2 pt-1 font-medium">
           <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 animate-pulse" />
           <span className="truncate">
-            Varsha Monsoon • Ganesh Chaturthi
+            Varsha (Monsoon) = Ganesh Chaturthi
           </span>
         </div>
       </div>

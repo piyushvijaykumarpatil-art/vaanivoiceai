@@ -10,6 +10,45 @@ interface LanguageSelectorProps {
   variant?: 'dropdown' | 'grid';
 }
 
+const CornerFlourish: React.FC<{ position: 'tl' | 'tr' | 'bl' | 'br' }> = ({ position }) => {
+  const rotationClass = {
+    tl: '',
+    tr: 'rotate-90',
+    bl: '-rotate-90',
+    br: 'rotate-180'
+  }[position];
+
+  const posClass = {
+    tl: 'top-1.5 left-1.5',
+    tr: 'top-1.5 right-1.5',
+    bl: 'bottom-1.5 left-1.5',
+    br: 'bottom-1.5 right-1.5'
+  }[position];
+
+  return (
+    <svg
+      className={`absolute ${posClass} w-4 h-4 pointer-events-none text-amber-300 drop-shadow-[0_0_8px_rgba(245,158,11,0.9)] transition-transform duration-300 ${rotationClass} z-20`}
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M 2 12 L 2 4 C 2 2.9 2.9 2 4 2 L 12 2"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      <circle cx="5" cy="5" r="1.5" fill="currentColor" />
+      <path
+        d="M 6 9 C 6 7.3 7.3 6 9 6"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+};
+
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   currentLanguage,
   onLanguageSelect,
@@ -34,17 +73,28 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                   : 'border border-white/10 hover:border-white/30 bg-[#060b16]/75 hover:bg-[#0a1224]/85 opacity-85 hover:opacity-100 hover:scale-[1.01]'
               }`}
               style={{
-                backgroundColor: isSelected ? 'rgba(245, 158, 11, 0.08)' : undefined,
+                backgroundColor: isSelected ? 'rgba(245, 158, 11, 0.12)' : undefined,
                 borderColor: isSelected ? '#F59E0B' : undefined,
                 boxShadow: isSelected
-                  ? '0 0 25px rgba(245, 158, 11, 0.6), inset 0 0 15px rgba(245, 158, 11, 0.2)'
+                  ? '0 0 30px rgba(245, 158, 11, 0.7), inset 0 0 16px rgba(245, 158, 11, 0.25)'
                   : '0 8px 24px -6px rgba(0, 0, 0, 0.5)'
               }}
             >
-              {/* Semi-transparent glowing 3D wireframe brain-node watermark */}
+              {/* Ornate Glowing Warm Gold Corner Flourishes on Active Card */}
+              {isSelected && (
+                <>
+                  <CornerFlourish position="tl" />
+                  <CornerFlourish position="tr" />
+                  <CornerFlourish position="bl" />
+                  <CornerFlourish position="br" />
+                </>
+              )}
+
+              {/* Embedded Translucent Glowing 3D Wireframe Brain Graphic */}
               <div className="absolute -right-3 -bottom-3 w-28 h-28 pointer-events-none transition-transform duration-500 group-hover:scale-110">
                 <BrainNodeWatermark
-                  className={isSelected ? "w-full h-full opacity-35" : "w-full h-full opacity-15 group-hover:opacity-30"}
+                  idPrefix={`card-${lang.id}`}
+                  className={isSelected ? "w-full h-full opacity-45" : "w-full h-full opacity-18 group-hover:opacity-35"}
                   glowColor={isSelected ? "#F59E0B" : "#06B6D4"}
                 />
               </div>
@@ -63,12 +113,12 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                 </span>
               </div>
 
-              {/* Native Language Name & English Name */}
+              {/* Native Language Name & English/Regional Name */}
               <div className="relative z-10 mb-1">
                 <div
                   className={`font-black text-base sm:text-lg transition-colors tracking-tight ${
                     isSelected
-                      ? 'text-amber-300 drop-shadow-[0_0_12px_rgba(245,158,11,0.4)]'
+                      ? 'text-amber-300 drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]'
                       : 'text-white group-hover:text-amber-200'
                   }`}
                 >

@@ -3,12 +3,17 @@ import React from 'react';
 interface BrainNodeWatermarkProps {
   className?: string;
   glowColor?: string;
+  idPrefix?: string;
 }
 
 export const BrainNodeWatermark: React.FC<BrainNodeWatermarkProps> = ({
   className = "w-28 h-28 opacity-20",
-  glowColor = "#06B6D4"
+  glowColor = "#06B6D4",
+  idPrefix = "brain"
 }) => {
+  const filterId = `${idPrefix}-glow-${glowColor.replace('#', '')}`;
+  const gradId = `${idPrefix}-grad-${glowColor.replace('#', '')}`;
+
   return (
     <svg
       viewBox="0 0 160 140"
@@ -17,22 +22,22 @@ export const BrainNodeWatermark: React.FC<BrainNodeWatermarkProps> = ({
       className={`pointer-events-none select-none transition-all duration-500 ${className}`}
     >
       <defs>
-        <filter id="brain-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="2.5" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
-        <linearGradient id="brain-wire-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor={glowColor} stopOpacity="0.8" />
-          <stop offset="50%" stopColor="#A855F7" stopOpacity="0.5" />
+        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={glowColor} stopOpacity="0.85" />
+          <stop offset="50%" stopColor="#C084FC" stopOpacity="0.55" />
           <stop offset="100%" stopColor={glowColor} stopOpacity="0.9" />
         </linearGradient>
       </defs>
 
       {/* 3D Isometric Wireframe Brain Silhouette & Hemispheres */}
-      <g stroke="url(#brain-wire-grad)" strokeWidth="0.85" opacity="0.85">
+      <g stroke={`url(#${gradId})`} strokeWidth="0.85" opacity="0.85">
         {/* Left Hemisphere Outer Contour */}
         <path
           d="M 80,20 C 65,18 45,26 35,42 C 24,58 24,78 32,94 C 40,110 58,118 72,118 C 76,118 78,116 80,114"
@@ -92,7 +97,7 @@ export const BrainNodeWatermark: React.FC<BrainNodeWatermarkProps> = ({
       </g>
 
       {/* Glowing 3D Wireframe Neural Nodes */}
-      <g filter="url(#brain-glow)">
+      <g filter={`url(#${filterId})`}>
         <circle cx="80" cy="22" r="2.5" fill="#FFFFFF" />
         <circle cx="45" cy="36" r="2.2" fill={glowColor} />
         <circle cx="62" cy="44" r="2.2" fill={glowColor} />

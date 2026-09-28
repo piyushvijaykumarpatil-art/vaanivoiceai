@@ -288,7 +288,7 @@ export const App: React.FC = () => {
                 VAANI <span style={{ color: activeThemeConfig.primaryColor }}>• IMPERIAL EDITION</span>
               </h1>
               <p className="text-[10px] text-slate-400 uppercase tracking-widest hidden sm:block font-medium">
-                THE SOVEREIGN VOICE AI EXPERIENCE
+                THE SOVERGION VOIGE AI EXPERIENCE
               </p>
             </div>
           </div>

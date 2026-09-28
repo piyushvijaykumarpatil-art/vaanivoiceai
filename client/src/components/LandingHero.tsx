@@ -4,7 +4,7 @@ import { ThemeSwitcher } from './ThemeSwitcher';
 import { LanguageSelector } from './LanguageSelector';
 import { LiveHudClock } from './LiveHudClock';
 import type { LuxuryThemeId } from '../types';
-import { Sparkles, Settings, Volume2, Orbit, Database, Calendar } from 'lucide-react';
+import { Sparkles, Settings, Volume2, Database, Calendar } from 'lucide-react';
 
 interface LandingHeroProps {
   currentTheme: LuxuryThemeId;
@@ -39,25 +39,13 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               VAANI <span style={{ color: primaryColor }}>• IMPERIAL EDITION</span>
             </h1>
             <p className="text-[10px] md:text-[11px] text-slate-400 font-bold tracking-widest uppercase">
-              THE SOVEREIGN VOICE AI EXPERIENCE
+              THE SOVERGION VOIGE AI EXPERIENCE
             </p>
           </div>
         </div>
 
-        {/* Right side: Voice Model button, Theme selector pills, Settings gear & Creator badge */}
+        {/* Right side: Theme selector pills (with crown theme active), Settings gear & Creator badge */}
         <div className="flex items-center gap-2.5 flex-wrap justify-center sm:justify-end">
-          {/* Voice Model Studio Button */}
-          {onOpenVoiceStudio && (
-            <button
-              onClick={onOpenVoiceStudio}
-              title="Voice Models & Neural Mic Studio"
-              className="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-black/50 border border-white/10 hover:border-white/30 text-slate-300 hover:text-white transition-all duration-200 flex items-center gap-1.5 backdrop-blur-md"
-            >
-              <Volume2 className="w-4 h-4 text-amber-400" />
-              <span className="hidden sm:inline text-xs font-semibold">Voice Model</span>
-            </button>
-          )}
-
           {/* Theme Selector Pills */}
           <div className="imperial-glass px-2.5 py-1.5 rounded-2xl border border-white/10 flex items-center gap-2">
             <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold hidden md:inline">Theme:</span>
@@ -145,8 +133,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               onClick={onEnterChamber}
               className="group relative inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-4.5 rounded-2xl font-black text-base sm:text-lg transition-all duration-300 text-black bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:via-yellow-300 hover:to-amber-400 shadow-[0_0_35px_rgba(245,158,11,0.6)] hover:shadow-[0_0_55px_rgba(245,158,11,0.9)] hover:scale-105 active:scale-95 border border-yellow-200/50"
             >
-              <span className="tracking-wide">Enter Sovereign Chamber</span>
-              <span className="text-xl group-hover:translate-x-1.5 transition-transform duration-200">➔</span>
+              <span className="tracking-wide">Enter Sovereign Chamber ➔</span>
             </button>
           </div>
 
@@ -164,7 +151,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
           </div>
         </div>
 
-        {/* Bottom Footer Toolbar: Four Glass Pill Buttons */}
+        {/* Bottom Footer Toolbar: Three Lower Glass Pill Action Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-3 max-w-4xl w-full pt-4">
           <button
             onClick={onOpenVoiceStudio}
@@ -175,19 +162,11 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
           </button>
 
           <button
-            onClick={onEnterChamber}
-            className="flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-cyan-400/50 backdrop-blur-xl text-xs font-bold text-slate-300 hover:text-white transition-all duration-300 shadow-lg group hover:scale-105"
-          >
-            <Orbit className="w-4 h-4 text-cyan-400 group-hover:rotate-45 transition-transform" />
-            <span className="tracking-wide uppercase">CELESTIAL GYROSCOPIC ORB</span>
-          </button>
-
-          <button
             onClick={onOpenSettings}
             className="flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/50 backdrop-blur-xl text-xs font-bold text-slate-300 hover:text-white transition-all duration-300 shadow-lg group hover:scale-105"
           >
             <Database className="w-4 h-4 text-purple-400 group-hover:scale-110 transition-transform" />
-            <span className="tracking-wide uppercase">COSMIC ACID & SUPABASE ENGINE</span>
+            <span className="tracking-wide uppercase">COSMIC ACID & SUPABASE ENGNE</span>
           </button>
 
           <div

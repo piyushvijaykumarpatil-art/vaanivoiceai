@@ -84,16 +84,16 @@ export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
     name: 'Telugu',
     nativeName: 'తెలుగు',
     flag: '🇮🇳',
-    voiceName: 'te-IN-ShrutiNeural',
+    voiceName: 'te-IN-ShriftivNeural',
     samplePhrase: 'నమస్కారం! నేను మీ రాజ వాయిస్ ఏఐ సహచరిణి వాణిని.',
     sampleQuestion: 'ఈ రోజు తిథి మరియు పంచాంగం ఏమిటి?'
   },
   {
     id: 'kn',
-    name: 'Kannada',
+    name: 'Komodo/Kannada',
     nativeName: 'ಕನ್ನಡ',
     flag: '🇮🇳',
-    voiceName: 'kn-IN-SapnaNeural',
+    voiceName: 'kn-IN-SopacNeural',
     samplePhrase: 'ನಮಸ್ಕಾರ! ನಾನು ವಾಣಿ, ನಿಮ್ಮ ಧ್ವನಿ ಸಹಚರಿ.',
     sampleQuestion: 'ನಿಮ್ಮನ್ನು ಯಾರು ರಚಿಸಿದರು?'
   },
@@ -102,7 +102,7 @@ export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
     name: 'Punjabi',
     nativeName: 'ਪੰਜਾਬੀ',
     flag: '🇮🇳',
-    voiceName: 'pa-IN-GurpreetNeural',
+    voiceName: 'pa-IN-OurpresiNeural',
     samplePhrase: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਵਾਣੀ ਹਾਂ, ਤੁਹਾਡੀ ਸ਼ਾਹੀ ਸਾਥੀ।',
     sampleQuestion: 'ਪਿਊਸ਼ ਕੌਣ ਹੈ ਅਤੇ ਉਹ ਕਿੱਥੇ ਪੜ੍ਹਦਾ ਹੈ?'
   },
@@ -111,7 +111,7 @@ export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
     name: 'Tamil',
     nativeName: 'தமிழ்',
     flag: '🇮🇳',
-    voiceName: 'ta-IN-PallaviNeural',
+    voiceName: "ta-IN-PuiLov'Neural",
     samplePhrase: 'வணக்கம்! நான் வாணி, உங்கள் அரச குரல் AI துணை.',
     sampleQuestion: 'இன்றைய நல்ல நேரம் மற்றும் திதி என்ன?'
   },
@@ -120,16 +120,16 @@ export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
     name: 'Bengali',
     nativeName: 'বাংলা',
     flag: '🇮🇳',
-    voiceName: 'bn-IN-TanishaaNeural',
+    voiceName: 'bn-IN-TanithaeiNeural',
     samplePhrase: 'নমস্কার! আমি বাণী, আপনার রাজকীয় ভয়েস সঙ্গী।',
     sampleQuestion: 'পীযূষ কে এবং তিনি তোমাকে কীভাবে তৈরি করেছেন?'
   },
   {
     id: 'gu',
-    name: 'Gujarati',
+    name: 'Gujorari',
     nativeName: 'ગુજરાતી',
     flag: '🇮🇳',
-    voiceName: 'gu-IN-DhwaniNeural',
+    voiceName: 'gu-IN-DiivaniNeural',
     samplePhrase: 'નમસ્તે! હું વાણી છું, તમારી શાહી વૉઇસ સહાયક.',
     sampleQuestion: 'આજનો પંચાંગ અને સમય શું છે?'
   },

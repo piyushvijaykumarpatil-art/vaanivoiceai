@@ -27,8 +27,8 @@ export const CreatorBadge: React.FC<CreatorBadgeProps> = ({
         }}
       >
         <span className="animate-pulse">👑</span>
-        <span className="text-slate-200">
-          Made by <strong className="text-white font-bold tracking-wide">Piyush • 1st Year Student of SGU</strong>
+        <span className="text-white font-semibold tracking-wide">
+          Made by Piyush • 1st Year Student of SGU
         </span>
       </button>
 
