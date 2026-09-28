@@ -15,6 +15,8 @@ interface LuxuryDockInputProps {
   primaryColor?: string;
   isContinuousLiveMode?: boolean;
   onToggleContinuousLiveMode?: () => void;
+  autoStartMic?: boolean;
+  onMicStarted?: () => void;
 }
 
 export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
@@ -27,7 +29,9 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
   onOpenVoiceStudio,
   primaryColor = '#F59E0B',
   isContinuousLiveMode = false,
-  onToggleContinuousLiveMode
+  onToggleContinuousLiveMode,
+  autoStartMic = false,
+  onMicStarted
 }) => {
   const [inputText, setInputText] = useState('');
   const [isMicListening, setIsMicListening] = useState(false);
@@ -252,11 +256,17 @@ export const LuxuryDockInput: React.FC<LuxuryDockInputProps> = ({
           <VoiceMicButton
             currentLanguage={currentLanguage}
             onTranscriptUpdate={handleTranscriptUpdate}
-            onListeningChange={handleListeningChange}
+            onListeningChange={(listening) => {
+              handleListeningChange(listening);
+              if (listening && onMicStarted) {
+                onMicStarted();
+              }
+            }}
             onSpeechEnd={handleSpeechEnd}
             primaryColor={primaryColor}
             disabled={isLoading}
             autoSendDelayMs={voiceSettings.handsFreeAutoSend ? 1400 : 0}
+            autoStart={autoStartMic}
           />
 
           {/* Send Button */}

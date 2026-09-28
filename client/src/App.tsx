@@ -32,6 +32,7 @@ export const App: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [isContinuousLiveMode, setIsContinuousLiveMode] = useState<boolean>(false);
   const [lastSpokenText, setLastSpokenText] = useState<string>('');
+  const [pendingAutoMic, setPendingAutoMic] = useState<boolean>(false);
 
   const activeThemeConfig = LUXURY_THEMES.find(t => t.id === currentTheme) || LUXURY_THEMES[0];
   const activeLangConfig = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage) || SUPPORTED_LANGUAGES[0];
@@ -228,7 +229,7 @@ export const App: React.FC = () => {
   // If in Landing Portal view
   if (currentView === 'landing') {
     return (
-      <div className="relative min-h-screen bg-[#02040A] text-slate-100">
+      <div className="relative min-h-screen bg-[#02040A] text-slate-100 flex flex-col justify-between">
         {/* Deep Space Void with Teal-and-Purple Nebula & High-Tech Circuit/Node Grid */}
         <CelestialNebulaBackground primaryColor={activeThemeConfig.primaryColor} />
 
@@ -237,11 +238,37 @@ export const App: React.FC = () => {
           onThemeSelect={setCurrentTheme}
           currentLanguage={currentLanguage}
           onLanguageSelect={setCurrentLanguage}
-          onEnterChamber={() => setCurrentView('chamber')}
+          onEnterChamber={(startMic) => {
+            if (startMic) {
+              setPendingAutoMic(true);
+            }
+            setCurrentView('chamber');
+          }}
           onOpenSettings={() => setIsStudioOpen(true)}
           onOpenVoiceStudio={() => setIsVoiceModalOpen(true)}
           primaryColor={activeThemeConfig.primaryColor}
         />
+
+        {/* Live Luxury Voice & Microphone Dock directly accessible on landing screen */}
+        <div className="relative z-20 w-full pb-4">
+          <LuxuryDockInput
+            onSendMessage={async (text) => {
+              setCurrentView('chamber');
+              await handleSendMessage(text);
+            }}
+            onStopAudio={handleStopAudio}
+            isSpeaking={isSpeaking}
+            isLoading={isLoading}
+            currentLanguage={currentLanguage}
+            onLanguageChange={setCurrentLanguage}
+            onOpenVoiceStudio={() => setIsVoiceModalOpen(true)}
+            primaryColor={activeThemeConfig.primaryColor}
+            isContinuousLiveMode={isContinuousLiveMode}
+            onToggleContinuousLiveMode={() => setIsContinuousLiveMode(prev => !prev)}
+            autoStartMic={pendingAutoMic}
+            onMicStarted={() => setPendingAutoMic(false)}
+          />
+        </div>
 
         {/* Voice Studio Modal */}
         <VoiceModelModal
@@ -409,6 +436,8 @@ export const App: React.FC = () => {
           primaryColor={activeThemeConfig.primaryColor}
           isContinuousLiveMode={isContinuousLiveMode}
           onToggleContinuousLiveMode={() => setIsContinuousLiveMode(prev => !prev)}
+          autoStartMic={pendingAutoMic}
+          onMicStarted={() => setPendingAutoMic(false)}
         />
       </footer>
 

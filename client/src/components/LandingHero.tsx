@@ -4,14 +4,14 @@ import { ThemeSwitcher } from './ThemeSwitcher';
 import { LanguageSelector } from './LanguageSelector';
 import { LiveHudClock } from './LiveHudClock';
 import type { LuxuryThemeId } from '../types';
-import { Sparkles, Settings, Volume2, Database, Calendar } from 'lucide-react';
+import { Sparkles, Settings, Volume2, Database, Calendar, Mic } from 'lucide-react';
 
 interface LandingHeroProps {
   currentTheme: LuxuryThemeId;
   onThemeSelect: (themeId: LuxuryThemeId) => void;
   currentLanguage: string;
   onLanguageSelect: (langId: string) => void;
-  onEnterChamber: () => void;
+  onEnterChamber: (startMic?: boolean) => void;
   onOpenSettings?: () => void;
   onOpenVoiceStudio?: () => void;
   primaryColor?: string;
@@ -127,13 +127,27 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             <LiveHudClock primaryColor={primaryColor} />
           </div>
 
-          {/* Center: Large Glowing Golden CTA Button */}
-          <div className="flex justify-center order-first md:order-none">
+          {/* Center: Large Glowing Golden CTA Button & Live Mic Button */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 order-first md:order-none">
             <button
-              onClick={onEnterChamber}
-              className="group relative inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-4.5 rounded-2xl font-black text-base sm:text-lg transition-all duration-300 text-black bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:via-yellow-300 hover:to-amber-400 shadow-[0_0_35px_rgba(245,158,11,0.6)] hover:shadow-[0_0_55px_rgba(245,158,11,0.9)] hover:scale-105 active:scale-95 border border-yellow-200/50"
+              onClick={() => onEnterChamber(false)}
+              className="group relative inline-flex items-center justify-center gap-3 px-7 sm:px-8 py-4 rounded-2xl font-black text-sm sm:text-base transition-all duration-300 text-black bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 hover:from-amber-200 hover:via-yellow-300 hover:to-amber-400 shadow-[0_0_35px_rgba(245,158,11,0.6)] hover:shadow-[0_0_55px_rgba(245,158,11,0.9)] hover:scale-105 active:scale-95 border border-yellow-200/50"
             >
               <span className="tracking-wide">Enter Sovereign Chamber ➔</span>
+            </button>
+
+            {/* Direct Live Mic Hardware Action Button */}
+            <button
+              onClick={() => onEnterChamber(true)}
+              title="Speak with Live Voice Microphone"
+              className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl font-bold text-sm sm:text-base transition-all duration-300 text-white bg-gradient-to-r from-red-600 via-rose-500 to-amber-600 hover:from-red-500 hover:to-amber-500 shadow-[0_0_25px_rgba(239,68,68,0.55)] hover:shadow-[0_0_40px_rgba(239,68,68,0.85)] hover:scale-105 active:scale-95 border border-red-300/40"
+            >
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-300 opacity-80" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
+              </span>
+              <Mic className="w-5 h-5 text-amber-200 animate-pulse group-hover:scale-110 transition-transform" />
+              <span className="tracking-wide">Speak with Mic 🎙️</span>
             </button>
           </div>
 

@@ -12,6 +12,7 @@ export interface VoiceMicButtonProps {
   disabled?: boolean;
   className?: string;
   autoSendDelayMs?: number;
+  autoStart?: boolean;
 }
 
 const SPEECH_LANG_MAP: Record<string, string> = {
@@ -23,7 +24,8 @@ const SPEECH_LANG_MAP: Record<string, string> = {
   pa: 'pa-IN',
   ta: 'ta-IN',
   bn: 'bn-IN',
-  gu: 'gu-IN'
+  gu: 'gu-IN',
+  ml: 'ml-IN'
 };
 
 export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
@@ -35,7 +37,8 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
   primaryColor = '#F59E0B',
   disabled = false,
   className = '',
-  autoSendDelayMs = 1400
+  autoSendDelayMs = 1400,
+  autoStart = false
 }) => {
   const [isListening, setIsListening] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -95,6 +98,16 @@ export const VoiceMicButton: React.FC<VoiceMicButtonProps> = ({
       }
     };
   }, []);
+
+  // Auto-start microphone if requested via quick-speak action
+  useEffect(() => {
+    if (autoStart && !isListening && !disabled) {
+      const timer = setTimeout(() => {
+        toggleListening();
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [autoStart]);
 
   const stopRecognition = () => {
     clearSilenceTimer();
