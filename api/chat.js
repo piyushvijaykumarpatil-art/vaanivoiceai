@@ -61,7 +61,7 @@ function sanitizeTextForTTS(text) {
     .trim();
 }
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-gemini-api-key');
@@ -180,3 +180,6 @@ I am listening and ready to assist you across computer science, engineering, mat
     });
   }
 }
+
+module.exports = handler;
+module.exports.default = handler;
