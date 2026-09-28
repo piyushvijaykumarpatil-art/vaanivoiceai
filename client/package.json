@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "postinstall": "node -e \"if(process.platform==='linux'){try{require('child_process').execSync('npm i @rollup/rollup-linux-x64-gnu@4.63.5 --no-save',{stdio:'inherit'})}catch(e){}}\"",
-    "prebuild": "node -e \"if(process.platform==='linux'){try{require('child_process').execSync('npm i @rollup/rollup-linux-x64-gnu@4.63.5 --no-save',{stdio:'inherit'})}catch(e){}}\"",
-    "build": "node -e \"if(process.platform==='linux'){try{require('child_process').execSync('npm i @rollup/rollup-linux-x64-gnu@4.63.5 --no-save',{stdio:'inherit'})}catch(e){}}\" && tsc -b && vite build",
+    "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },
@@ -29,6 +27,7 @@
     "vite": "^5.4.11"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.63.5"
+    "@rollup/rollup-linux-x64-gnu": "4.63.5",
+    "@rollup/rollup-linux-x64-musl": "4.63.5"
   }
 }
