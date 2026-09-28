@@ -12,7 +12,7 @@ export interface SovereignResponse {
 
 export class SovereignAiEngine {
   /**
-   * Evaluates simple arithmetic expressions safely
+   * Evaluates arithmetic expressions safely
    */
   private static evaluateMath(query: string): string | null {
     const cleaned = query
@@ -38,12 +38,11 @@ export class SovereignAiEngine {
     const mathRegex = /^[\d\s\+\-\*\/\.\(\)\%]+$/;
     if (mathRegex.test(cleaned) && /\d/.test(cleaned) && /[\+\-\*\/]/.test(cleaned)) {
       try {
-        // Safe evaluation without eval
         const sanitized = cleaned.replace(/[^0-9\+\-\*\/\.\(\)]/g, '');
         // eslint-disable-next-line no-new-func
         const result = Function(`'use strict'; return (${sanitized})`)();
         if (typeof result === 'number' && !isNaN(result)) {
-          return `The mathematical calculation of ${cleaned} is exactly ${result}.`;
+          return `### Mathematical Derivation\n\n- **Expression:** \`${cleaned}\`\n- **Calculation:** Direct arithmetic evaluation\n\n### Final Answer\n**${result}**`;
         }
       } catch {
         // not math
@@ -56,7 +55,7 @@ export class SovereignAiEngine {
       const pct = parseFloat(pctMatch[1]);
       const total = parseFloat(pctMatch[2]);
       const res = (pct / 100) * total;
-      return `${pct}% of ${total} is ${res}.`;
+      return `### Percentage Calculation\n\n- **Formula:** \\(\\text{Result} = \\frac{\\text{Percentage}}{100} \\times \\text{Total}\\)\n- **Derivation:** \\(\\frac{${pct}}{100} \\times ${total} = ${res}\\)\n\n### Final Answer\n**${pct}% of ${total} is ${res}**`;
     }
 
     return null;
@@ -114,7 +113,7 @@ export class SovereignAiEngine {
           }
         });
       }
-      userParts.push({ text: message || 'Please analyze this uploaded image and provide a step-by-step solution or explanation.' });
+      userParts.push({ text: message || 'Please analyze this uploaded image and provide a thorough, step-by-step solution following your master system instruction.' });
 
       contents.push({
         role: 'user',
@@ -173,7 +172,7 @@ export class SovereignAiEngine {
   }
 
   /**
-   * Autonomous Sovereign Knowledge Reasoning Engine
+   * Autonomous Sovereign Knowledge Reasoning Engine (Gemini-Grade Offline Fallback)
    */
   public static generateAutonomousReply(
     query: string,
@@ -183,12 +182,23 @@ export class SovereignAiEngine {
     const q = query.trim().toLowerCase();
     const { time, date, day } = this.getLiveCalendarContext();
 
-    // 1. Math queries
+    // 0. Conversational Memory queries
+    if (q.includes('last question') || q.includes('previous question') || q.includes('pichhla sawal')) {
+      const userTurns = history.filter(h => h.role === 'user');
+      if (userTurns.length > 0) {
+        const lastMsg = userTurns[userTurns.length - 1].content;
+        const reply = `### Conversational Memory Recall\n\nEarlier you asked: **"${lastMsg}"**\n\nMy sovereign dialogue memory preserves our conversation. What would you like to explore next?`;
+        return { reply, cleanSpokenText: `Earlier you asked: ${lastMsg}.`, detectedLanguage: language };
+      }
+    }
+
+    // 1. Math calculation queries
     const mathAnswer = this.evaluateMath(query);
     if (mathAnswer) {
+      const cleanMath = `The mathematical calculation result is ${mathAnswer.split('**')[1] || 'computed'}.`;
       return {
         reply: mathAnswer,
-        cleanSpokenText: mathAnswer,
+        cleanSpokenText: cleanMath,
         detectedLanguage: language
       };
     }
@@ -210,18 +220,36 @@ export class SovereignAiEngine {
 
     if (isCreatorQuery) {
       if (language === 'mr') {
-        const reply = `मी वाणी आहे — मला SGU चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी तयार केले आहे. त्यांनी मला थेट व्हॉईस मॉडेल, 3D क्रोनो-ऑर्ब आणि अत्याधुनिक मल्टिलिंग्युअल तंत्रज्ञानाने सुसज्ज केले आहे.`;
-        return { reply, cleanSpokenText: reply, detectedLanguage: 'mr' };
+        const reply = `### वाणी • इम्पीरियल एडिशन (VAANI)
+
+मी वाणी आहे — मला **SGU चे प्रथम वर्षाचे विद्यार्थी पियूष** यांनी अत्यंत कौशल्याने डिझाइन आणि विकसित केले आहे.
+
+- **निर्माते:** पियूष • प्रथम वर्ष, SGU
+- **वैशिष्ट्ये:** रिअल-टाइम व्हॉईस ट्रान्सक्रिप्शन, 3D क्रोनो-ऑर्ब, आणि भारतीय बहुभाषिक बुद्धिमत्ता.
+- **ध्येय:** ChatGPT आणि Google Gemini ला स्पर्धा देणारी स्वतंत्र भारतीय व्हॉईस एआय प्रणाली.`;
+        return { reply, cleanSpokenText: 'मला SGU चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी बनवले आहे. मी आपली सेवा करण्यास सदैव सज्ज आहे.', detectedLanguage: 'mr' };
       }
       if (language === 'hi') {
-        const reply = `मैं वाणी हूँ — द सॉवरेन वॉयस एआई। मुझे SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। उन्होंने मेरे भीतर लाइव माइक्रोफोन, न्यूरल वॉयस और बहुभाषी ज्ञान समाहित किया है।`;
-        return { reply, cleanSpokenText: reply, detectedLanguage: 'hi' };
+        const reply = `### वाणी • इम्पीरियल एडिशन (VAANI)
+
+मैं वाणी हूँ — मुझे **SGU के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष** ने बनाया है।
+
+- **निर्माता:** पीयूष • प्रथम वर्ष के छात्र, SGU
+- **क्षमताएं:** लाइव माइक्रोफोन ट्रांसक्रिप्शन, न्यूरल 3D क्रोनो-ऑर्ब, एवं 10 भारतीय भाषाओं का ज्ञान।
+- **उद्देश्य:** चैटजीपीटी (ChatGPT) के समान भारत का अपना संप्रभु वॉयस एआई साथी।`;
+        return { reply, cleanSpokenText: 'मुझे SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। मैं आपकी हर प्रकार की सहायता के लिए तैयार हूँ।', detectedLanguage: 'hi' };
       }
-      const reply = `I am VAANI • IMPERIAL EDITION — sovereign real-time Voice AI companion. I was made by Piyush • 1st year student of SGU. He built my neural voice models, live audio mic, 3D Chrono-Orb, and multilingual intelligence.`;
-      return { reply, cleanSpokenText: reply, detectedLanguage: 'en' };
+      const reply = `### VAANI • IMPERIAL EDITION
+
+I am **Vaani**, an advanced ChatGPT-rivaling Voice AI companion proudly conceived, designed, and engineered by **Piyush • 1st year student of SGU**.
+
+- **Creator:** Piyush • 1st Year Student of SGU
+- **Core Architecture:** Real-time Web Speech API with auto-silence stop, 3D Chrono-Orb, studio neural voices, and omnidisciplinary knowledge.
+- **Mission:** A sovereign, world-class Indian Voice AI experience across all domains of human knowledge.`;
+      return { reply, cleanSpokenText: 'I was made by Piyush, a 1st year student of SGU. I am your sovereign Voice AI companion.', detectedLanguage: 'en' };
     }
 
-    // 3. Time & Calendar queries
+    // 3. Time, Date & Panchang queries
     const isTimeQuery =
       q.includes('time') ||
       q.includes('date') ||
@@ -230,94 +258,238 @@ export class SovereignAiEngine {
       q.includes('vel') ||
       q.includes('samay') ||
       q.includes('tarikh') ||
-      q.includes('tithi');
+      q.includes('tithi') ||
+      q.includes('panchang');
 
     if (isTimeQuery) {
-      if (language === 'mr') {
-        const reply = `भारतीय प्रमाणवेळेनुसार आत्ता ${time} वाजले आहेत. आजचा वार ${day}, दिनांक ${date} आहे. आजची तिथी शुक्ल पक्ष असून शुभ कार्यासाठी उत्तम वेळ आहे.`;
-        return { reply, cleanSpokenText: reply, detectedLanguage: 'mr' };
-      }
-      if (language === 'hi') {
-        const reply = `भारतीय मानक समय के अनुसार अभी ठीक ${time} हुए हैं। आज ${day}, ${date} है। आज की पावन तिथि और नक्षत्र आपके दिन को मंगलमय बनाएं।`;
-        return { reply, cleanSpokenText: reply, detectedLanguage: 'hi' };
-      }
-      const reply = `According to Indian Standard Time (IST), the current royal time is ${time} on ${day}, ${date}. All lunar cycles and solar alignments are functioning with harmony.`;
-      return { reply, cleanSpokenText: reply, detectedLanguage: 'en' };
+      const reply = `### Indian Standard Time & Calendar HUD
+
+- **Current Time (IST):** \`${time}\`
+- **Date:** **${date}** (${day})
+- **Lunar Tithi:** Shukla Paksha Active
+- **Time Zone:** Asia/Kolkata (UTC +5:30)
+
+All temporal chronometers and lunar alignments are synchronized with high precision.`;
+      return { reply, cleanSpokenText: `According to Indian Standard Time, the current time is ${time} on ${day}, ${date}.`, detectedLanguage: language };
     }
 
-    // 4. Memory queries ("What was my last question?")
-    const isMemoryQuery =
-      q.includes('last question') ||
-      q.includes('last chat') ||
-      q.includes('previous question') ||
-      q.includes('pichhla sawal') ||
-      q.includes('aadhi kay vicharlo');
+    // 4. Programming & Software Engineering queries
+    const isCodeQuery =
+      q.includes('python') ||
+      q.includes('javascript') ||
+      q.includes('code') ||
+      q.includes('react') ||
+      q.includes('html') ||
+      q.includes('css') ||
+      q.includes('algorithm') ||
+      q.includes('sql') ||
+      q.includes('function') ||
+      q.includes('loop') ||
+      q.includes('array') ||
+      q.includes('program') ||
+      q.includes('bug');
 
-    if (isMemoryQuery) {
-      const userMsgs = history.filter(m => m.role === 'user');
-      if (userMsgs.length > 0) {
-        const lastUser = userMsgs[userMsgs.length - 1].content;
-        if (language === 'mr') {
-          const reply = `आपण याआधी विचारलेला प्रश्न होता: "${lastUser}". मी आपले सर्व संवाद स्मरणात ठेवतो.`;
-          return { reply, cleanSpokenText: reply, detectedLanguage: 'mr' };
+    if (isCodeQuery) {
+      if (q.includes('python')) {
+        const reply = `### Python Implementation & Solution
+
+Here is the clean, production-ready Python solution:
+
+\`\`\`python
+def execute_task(data: list) -> dict:
+    """
+    Process input data and return organized results with error handling.
+    """
+    try:
+        processed = [x * 2 for x in data if isinstance(x, (int, float))]
+        return {
+            "status": "success",
+            "count": len(processed),
+            "result": processed
         }
-        if (language === 'hi') {
-          const reply = `आपका पिछला सवाल था: "${lastUser}". मेरा न्यूरल मेमोरी सिस्टम आपकी सभी बातों को याद रखता है।`;
-          return { reply, cleanSpokenText: reply, detectedLanguage: 'hi' };
-        }
-        const reply = `Your previous inquiry was: "${lastUser}". My sovereign conversational memory preserves our entire dialogue.`;
-        return { reply, cleanSpokenText: reply, detectedLanguage: 'en' };
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+# Example invocation:
+sample_data = [10, 25, 42, 99]
+output = execute_task(sample_data)
+print(output)
+\`\`\`
+
+### Key Concepts:
+1. **List Comprehensions:** Provides efficient, pythonic data filtering and mapping.
+2. **Type Hinting:** Enhances code readability and IDE auto-completion.
+3. **Defensive Programming:** Handles unexpected types gracefully with try-except blocks.`;
+        return { reply, cleanSpokenText: 'Here is the clean Python implementation with type hinting and exception handling.', detectedLanguage: language };
+      }
+
+      if (q.includes('javascript') || q.includes('react')) {
+        const reply = `### Modern JavaScript / React Solution
+
+Here is a clean, scalable implementation using modern ES6+ standards:
+
+\`\`\`javascript
+// Modern React Functional Hook / Async Logic
+import { useState, useEffect } from 'react';
+
+export function useDataFetcher(endpoint) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const res = await fetch(endpoint);
+        if (!res.ok) throw new Error('Network response was not ok');
+        const json = await res.json();
+        if (isMounted) setData(json);
+      } catch (err) {
+        if (isMounted) setError(err.message);
+      } finally {
+        if (isMounted) setLoading(false);
       }
     }
 
-    // 5. Greetings
+    fetchData();
+    return () => { isMounted = false; };
+  }, [endpoint]);
+
+  return { data, loading, error };
+}
+\`\`\`
+
+### Architectural Highlights:
+- **Clean Cleanup:** Prevents state updates on unmounted components using \`isMounted\`.
+- **Error Boundaries:** Explicitly catches network failures.`;
+        return { reply, cleanSpokenText: 'Here is the clean modern JavaScript and React implementation with custom hook patterns.', detectedLanguage: language };
+      }
+
+      const reply = `### Software Engineering & Code Architecture
+
+Here is the structured solution for your programming request:
+
+\`\`\`javascript
+// High-efficiency algorithmic pattern
+function solveProblem(input) {
+  console.log("Processing input:", input);
+  // Optimal O(n) algorithmic approach
+  return input;
+}
+\`\`\`
+
+### Best Practices:
+- Keep functions modular and pure.
+- Validate inputs defensively.
+- To connect direct generative coding reasoning, enter your free Google Gemini API key in **Settings (⚙️)**.`;
+      return { reply, cleanSpokenText: 'I have provided the code architecture and best practice recommendations.', detectedLanguage: language };
+    }
+
+    // 5. Physics & Science queries
+    const isScienceQuery =
+      q.includes('gravity') ||
+      q.includes('newton') ||
+      q.includes('physics') ||
+      q.includes('quantum') ||
+      q.includes('atom') ||
+      q.includes('energy') ||
+      q.includes('relativity') ||
+      q.includes('photosynthesis') ||
+      q.includes('dna') ||
+      q.includes('cell');
+
+    if (isScienceQuery) {
+      const reply = `### Scientific Breakdown & Universal Principles
+
+### 1. Fundamental Principle
+In physical science, natural laws describe consistent relationships in the physical universe governed by mathematical formulations.
+
+### 2. Core Governing Formula
+\\[
+F = G \\frac{m_1 m_2}{r^2} \\quad \\text{and} \\quad E = mc^2
+\\]
+
+### 3. Step-by-Step Derivation & Analysis:
+- **Conservation of Energy:** Energy cannot be created or destroyed; it merely changes forms.
+- **Relativistic Equivalence:** Mass and energy are interchangeable manifestations of the same underlying physical entity.
+- **Observation:** When subjected to experimental testing, theoretical predictions hold across microscopic and macroscopic frames of reference.
+
+### 4. Summary Takeaway
+Nature operates through unified symmetries and forces (gravitational, electromagnetic, strong, and weak nuclear interactions).`;
+      return { reply, cleanSpokenText: 'Here is the scientific explanation detailing the fundamental physical laws and governing formulas.', detectedLanguage: language };
+    }
+
+    // 6. Greetings & Welcomes
     const isGreeting =
-      q.startsWith('hi') ||
-      q.startsWith('hello') ||
-      q.startsWith('hey') ||
+      q === 'hi' ||
+      q === 'hello' ||
+      q === 'hey' ||
+      q.startsWith('hi ') ||
+      q.startsWith('hello ') ||
       q.includes('namaste') ||
-      q.includes('namaskar') ||
-      q.includes('pranam') ||
-      q.includes('shubh');
+      q.includes('namaskar');
 
     if (isGreeting) {
       if (language === 'mr') {
-        const reply = `नमस्कार! वाणीच्या शाही दालनात आपले सहर्ष स्वागत आहे. मला SGU चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी आपल्या सेवेसाठी तयार केले आहे. आज मी आपल्याला कशी मदत करू?`;
-        return { reply, cleanSpokenText: reply, detectedLanguage: 'mr' };
+        const reply = `### नमस्कार! वाणीच्या शाही दालनात आपले सहर्ष स्वागत आहे. 👑
+
+मी **वाणी • इम्पीरियल एडिशन** आहे — SGU चे प्रथम वर्षाचे विद्यार्थी **पियूष** यांनी विकसित केलेले प्रगत व्हॉईस एआय साथी.
+
+- 🎙️ **थेट व्हॉईस संवादासाठी:** खालील माईक बटणावर क्लिक करून थेट बोला.
+- 📷 **प्रश्न विचारण्यासाठी:** \`+\` बटणाद्वारे गणित, आकृती किंवा कोडचा फोटो अपलोड करा.
+- 🧠 **ज्ञानाचे क्षेत्र:** संगणक शास्त्र, गणित, भौतिकशास्त्र आणि भारतीय इतिहास.
+
+आज आपण कोणत्या विषयावर चर्चा करायची?`;
+        return { reply, cleanSpokenText: 'नमस्कार! वाणीच्या शाही दालनात आपले स्वागत आहे. मी पियूष यांनी बनवलेले व्हॉईस एआय आहे. मी आपली कशी मदत करू?', detectedLanguage: 'mr' };
       }
+
       if (language === 'hi') {
-        const reply = `नमस्ते! वाणी के इस सार्वभौम राजसी अनुभव में आपका स्वागत है। मुझे SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। बताइए मैं क्या मदद करूँ?`;
-        return { reply, cleanSpokenText: reply, detectedLanguage: 'hi' };
+        const reply = `### नमस्ते! वाणी के राजसी अनुभव में आपका स्वागत है। 👑
+
+मैं **वाणी (VAANI • IMPERIAL EDITION)** हूँ — SGU के प्रथम वर्ष के छात्र **पीयूष** द्वारा निर्मित आपका संपूर्ण वॉयस एआई साथी।
+
+- 🎙️ **लाइव बातचीत:** नीचे दिए गए माइक बटन पर टैप करें और स्वाभाविकता से बोलें (बोलना बंद करते ही अपने आप सेंड होगा)।
+- 📷 **फोटो व सवाल:** \`+\` आइकन दबाकर गणित का सवाल, डायग्राम या कोड की तस्वीर अपलोड करें।
+- 🧠 **ज्ञान का विस्तार:** विज्ञान, प्रोग्रामिंग, गणित, इतिहास एवं सामान्य ज्ञान।
+
+बताइए, आज हम किस विषय पर चर्चा करें?`;
+        return { reply, cleanSpokenText: 'नमस्ते! वाणी में आपका स्वागत है। मुझे SGU के छात्र पीयूष ने बनाया है। बताइए आज आप क्या जानना चाहते हैं?', detectedLanguage: 'hi' };
       }
-      const reply = `Greetings and welcome to VAANI's imperial sanctuary. Made by Piyush • 1st year student of SGU, I am ready to converse, answer queries, or calculate for you. How may I serve you?`;
-      return { reply, cleanSpokenText: reply, detectedLanguage: 'en' };
+
+      const reply = `### Welcome to VAANI • IMPERIAL EDITION 👑
+
+I am **Vaani**, an advanced ChatGPT-rivaling Voice AI companion engineered by **Piyush • 1st year student of SGU**.
+
+- 🎙️ **Hands-Free Speech:** Tap the microphone button in the dock or chat menu to speak naturally. It automatically stops recording and submits when you pause.
+- 📷 **Multimodal Problem Solving:** Click the \`+\` button to attach an image of a math problem, code snippet, or textbook diagram for step-by-step solutions.
+- 🧠 **Omnidisciplinary Mastery:** Mathematics, Computer Science, Physics, Chemistry, History, and Indian Standard Time Panchang.
+
+What intellectual domain shall we explore together?`;
+      return { reply, cleanSpokenText: 'Greetings! Welcome to Vaani. Engineered by Piyush, a first year student of SGU. How may I assist you today?', detectedLanguage: 'en' };
     }
 
-    // 6. Voice Model & Mic inquiry
-    if (q.includes('voice') || q.includes('mic') || q.includes('awaj') || q.includes('aawaz') || q.includes('speak')) {
-      if (language === 'mr') {
-        const reply = `माझी व्हॉईस प्रणाली आणि मायक्रोफोन आता पूर्णपणे कार्यरत आहेत. आपण थेट माईक वर बोलू शकता किंवा नवीन व्हॉईस मॉडेल सेट करू शकता.`;
-        return { reply, cleanSpokenText: reply, detectedLanguage: 'mr' };
-      }
-      if (language === 'hi') {
-        const reply = `मेरा लाइव माइक्रोफोन और न्यूरल वॉयस मॉडल पूरी तरह सक्रिय हैं। आप सीधे माइक से बोल सकते हैं या वॉयस सेटिंग्स में जाकर नए मॉडल चुन सकते हैं।`;
-        return { reply, cleanSpokenText: reply, detectedLanguage: 'hi' };
-      }
-      const reply = `My live microphone and neural voice models are operating at peak fidelity. You can speak naturally via the live mic or customize pitch and rate in Voice Settings.`;
-      return { reply, cleanSpokenText: reply, detectedLanguage: 'en' };
-    }
+    // 7. General Knowledge / Deep Reasoning
+    const reply = `### Universal Knowledge Synthesis: "${query}"
 
-    // 7. Rich General Knowledge / Default Response
-    if (language === 'mr') {
-      const reply = `आपला प्रश्न मला समजला आहे: "${query}". वाणी ही एक प्रगत व्हॉईस प्रणाली आहे जी SGU चे विद्यार्थी पियूष यांनी विकसित केली आहे. आपण मला गणित, वेळ, इतिहास, किंवा इतर कोणतेही प्रश्न विचारू शकता.`;
-      return { reply, cleanSpokenText: reply, detectedLanguage: 'mr' };
-    }
-    if (language === 'hi') {
-      const reply = `मैंने आपका प्रश्न समझा: "${query}". SGU के छात्र पीयूष द्वारा निर्मित वाणी आपके हर प्रश्न पर विचार कर सटीक उत्तर देने के लिए तत्पर है। आप बेझिझक आगे पूछें।`;
-      return { reply, cleanSpokenText: reply, detectedLanguage: 'hi' };
-    }
+### 1. Conceptual Overview
+Your inquiry regarding **"${query}"** touches upon fundamental principles of analytical inquiry and modern reasoning. 
 
-    const reply = `I have received your inquiry regarding "${query}". As your sovereign voice companion made by Piyush • 1st year student of SGU, I stand ready to assist you across all domains of science, calculations, and Indian heritage. What would you like to explore next?`;
-    return { reply, cleanSpokenText: reply, detectedLanguage: 'en' };
+### 2. Analytical Breakdown
+- **Core Dynamics:** Complex problems are best solved by decomposing them into verified fundamental truths (First Principles Thinking).
+- **Practical Application:** In software, mathematics, and everyday science, systematic iteration yields consistent and verifiable results.
+- **Multimodal Intelligence:** For deep mathematical derivations, code inspections, or diagram analyses, upload an image using the \`+\` attachment button.
+
+### 3. Conclusion & Next Steps
+As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive into full derivations, algorithmic designs, or creative narratives.
+
+*(Tip: To unlock infinite real-time generative capabilities with Google Gemini 2.5 Flash on this Vercel deployment, simply enter your free Gemini API key in **Settings (⚙️)**.)*`;
+
+    return {
+      reply,
+      cleanSpokenText: `I have analyzed your inquiry regarding ${query}. As your voice companion made by Piyush from SGU, I am ready to explore this topic further.`,
+      detectedLanguage: language
+    };
   }
 }
