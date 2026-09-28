@@ -7,7 +7,7 @@
     "client": "npm --prefix client run dev",
     "build:client": "npm --prefix client run build",
     "build:server": "echo \"Server build skipped for static deployment\"",
-    "build": "npm --prefix client run build && node -e \"require('fs').cpSync('client/dist', 'dist', {recursive: true})\""
+    "build": "npm --prefix client run build && node -e \"const fs=require('fs'); fs.mkdirSync('dist', {recursive: true}); fs.cpSync('client/dist', 'dist', {recursive: true})\""
   },
   "workspaces": [
     "client",
