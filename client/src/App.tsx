@@ -93,9 +93,8 @@ export const App: React.FC = () => {
     setMessages(prev => [...prev, userMsg]);
     setIsLoading(true);
 
-    if (image) {
-      setIsDrawerOpen(true);
-    }
+    // Automatically open the chat menu on screen after chatting
+    setIsDrawerOpen(true);
 
     try {
       // 2. Prepare past context for Google Assistant-grade memory
@@ -294,6 +293,19 @@ export const App: React.FC = () => {
           onClose={() => setIsStudioOpen(false)}
           primaryColor={activeThemeConfig.primaryColor}
         />
+
+        {/* Sovereign Chat Menu Drawer */}
+        <TranscriptDrawer
+          isOpen={isDrawerOpen}
+          onClose={() => setIsDrawerOpen(false)}
+          messages={messages}
+          onReplayAudio={handleReplayAudio}
+          onClearSession={handleClearSession}
+          onSendMessage={handleSendMessage}
+          isLoading={isLoading}
+          currentLanguage={currentLanguage}
+          primaryColor={activeThemeConfig.primaryColor}
+        />
       </div>
     );
   }
@@ -473,6 +485,9 @@ export const App: React.FC = () => {
         messages={messages}
         onReplayAudio={handleReplayAudio}
         onClearSession={handleClearSession}
+        onSendMessage={handleSendMessage}
+        isLoading={isLoading}
+        currentLanguage={currentLanguage}
         primaryColor={activeThemeConfig.primaryColor}
       />
     </div>
