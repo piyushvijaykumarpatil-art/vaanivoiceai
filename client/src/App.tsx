@@ -114,6 +114,40 @@ export const App: React.FC = () => {
           language: currentLanguage,
           history: historyContext
         });
+
+        // If backend returned generic autonomous fallback, attempt client-side upgrade
+        const isGeneric = 
+          chatResponse?.domainCategory === 'autonomous_reasoning' ||
+          chatResponse?.reply?.includes('Conceptual Framework') ||
+          chatResponse?.reply?.includes('Analytical Exploration');
+
+        if (isGeneric) {
+          const directGeminiKey = localStorage.getItem('vaani_gemini_api_key');
+          if (directGeminiKey) {
+            const directGeminiReply = await SovereignAiEngine.queryGeminiDirect(
+              directGeminiKey,
+              promptText,
+              currentLanguage,
+              historyContext,
+              image
+            );
+            if (directGeminiReply) {
+              chatResponse = directGeminiReply;
+            }
+          }
+
+          // If still generic, check if client-side sovereign knowledge catalog has a grounded match
+          if (!directGeminiKey || isGeneric) {
+            const localGrounded = SovereignAiEngine.generateAutonomousReply(
+              promptText,
+              currentLanguage,
+              historyContext
+            );
+            if (!localGrounded.isGenericFallback) {
+              chatResponse = localGrounded;
+            }
+          }
+        }
       } catch (backendErr) {
         console.warn('Backend server unreachable, activating sovereign client intelligence engine:', backendErr);
 

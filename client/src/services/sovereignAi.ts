@@ -10,6 +10,7 @@ export interface SovereignResponse {
   reply: string;
   cleanSpokenText: string;
   detectedLanguage: string;
+  isGenericFallback?: boolean;
 }
 
 export class SovereignAiEngine {
@@ -146,10 +147,12 @@ export class SovereignAiEngine {
 - Requested language: ${language}.
 - If user input or image is ambiguous or lacks context, ask a brief, helpful clarifying question rather than guessing.`;
 
+      const candidateModels = ['gemini-3.5-flash', 'gemini-flash-lite-latest', 'gemini-3.8-flash'];
       let rawText = '';
-      for (let attempt = 1; attempt <= 2; attempt++) {
+
+      for (const model of candidateModels) {
         try {
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -162,11 +165,9 @@ export class SovereignAiEngine {
             const data = await res.json();
             rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
             if (rawText) break;
-          } else if (res.status === 503 || res.status === 429) {
-            if (attempt < 2) await new Promise(r => setTimeout(r, 800));
           }
         } catch {
-          if (attempt < 2) await new Promise(r => setTimeout(r, 800));
+          // try next model
         }
       }
       if (!rawText) return null;
@@ -192,7 +193,15 @@ export class SovereignAiEngine {
     language: string,
     history: Array<{ role: 'user' | 'assistant'; content: string }>
   ): SovereignResponse {
-    const q = query.trim().toLowerCase();
+    let q = query.trim().toLowerCase();
+
+    // Normalize common phonetic spellings & typos
+    q = q
+      .replace(/\bmathma\b|\bmahtma\b|\bmahatmaji\b/g, 'mahatma')
+      .replace(/\bghandi\b|\bgandhiji\b|\bghandhi\b/g, 'gandhi')
+      .replace(/\bshivaji\s*maharaj\b/g, 'shivaji')
+      .replace(/\bambedkar\s*ji\b|\bbabasaheb\b/g, 'ambedkar');
+
     const { time, date, day } = this.getLiveCalendarContext();
 
     // 0. Conversational Memory queries
@@ -539,7 +548,8 @@ As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive i
     return {
       reply,
       cleanSpokenText: `I have analyzed your inquiry regarding ${query}. As your voice companion made by Piyush from SGU, I am ready to explore this topic further.`,
-      detectedLanguage: language
+      detectedLanguage: language,
+      isGenericFallback: true
     };
   }
 }

@@ -11,6 +11,7 @@ const ChatRequestSchema = z.object({
   message: z.string().default(''),
   image: z.string().optional(),
   language: z.enum(['mr', 'hi', 'en', 'te', 'kn', 'pa', 'ta', 'bn', 'gu', 'ml']).default('en'),
+  geminiApiKey: z.string().optional(),
   history: z.array(z.object({
     role: z.enum(['user', 'assistant']),
     content: z.string()
@@ -25,10 +26,11 @@ chatRouter.post('/', async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const { sessionId, message, image, language, history } = parseResult.data;
+    const { sessionId, message, image, language, history, geminiApiKey } = parseResult.data;
+    const clientKey = geminiApiKey || (req.headers['x-gemini-api-key'] as string | undefined);
 
     // Generate intelligent AI response with multimodal support
-    const aiResult = await generateChatResponse(message, language, history, image);
+    const aiResult = await generateChatResponse(message, language, history, image, clientKey);
     const cleanSpoken = sanitizeTextForTTS(aiResult.reply);
 
     // Save to local ACID database session

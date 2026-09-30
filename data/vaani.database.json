@@ -82,7 +82,7 @@
       "summary": "The biological process by which green plants and certain organisms transform sunlight, water, and carbon dioxide into chemical energy (glucose) and oxygen.",
       "category": "science",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.429Z"
+      "createdAt": "2026-09-30T07:37:12.855Z"
     },
     {
       "id": "know_gravity_physics",
@@ -107,7 +107,7 @@
       "summary": "The universal fundamental force of attraction between masses, governed classically by Newton's Law of Universal Gravitation and modernly by Einstein's General Theory of Relativity.",
       "category": "science",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.430Z"
+      "createdAt": "2026-09-30T07:37:12.856Z"
     },
     {
       "id": "know_ai_ml",
@@ -132,7 +132,7 @@
       "summary": "The field of computer science dedicated to building machines capable of performing tasks requiring human-level reasoning, pattern recognition, and natural language synthesis.",
       "category": "technology",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.430Z"
+      "createdAt": "2026-09-30T07:37:12.856Z"
     },
     {
       "id": "know_python_programming",
@@ -156,7 +156,7 @@
       "summary": "A high-level, interpreted, dynamically-typed programming language emphasizing developer productivity, elegant syntax, and vast ecosystem support.",
       "category": "programming",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.431Z"
+      "createdAt": "2026-09-30T07:37:12.856Z"
     },
     {
       "id": "know_shivaji_maharaj",
@@ -182,7 +182,7 @@
       "summary": "The visionary founder of the Maratha Empire (Hindavi Swarajya), pioneer of guerrilla warfare (Ganimi Kava), Father of the Indian Navy, and champion of benevolent governance.",
       "category": "history",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.431Z"
+      "createdAt": "2026-09-30T07:37:12.856Z"
     },
     {
       "id": "know_constitution_ambedkar",
@@ -205,7 +205,7 @@
       "summary": "The supreme legal document of the Republic of India, drafted under the chairmanship of Dr. B.R. Ambedkar, establishing the world's largest constitutional democracy.",
       "category": "history",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.431Z"
+      "createdAt": "2026-09-30T07:37:12.856Z"
     },
     {
       "id": "know_isro_space",
@@ -228,7 +228,7 @@
       "summary": "The Indian Space Research Organisation (ISRO), founded by Dr. Vikram Sarabhai, globally acclaimed for low-cost, high-precision interplanetary missions.",
       "category": "science",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.431Z"
+      "createdAt": "2026-09-30T07:37:12.856Z"
     },
     {
       "id": "know_creator_sgu",
@@ -249,7 +249,7 @@
       "summary": "Vaani was conceived, designed, and engineered by Piyush, a passionate 1st year engineering innovator at Sanjay Ghodawat University (SGU), Kolhapur.",
       "category": "creator",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.431Z"
+      "createdAt": "2026-09-30T07:37:12.856Z"
     },
     {
       "id": "know_indian_scientists",
@@ -270,7 +270,7 @@
       "summary": "Tribute to India's greatest scientific minds: Srinivasa Ramanujan, Dr. A.P.J. Abdul Kalam, Sir C.V. Raman, and Aryabhata.",
       "category": "science",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.431Z"
+      "createdAt": "2026-09-30T07:37:12.856Z"
     },
     {
       "id": "know_calendar_panchang",
@@ -292,7 +292,7 @@
       "summary": "The lunisolar Indian calendar based on astronomical calculations of the Moon and Sun, including Tithis, Pakshas, and the sacred holy month of Shravan.",
       "category": "culture",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.431Z"
+      "createdAt": "2026-09-30T07:37:12.856Z"
     },
     {
       "id": "know_indian_geography",
@@ -315,7 +315,7 @@
       "summary": "Comprehensive geographical overview of India: 28 states, 8 Union Territories, Himalayan mountain ranges, and sacred river systems.",
       "category": "geography",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.431Z"
+      "createdAt": "2026-09-30T07:37:12.857Z"
     },
     {
       "id": "know_health_nutrition",
@@ -337,7 +337,65 @@
       "summary": "Evidence-based principles of human physiology, daily hydration, macronutrient balance, sleep hygiene, and holistic wellness.",
       "category": "health",
       "language": "en",
-      "createdAt": "2026-09-30T06:01:49.431Z"
+      "createdAt": "2026-09-30T07:37:12.857Z"
+    },
+    {
+      "id": "know_mahatma_gandhi",
+      "title": "Mahatma Gandhi (Mohandas Karamchand Gandhi)",
+      "keywords": [
+        "mahatma",
+        "gandhi",
+        "mathma",
+        "ghandi",
+        "gandhiji",
+        "bapu",
+        "father of the nation",
+        "ahimsa",
+        "satyagraha",
+        "dandi march",
+        "salt march",
+        "quit india",
+        "freedom fighter",
+        "rashtrapita"
+      ],
+      "summary": "Mohandas Karamchand Gandhi (2 October 1869 – 30 January 1948), revered as Mahatma (Great Soul) and Father of the Nation (Rashtrapita), who led India to independence through nonviolent civil resistance (Satyagraha).",
+      "category": "history",
+      "language": "en",
+      "createdAt": "2026-09-30T07:37:12.857Z"
+    },
+    {
+      "id": "know_world_capitals",
+      "title": "World Capitals & International Geography",
+      "keywords": [
+        "capital",
+        "capitals",
+        "france",
+        "paris",
+        "germany",
+        "berlin",
+        "united kingdom",
+        "uk",
+        "london",
+        "usa",
+        "united states",
+        "washington",
+        "japan",
+        "tokyo",
+        "italy",
+        "rome",
+        "russia",
+        "moscow",
+        "china",
+        "beijing",
+        "australia",
+        "canberra",
+        "canada",
+        "ottawa"
+      ],
+      "summary": "Authoritative encyclopedia of world nations and their capital cities, including France (Paris), United Kingdom (London), USA (Washington, D.C.), Japan (Tokyo), and India (New Delhi).",
+      "category": "geography",
+      "language": "en",
+      "createdAt": "2026-09-30T07:37:12.857Z"
     }
   ]
 }

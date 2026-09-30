@@ -4,9 +4,20 @@
     "title": "Photosynthesis & Plant Energy Cycle",
     "category": "science",
     "keywords": [
-      "photosynthesis", "plant", "plants", "chlorophyll", "chloroplast",
-      "sunlight", "carbon dioxide", "oxygen", "glucose", "calvin cycle",
-      "light reaction", "vanaspati", "prakash sanshleshan", "biology"
+      "photosynthesis",
+      "plant",
+      "plants",
+      "chlorophyll",
+      "chloroplast",
+      "sunlight",
+      "carbon dioxide",
+      "oxygen",
+      "glucose",
+      "calvin cycle",
+      "light reaction",
+      "vanaspati",
+      "prakash sanshleshan",
+      "biology"
     ],
     "summary": "The biological process by which green plants and certain organisms transform sunlight, water, and carbon dioxide into chemical energy (glucose) and oxygen.",
     "content": "### Photosynthesis: The Engine of Life on Earth 🌿\n\n**Photosynthesis** is the biochemical process by which photoautotrophic organisms (green plants, algae, and cyanobacteria) convert light energy into chemical energy stored in carbohydrate molecules (glucose).\n\n### 1. The Master Chemical Equation\n$$\\text{6CO}_2 + \\text{6H}_2\\text{O} + \\text{Light Energy} \\xrightarrow{\\text{Chlorophyll}} \\text{C}_6\\text{H}_{12}\\text{O}_6 + \\text{6O}_2$$\n\n- **Reactants:** Carbon dioxide (absorbed through leaf stomata) + Water (absorbed by roots via xylem) + Solar photons.\n- **Products:** Glucose (used for cellular respiration and cellulose structure) + Oxygen (released as a vital byproduct).\n\n### 2. The Two Stages of Photosynthesis\n1. **Light-Dependent Reactions (in Thylakoid Membranes):**\n   - Chlorophyll absorbs photons in the blue and red wavelengths.\n   - Water molecules undergo photolysis: 2H₂O -> 4H⁺ + 4e⁻ + O₂.\n   - Generates high-energy carriers: **ATP** and **NADPH**.\n2. **Light-Independent Reactions / The Calvin Cycle (in Stroma):**\n   - Carbon fixation catalyzed by the enzyme **RuBisCO**.\n   - ATP and NADPH reduce 3-PGA into glyceraldehyde-3-phosphate (G3P), synthesizing glucose.\n\n### 3. Biological & Global Importance\n- Produces nearly **100% of atmospheric oxygen** supporting aerobic life.\n- Acts as the foundational primary producer in terrestrial and aquatic food webs.\n- Crucial carbon sink mitigating planetary greenhouse warming.",
@@ -31,9 +42,21 @@
     "title": "Gravity, Gravitation & Laws of Motion",
     "category": "science",
     "keywords": [
-      "gravity", "gravitation", "gravitational", "newton", "newton's laws",
-      "einstein", "relativity", "mass", "acceleration", "force", "spacetime",
-      "gurutvakarshan", "physics", "motion", "f=ma"
+      "gravity",
+      "gravitation",
+      "gravitational",
+      "newton",
+      "newton's laws",
+      "einstein",
+      "relativity",
+      "mass",
+      "acceleration",
+      "force",
+      "spacetime",
+      "gurutvakarshan",
+      "physics",
+      "motion",
+      "f=ma"
     ],
     "summary": "The universal fundamental force of attraction between masses, governed classically by Newton's Law of Universal Gravitation and modernly by Einstein's General Theory of Relativity.",
     "content": "### Universal Gravitation & Fundamental Physics 🌌\n\n**Gravity** is one of the four fundamental interactions in nature (alongside electromagnetism, strong nuclear force, and weak nuclear force). It dictates planetary orbits, tidal rhythms, and the macroscopic structure of the cosmos.\n\n### 1. Newton's Law of Universal Gravitation\nSir Isaac Newton established that every particle of matter attracts every other particle with a force proportional to the product of their masses and inversely proportional to the square of the distance between their centers:\n$$F = G \\frac{m_1 m_2}{r^2}$$\n\n- **G:** Gravitational Constant = 6.67430 x 10⁻¹¹ N·m²/kg².\n- **g:** Earth's acceleration due to gravity = 9.80665 m/s².\n\n### 2. Newton's Three Master Laws of Motion\n1. **First Law (Inertia):** An object remains at rest or in uniform motion unless acted upon by a net external force.\n2. **Second Law (Force & Momentum):** The rate of change of momentum is proportional to the applied force: F = ma.\n3. **Third Law (Action & Reaction):** For every action, there is an equal and opposite reaction.\n\n### 3. Einstein's General Relativity (1915)\nAlbert Einstein revolutionized physics by showing gravity is **not merely an invisible pull**, but the curvature of four-dimensional **spacetime** caused by mass and energy. Massive celestial bodies warp spacetime, causing nearby matter and light to follow curved geodesic paths.",
@@ -58,9 +81,21 @@
     "title": "Artificial Intelligence, Machine Learning & LLMs",
     "category": "technology",
     "keywords": [
-      "ai", "artificial intelligence", "machine learning", "ml", "deep learning",
-      "neural network", "llm", "transformer", "chatgpt", "gemini", "nlp",
-      "generative ai", "weights", "tokens", "embeddings"
+      "ai",
+      "artificial intelligence",
+      "machine learning",
+      "ml",
+      "deep learning",
+      "neural network",
+      "llm",
+      "transformer",
+      "chatgpt",
+      "gemini",
+      "nlp",
+      "generative ai",
+      "weights",
+      "tokens",
+      "embeddings"
     ],
     "summary": "The field of computer science dedicated to building machines capable of performing tasks requiring human-level reasoning, pattern recognition, and natural language synthesis.",
     "content": "### Artificial Intelligence, Deep Learning & LLM Architecture 🤖\n\n**Artificial Intelligence (AI)** encompasses algorithmic systems engineered to simulate cognitive functions including pattern recognition, logical deduction, predictive synthesis, and autonomous problem-solving.\n\n### 1. Structural Hierarchy\n1. **Artificial Intelligence (Broadest):** Any computational system demonstrating human-like intellect (rule-based expert systems, heuristic search).\n2. **Machine Learning (Subset):** Statistical algorithms that automatically learn patterns from empirical training data without explicit deterministic programming (Supervised, Unsupervised, Reinforcement Learning).\n3. **Deep Learning (Sub-subset):** Multi-layered Artificial Neural Networks (ANNs, CNNs, Transformers) inspired by biological neuronal synapses.\n4. **Large Language Models & Generative AI:** High-parameter probabilistic models capable of generating fluent code, text, audio, and visual assets.\n\n### 2. The Transformer Architecture (Vaswani et al., 2017)\nModern LLMs (including Google Gemini and ChatGPT) are founded upon the **Transformer** architecture:\n- **Self-Attention Mechanism:** Computes contextual relevance weights across all tokens in parallel using Query (Q), Key (K), and Value (V) matrices.\n- **Tokenization & Vector Embeddings:** Text is converted to discrete semantic vectors in high-dimensional latent space.\n- **Multi-Head Attention:** Allows the model to attend to information from different representation subspaces simultaneously.",
@@ -85,9 +120,20 @@
     "title": "Python Programming, Data Structures & Best Practices",
     "category": "programming",
     "keywords": [
-      "python", "coding", "programming", "code", "function", "class", "oop",
-      "list comprehension", "generator", "decorator", "dictionary", "algorithm",
-      "developer", "syntax"
+      "python",
+      "coding",
+      "programming",
+      "code",
+      "function",
+      "class",
+      "oop",
+      "list comprehension",
+      "generator",
+      "decorator",
+      "dictionary",
+      "algorithm",
+      "developer",
+      "syntax"
     ],
     "summary": "A high-level, interpreted, dynamically-typed programming language emphasizing developer productivity, elegant syntax, and vast ecosystem support.",
     "content": "### Python Programming Mastery & Architecture 🐍\n\n**Python** is one of the world's most versatile, elegant, and widely adopted programming languages, excelling in data science, artificial intelligence, backend web systems, and scientific computing.\n\n### 1. Production-Ready Python Pattern\n```python\nfrom typing import List, Dict, Any\nimport time\n\nclass SovereignDataPipeline:\n    \"\"\"Production pipeline demonstrating type hinting, comprehensions, and error handling.\"\"\"\n    \n    def __init__(self, pipeline_name: str) -> None:\n        self.name = pipeline_name\n        self.records_processed: int = 0\n\n    def process_records(self, raw_data: List[Dict[str, Any]]) -> Dict[str, Any]:\n        start_time = time.perf_counter()\n        \n        # High-performance list comprehension with filter\n        valid_items = [\n            {\"id\": item[\"id\"], \"score\": round(item[\"val\"] * 1.5, 2)}\n            for item in raw_data\n            if item.get(\"status\") == \"active\" and isinstance(item.get(\"val\"), (int, float))\n        ]\n        \n        self.records_processed += len(valid_items)\n        elapsed = time.perf_counter() - start_time\n        \n        return {\n            \"pipeline\": self.name,\n            \"processed_count\": len(valid_items),\n            \"execution_seconds\": round(elapsed, 4),\n            \"payload\": valid_items\n        }\n\n# Usage:\npipeline = SovereignDataPipeline(\"TelemetryEngine\")\nresult = pipeline.process_records([\n    {\"id\": \"A1\", \"status\": \"active\", \"val\": 42},\n    {\"id\": \"B2\", \"status\": \"idle\", \"val\": 10},\n    {\"id\": \"C3\", \"status\": \"active\", \"val\": 88.5},\n])\nprint(result)\n```\n\n### 2. Core Python Principles\n- **Dynamic Typing with Type Annotations:** Enhances readability and prevents runtime bugs with static linters.\n- **List Comprehensions & Generators:** Enables memory-efficient O(n) data processing with low overhead.\n- **Decorators and Context Managers:** Metaprogramming pattern for caching, logging, and resource cleanup.",
@@ -112,9 +158,22 @@
     "title": "Chhatrapati Shivaji Maharaj & Hindavi Swarajya",
     "category": "history",
     "keywords": [
-      "shivaji", "chhatrapati", "maharaj", "maratha", "swarajya", "hindavi",
-      "raigad", "rajgad", "pratapgad", "sindhudurg", "ganimi kava", "afzal khan",
-      "tanaji", "baji prabhu", "jijabai", "shahaji"
+      "shivaji",
+      "chhatrapati",
+      "maharaj",
+      "maratha",
+      "swarajya",
+      "hindavi",
+      "raigad",
+      "rajgad",
+      "pratapgad",
+      "sindhudurg",
+      "ganimi kava",
+      "afzal khan",
+      "tanaji",
+      "baji prabhu",
+      "jijabai",
+      "shahaji"
     ],
     "summary": "The visionary founder of the Maratha Empire (Hindavi Swarajya), pioneer of guerrilla warfare (Ganimi Kava), Father of the Indian Navy, and champion of benevolent governance.",
     "content": "### Chhatrapati Shivaji Maharaj: Architect of Hindavi Swarajya 🚩\n\n**Chhatrapati Shivaji Maharaj** (19 February 1630 – 3 April 1680) was a legendary Indian sovereign warrior king and the visionary founder of the **Maratha Empire (Hindavi Swarajya)**.\n\n### 1. Foundations of Sovereignty\n- **Birthplace:** Shivneri Fort, near Junnar (Pune district, Maharashtra).\n- **Inspirational Mentorship:** Guided by his visionary mother **Rajmata Jijabai** and father Shahaji Raje Bhosale.\n- **Pledge of Swarajya:** At the young age of 16 at Raireshwar temple, Maharaj took the sacred vow to establish Swarajya (self-rule rooted in justice, religious tolerance, and people's welfare).\n\n### 2. Military Innovations & Fort Architecture\n- **Ganimi Kava (Guerrilla Tactics):** Mastered asymmetrical mountain warfare, utilizing speed, deception, terrain mastery, and surprise ambushes against overwhelmingly larger Mughal and Adilshahi armies.\n- **Fortress Mastery:** Conquered and fortified over 300 hill and sea forts, designating **Raigad Fort** as the capital of Swarajya.\n- **Father of the Indian Navy:** Built India's first modern naval armada with coastal fortresses like **Sindhudurg, Vijaydurg, and Suvarnadurg** to protect trade against European powers and the Siddis.\n\n### 3. Progressive Governance & Coronation (1674)\n- **Coronation (Rajyabhisheka):** Crowned as Chhatrapati at Raigad on 6 June 1674, restoring sovereign Indian royal authority.\n- **Ashta Pradhan Mandal:** Instituted an eight-minister administrative council ensuring departmental accountability.\n- **Peasant & Women Welfare:** Strict royal orders banned looting of civilian farmers, mandated religious freedom, and imposed the harshest punishments for disrespecting women of any faith.",
@@ -139,9 +198,19 @@
     "title": "The Constitution of India & Dr. B.R. Ambedkar",
     "category": "history",
     "keywords": [
-      "constitution", "ambedkar", "samvidhan", "b.r. ambedkar", "babasaheb",
-      "preamble", "fundamental rights", "republic", "democracy", "26 january",
-      "26 november", "drafting committee", "law"
+      "constitution",
+      "ambedkar",
+      "samvidhan",
+      "b.r. ambedkar",
+      "babasaheb",
+      "preamble",
+      "fundamental rights",
+      "republic",
+      "democracy",
+      "26 january",
+      "26 november",
+      "drafting committee",
+      "law"
     ],
     "summary": "The supreme legal document of the Republic of India, drafted under the chairmanship of Dr. B.R. Ambedkar, establishing the world's largest constitutional democracy.",
     "content": "### The Constitution of India & Dr. B.R. Ambedkar 📜\n\nThe **Constitution of India (भारतीय संविधान)** is the supreme law of the Republic of India. It lays down the legal framework delineating fundamental political code, governmental structures, procedures, powers, duties, and citizen rights.\n\n### 1. Architectural History\n- **Drafting Committee Chairman:** **Dr. Bhimrao Ramji Ambedkar (Babasaheb)**, revered as the Chief Architect and Father of the Indian Constitution.\n- **Constituent Assembly President:** Dr. Rajendra Prasad.\n- **Time Taken:** 2 years, 11 months, and 18 days of deliberative democratic debate.\n- **Adoption:** 26 November 1949 (celebrated annually as **Constitution Day / Samvidhan Divas**).\n- **Enactment:** 26 January 1950 (celebrated nationwide as **Republic Day**).\n\n### 2. The Sacred Preamble\nThe Preamble declares India to be a **SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC** guaranteeing JUSTICE, LIBERTY, EQUALITY, and FRATERNITY to all citizens.\n\n### 3. Fundamental Rights (Part III)\nArticles 12–35 guarantee Right to Equality, Freedom of Speech, Protection of Life and Liberty, and Right to Constitutional Remedies (termed by Dr. Ambedkar as the 'Heart and Soul of the Constitution').",
@@ -166,8 +235,19 @@
     "title": "ISRO & India's Space Exploration Achievements",
     "category": "science",
     "keywords": [
-      "isro", "space", "chandrayaan", "chandrayaan-3", "mangalyaan", "aditya-l1",
-      "gaganyaan", "vikram sarabhai", "moon", "mars", "satellite", "pslv", "gslv"
+      "isro",
+      "space",
+      "chandrayaan",
+      "chandrayaan-3",
+      "mangalyaan",
+      "aditya-l1",
+      "gaganyaan",
+      "vikram sarabhai",
+      "moon",
+      "mars",
+      "satellite",
+      "pslv",
+      "gslv"
     ],
     "summary": "The Indian Space Research Organisation (ISRO), founded by Dr. Vikram Sarabhai, globally acclaimed for low-cost, high-precision interplanetary missions.",
     "content": "### ISRO & The Indian Space Program 🚀\n\nThe **Indian Space Research Organisation (ISRO)** is India's national space agency, headquartered in Bengaluru, Karnataka. Operating under the Department of Space, ISRO is globally renowned for cost-efficient engineering and historic interplanetary milestones.\n\n### 1. Founding & Architectural Vision\n- **Founding Visionary:** **Dr. Vikram Sarabhai**, widely celebrated as the Father of the Indian Space Program.\n- **Establishment:** 15 August 1969.\n- **Primary Launch Facility:** Satish Dhawan Space Centre (SDSC) SHAR, Sriharikota, Andhra Pradesh.\n\n### 2. Crown Jewel Missions\n1. **Chandrayaan-3 (23 August 2023):**\n   - India became the **first nation to land near the Moon's South Pole** and the 4th country to achieve a soft lunar landing.\n   - Lander: *Vikram*, Rover: *Pragyan*.\n   - Landing point officially named **Shiv Shakti Point**; August 23 proclaimed as **National Space Day**.\n2. **Mangalyaan (Mars Orbiter Mission - MOM, 2013):**\n   - First nation in the world to reach Martian orbit on its maiden attempt, achieved on a historic budget (~$74M).\n3. **Aditya-L1 (2023):** India's premier solar observatory stationed at Sun-Earth Lagrangian Point L1 (~1.5 million km away).\n4. **Gaganyaan (Upcoming):** Indigenous human spaceflight mission aiming to send 3 astronauts to Low Earth Orbit (400 km).",
@@ -192,8 +272,17 @@
     "title": "Creator Lore - Piyush • 1st Year Student of SGU",
     "category": "creator",
     "keywords": [
-      "piyush", "creator", "maker", "developer", "who made you", "who created you",
-      "who is piyush", "sgu", "ghodawat", "sanjay ghodawat university", "vaani origin"
+      "piyush",
+      "creator",
+      "maker",
+      "developer",
+      "who made you",
+      "who created you",
+      "who is piyush",
+      "sgu",
+      "ghodawat",
+      "sanjay ghodawat university",
+      "vaani origin"
     ],
     "summary": "Vaani was conceived, designed, and engineered by Piyush, a passionate 1st year engineering innovator at Sanjay Ghodawat University (SGU), Kolhapur.",
     "content": "### Creator Attribution & Imperial Heritage 👑\n\n**VAANI • IMPERIAL EDITION** is a sovereign voice AI companion conceived, architected, and engineered by **Piyush**, a 1st year student at **Sanjay Ghodawat University (SGU)**.\n\n### 1. Vision of the Creator\nPiyush designed Vaani to eliminate reliance on foreign voice assistants and provide an imperial, culturally resonant AI experience for India:\n- **Zero-Latency Voice & Type Interaction:** Studio-grade neural speech synthesis in 10 Indian languages.\n- **3D Royal Chrono-Orb:** A gyroscopic Web Audio reactive visualizer with luxury 24K Gold, Emerald, Sapphire, Ruby, Amethyst, and Cyan themes.\n- **Dual Persistence Architecture:** Built with an atomic ACID JSON local engine coupled with Supabase Cloud PostgreSQL.\n- **Temporal Panchang Intelligence:** Real-time Indian Standard Time (IST), lunar Tithis, Pakshas, and 365-day festival engine.\n\n### 2. Sanjay Ghodawat University (SGU)\n- **Institution:** Sanjay Ghodawat University (Kolhapur/Atigre, Maharashtra).\n- **Reputation:** A premier private university known for cutting-edge engineering disciplines, technological innovation, and student research.",
@@ -218,8 +307,17 @@
     "title": "Great Indian Scientists & Mathematicians",
     "category": "science",
     "keywords": [
-      "ramanujan", "kalam", "abdul kalam", "c.v. raman", "aryabhata", "scientists",
-      "homi bhabha", "raman effect", "mathematics", "zero", "missile man"
+      "ramanujan",
+      "kalam",
+      "abdul kalam",
+      "c.v. raman",
+      "aryabhata",
+      "scientists",
+      "homi bhabha",
+      "raman effect",
+      "mathematics",
+      "zero",
+      "missile man"
     ],
     "summary": "Tribute to India's greatest scientific minds: Srinivasa Ramanujan, Dr. A.P.J. Abdul Kalam, Sir C.V. Raman, and Aryabhata.",
     "content": "### Legendary Indian Scientists & Mathematicians 🔬\n\nIndia has an unbroken, centuries-long legacy of groundbreaking mathematical and scientific discovery:\n\n### 1. Srinivasa Ramanujan (1887–1920)\n- **Genius of Infinite Series:** Self-taught mathematical prodigy whose intuitive theorems transformed number theory, continued fractions, and mock theta functions.\n- **Hardy-Ramanujan Number 1729:** The smallest number expressible as the sum of two cubes in two different ways (1³ + 12³ = 9³ + 10³).\n- **National Mathematics Day:** Celebrated annually on his birthday (December 22).\n\n### 2. Dr. A.P.J. Abdul Kalam (1931–2015)\n- **Missile Man of India:** Led India's Integrated Guided Missile Development Program (AGNI, PRITHVI) and the historic 1998 Pokhran-II nuclear tests.\n- **People's President:** Served as the 11th President of India (2002–2007), author of *Wings of Fire* and *India 2020*.\n\n### 3. Sir C.V. Raman (1888–1970)\n- **The Raman Effect:** Discovered inelastic scattering of photons in transparent media.\n- **Nobel Prize (1930):** First Asian to win the Nobel Prize in Physics. National Science Day celebrated on February 28.\n\n### 4. Aryabhata (476–550 CE)\n- **Ancient Visionary:** Formulated operations of Zero, calculated pi ≈ 3.1416, and explained Earth's axial rotation and solar/lunar eclipses.",
@@ -244,8 +342,18 @@
     "title": "Indian Astronomical Calendar, Panchang & Shravan Maas",
     "category": "culture",
     "keywords": [
-      "calendar", "panchang", "tithi", "paksha", "shravan", "shukla", "krishna",
-      "nakshatra", "samvat", "hindu calendar", "somwar", "shiva"
+      "calendar",
+      "panchang",
+      "tithi",
+      "paksha",
+      "shravan",
+      "shukla",
+      "krishna",
+      "nakshatra",
+      "samvat",
+      "hindu calendar",
+      "somwar",
+      "shiva"
     ],
     "summary": "The lunisolar Indian calendar based on astronomical calculations of the Moon and Sun, including Tithis, Pakshas, and the sacred holy month of Shravan.",
     "content": "### Indian Astronomical Calendar & Panchang Science 🗓️\n\nThe traditional **Indian Lunisolar Calendar** is a sophisticated astronomical system aligning the lunar cycle (~354 days) with the solar year (~365.25 days) through periodic intercalary months (*Adhik Maas*).\n\n### 1. The Five Limbs of Panchang (पञ्चाङ्ग)\n1. **Tithi (Lunar Day):** The 12-degree angular separation between the Sun and Moon (30 tithis per month).\n2. **Vara (Solar Day):** The 7 days of the week (Ravivara to Shanivara).\n3. **Nakshatra (Lunar Mansion):** 27 stellar divisions of the zodiac traversed by the Moon (~13°20' each, from Ashwini to Revati).\n4. **Yoga (Angular Sum):** 27 mathematical combinations of Sun and Moon longitudinal positions.\n5. **Karana (Half Tithi):** 11 divisions corresponding to 6 degrees of angular difference.\n\n### 2. The Two Fortnights (Pakshas)\n- **Shukla Paksha (Bright Fortnight):** Waxing moon from Pratipada to Purnima (Full Moon).\n- **Krishna Paksha (Dark Fortnight):** Waning moon from Pratipada to Amavasya (New Moon).\n\n### 3. Sacred Month of Shravan (श्रावण मास)\n- **Significance:** The 5th month of the Hindu calendar, dedicated to **Lord Shiva** and the preservation of nature.\n- **Shravan Somwar:** Mondays observe devout fasting, spiritual introspection, and river water (*Jalabhishek*) offerings.\n- **Environmental Context:** Marks the height of the Indian monsoon (Varsha Ritu), replenishing rivers, aquifers, and agrarian fertility across India.",
@@ -270,8 +378,19 @@
     "title": "Geography of India: States, Rivers & Topography",
     "category": "geography",
     "keywords": [
-      "geography", "india", "states", "capital", "ganga", "himalayas", "rivers",
-      "delhi", "maharashtra", "karnataka", "tamil nadu", "gujarat", "western ghats"
+      "geography",
+      "india",
+      "states",
+      "capital",
+      "ganga",
+      "himalayas",
+      "rivers",
+      "delhi",
+      "maharashtra",
+      "karnataka",
+      "tamil nadu",
+      "gujarat",
+      "western ghats"
     ],
     "summary": "Comprehensive geographical overview of India: 28 states, 8 Union Territories, Himalayan mountain ranges, and sacred river systems.",
     "content": "### Geography of India: Physical Landscapes & Sovereign Heritage 🗺️\n\nIndia (Bharat) is the world's 7th largest nation by land area (3.287 million km²) and the most populous, characterized by immense topographical and ecological diversity.\n\n### 1. Political Division\n- **28 Sovereign States & 8 Union Territories.**\n- **National Capital:** New Delhi.\n- **Commercial & Financial Capital:** Mumbai (Maharashtra).\n\n### 2. Major Physiographic Divisions\n1. **The Northern Himalayan Mountain Wall:** Contains the world's highest peaks, acting as a climatic barrier and perennial water source.\n2. **The Northern Indo-Gangetic Plains:** Highly fertile alluvial agrarian basins fed by the Ganga, Yamuna, and Brahmaputra river systems.\n3. **The Peninsular Plateau & Deccan:** Ancient crystalline plateau flanked by the Western Ghats (Sahyadri - a global biodiversity hotspot) and Eastern Ghats.\n4. **The Coastal Plains & Islands:** Fertile Konkan, Malabar, Coromandel coasts, and the Andaman & Nicobar and Lakshadweep archipelagoes.\n\n### 3. Sacred River Networks\n- **Himalayan Rivers:** Ganga (2,525 km), Yamuna, Brahmaputra, Indus.\n- **Peninsular Rivers:** Godavari (longest peninsular river - *Dakshin Ganga*), Krishna, Narmada, Tapti, and Kaveri.",
@@ -296,8 +415,18 @@
     "title": "Human Health, Balanced Nutrition & Wellness",
     "category": "health",
     "keywords": [
-      "health", "nutrition", "diet", "water", "exercise", "vitamins", "protein",
-      "sleep", "immune system", "mental health", "wellness", "calories"
+      "health",
+      "nutrition",
+      "diet",
+      "water",
+      "exercise",
+      "vitamins",
+      "protein",
+      "sleep",
+      "immune system",
+      "mental health",
+      "wellness",
+      "calories"
     ],
     "summary": "Evidence-based principles of human physiology, daily hydration, macronutrient balance, sleep hygiene, and holistic wellness.",
     "content": "### Human Health, Physiology & Nutritional Science 🍏\n\nMaintaining peak cognitive focus, physical stamina, and cellular longevity requires balancing nutritional biochemistry, cardiovascular activity, and circadian recovery.\n\n### 1. Macronutrient Architecture\n- **Proteins (4 kcal/g):** Composed of 20 amino acids (9 essential); builds muscle tissue, enzymes, neurotransmitters, and antibodies. Target: 0.8–1.2g per kg of body mass.\n- **Complex Carbohydrates (4 kcal/g):** Whole grains, legumes, and tubers providing slow-release glucose, fiber for microbiome health, and stable insulin response.\n- **Healthy Lipids (9 kcal/g):** Unsaturated fats (Omega-3 and Omega-6 fatty acids) essential for cell membrane integrity, vitamin absorption (A, D, E, K), and hormone regulation.\n\n### 2. Daily Wellness Pillars\n- **Hydration:** Consume 2.5 to 3.5 liters of clean water daily to facilitate metabolic excretion, joint lubrication, and cognitive clarity.\n- **Sleep Hygiene:** 7 to 8 hours of restorative sleep regulates cortisol, boosts human growth hormone, and clears neural metabolic waste.\n- **Physical Activity:** 150 minutes of moderate aerobic exercise weekly plus resistance training enhances metabolic rate and cardiovascular longevity.",
@@ -314,6 +443,92 @@
         "summary": "संतुलित आहार, पुरेसे पाणी, व्यायाम आणि चांगल्या झोपेचे महत्त्व.",
         "content": "### आरोग्य आणि संतुलित आहार 🍏\n\n- **आहार:** शरीराला आवश्यक प्रथिने (Proteins), जीवनसत्त्वे (Vitamins) आणि चौरस अन्न.\n- **पाणी:** दररोज २.५ ते ३ लिटर पाणी पिणे आरोग्यासाठी अत्यंत गरजेचे आहे.\n- **नियमित व्यायाम व झोप:** रोज ३० मिनिटे व्यायाम आणि ७ ते ८ तासांची शांत झोप मानसिक व शारीरिक ताजेतवानेपणा टिकवून ठेवते.",
         "spokenSummary": "निरोगी राहण्यासाठी पोषक आहार, भरपूर पाणी, नियमित व्यायाम आणि ७ ते ८ तासांची झोप सर्वात महत्त्वाची आहे."
+      }
+    }
+  },
+  {
+    "id": "know_mahatma_gandhi",
+    "title": "Mahatma Gandhi (Mohandas Karamchand Gandhi)",
+    "category": "history",
+    "keywords": [
+      "mahatma",
+      "gandhi",
+      "mathma",
+      "ghandi",
+      "gandhiji",
+      "bapu",
+      "father of the nation",
+      "ahimsa",
+      "satyagraha",
+      "dandi march",
+      "salt march",
+      "quit india",
+      "freedom fighter",
+      "rashtrapita"
+    ],
+    "summary": "Mohandas Karamchand Gandhi (2 October 1869 – 30 January 1948), revered as Mahatma (Great Soul) and Father of the Nation (Rashtrapita), who led India to independence through nonviolent civil resistance (Satyagraha).",
+    "content": "### Mahatma Gandhi (Mohandas Karamchand Gandhi) 🇮🇳\n\n**Mohandas Karamchand Gandhi** (2 October 1869 – 30 January 1948), reverently known as **Mahatma** (Great Soul) and **Bapu**, was the preeminent leader of the Indian independence movement and the global pioneer of nonviolent resistance (**Satyagraha** and **Ahimsa**).\n\n### 1. Key Life Milestones\n- **Birth:** 2 October 1869 in Porbandar, Gujarat. His birthday is globally observed as the **International Day of Non-Violence**.\n- **South Africa Years (1893–1914):** Practiced law and developed the philosophy of Satyagraha against racial injustice.\n- **Return to India (1915):** Joined the Indian freedom struggle; Rabindranath Tagore bestowed upon him the title **Mahatma**.\n\n### 2. Major Historic Movements\n1. **Non-Cooperation Movement (1920–1922):** Mass peaceful boycott of British colonial institutions.\n2. **The Salt March / Dandi Satyagraha (1930):** Marched 390 km from Sabarmati Ashram to Dandi to defy the British salt tax.\n3. **Quit India Movement (1942):** Launched nationwide with the historic call: *\"Do or Die\"* (Karo ya Maro).\n\n### 3. Enduring Legacy\n- Championed truth (Satya), non-violence (Ahimsa), self-reliance (Swaraj), and harmony.\n- Inspired global civil rights movements led by Martin Luther King Jr. and Nelson Mandela.",
+    "spokenSummary": "Mahatma Gandhi, the Father of the Nation and Bapu, led India to independence through Satyagraha and non-violence, organizing the Dandi March and Quit India movement.",
+    "translations": {
+      "hi": {
+        "title": "महात्मा गांधी (राष्ट्रपिता)",
+        "summary": "सत्य और अहिंसा के मार्ग पर चलकर भारत को स्वतंत्रता दिलाने वाले राष्ट्रपिता महात्मा गांधी।",
+        "content": "### महात्मा गांधी (मोहनदास करमचंद गांधी) 🇮🇳\n\n**महात्मा गांधी** (2 अक्टूबर 1869 – 30 जनवरी 1948) को ससम्मान **राष्ट्रपिता** एवं **बापू** कहा जाता है। उन्होंने सत्य और अहिंसा के बल पर भारत को ब्रिटिश हुकूमत से आज़ाद कराया।\n\n### प्रमुख आंदोलन:\n1. **असहयोग आंदोलन (1920):** विदेशी सामान का शांतिपूर्ण बहिष्कार।\n2. **दांडी मार्च / नमक सत्याग्रह (1930):** साबरमती से दांडी तक पदयात्रा कर नमक कानून तोड़ा।\n3. **भारत छोड़ो आंदोलन (1942):** राष्ट्रव्यापी आंदोलन जिसमें उन्होंने *\"करो या मरो\"* का नारा दिया।\n\nउनका जन्मदिन 2 अक्टूबर दुनिया भर में अंतर्राष्ट्रीय अहिंसा दिवस के रूप में मनाया जाता है।",
+        "spokenSummary": "महात्मा गांधी राष्ट्रपिता हैं, जिन्होंने सत्य और अहिंसा के मार्ग पर चलकर दांडी यात्रा और भारत छोड़ो आंदोलन के जरिए देश को आज़ाद कराया।"
+      },
+      "mr": {
+        "title": "महात्मा गांधी (राष्ट्रपिता)",
+        "summary": "सत्य आणि अहिंसेच्या बळावर भारताला स्वातंत्र्य मिळवून देणारे राष्ट्रपिता महात्मा गांधी.",
+        "content": "### महात्मा गांधी (मोहनदास करमचंद गांधी) 🇮🇳\n\n**महात्मा गांधी** (२ ऑक्टोबर १८६९ – ३० जानेवारी १९४८) हे भारताचे **राष्ट्रपिता** आणि अहिंसक स्वातंत्र्यलढ्याचे महानायक होते.\n\n### प्रमुख लढे व चळवळी:\n- **सत्याग्रह व अहिंसा:** अहिंसेच्या मार्गाने ब्रिटिश साम्राज्याशी लढा दिला.\n- **दांडी यात्रा (१९३०):** साबरमती ते दांडी पायी जाऊन मिठाचा जुलमी कायदा मोडला.\n- **भारत छोडो आंदोलन (१९४२):** संपूर्ण देशाला *\"करा किंवा मरा\"* हा मंत्र दिला.\n\nत्यांची जयंती २ ऑक्टोबर ही जगभरात आंतरराष्ट्रीय अहिंसा दिन म्हणून साजरी केली जाते.",
+        "spokenSummary": "महात्मा गांधी भारताचे राष्ट्रपिता होते. त्यांनी सत्य, अहिंसा आणि सत्याग्रहाच्या बळावर दांडी यात्रा आणि भारत छोडो आंदोलनाचे नेतृत्व केले."
+      }
+    }
+  },
+  {
+    "id": "know_world_capitals",
+    "title": "World Capitals & International Geography",
+    "category": "geography",
+    "keywords": [
+      "capital",
+      "capitals",
+      "france",
+      "paris",
+      "germany",
+      "berlin",
+      "united kingdom",
+      "uk",
+      "london",
+      "usa",
+      "united states",
+      "washington",
+      "japan",
+      "tokyo",
+      "italy",
+      "rome",
+      "russia",
+      "moscow",
+      "china",
+      "beijing",
+      "australia",
+      "canberra",
+      "canada",
+      "ottawa"
+    ],
+    "summary": "Authoritative encyclopedia of world nations and their capital cities, including France (Paris), United Kingdom (London), USA (Washington, D.C.), Japan (Tokyo), and India (New Delhi).",
+    "content": "### Major World Capitals & Global Geography 🌍\n\n### Key Global Capitals\n- 🇫🇷 **France:** **Paris** (the City of Light, situated along the Seine River)\n- 🇬🇧 **United Kingdom:** **London** (historical global metropolis on the Thames)\n- 🇺🇸 **United States:** **Washington, D.C.** (seat of the federal government)\n- 🇯🇵 **Japan:** **Tokyo** (world's premier technologically advanced megacity)\n- 🇮🇳 **India:** **New Delhi** (national capital territory in northern India)\n- 🇩🇪 **Germany:** **Berlin** (cultural and economic center)\n- 🇮🇹 **Italy:** **Rome** (the Eternal City, heart of ancient Roman history)\n- 🇷🇺 **Russia:** **Moscow** (capital featuring the Red Square and Kremlin)\n- 🇨🇳 **China:** **Beijing** (seat of government and Forbidden City)\n- 🇦🇺 **Australia:** **Canberra** (planned capital city, not Sydney)\n- 🇨🇦 **Canada:** **Ottawa** (federal capital in Ontario, not Toronto)\n- 🇧🇷 **Brazil:** **Brasília** (architecturally planned capital, not Rio)",
+    "spokenSummary": "The capital of France is Paris, the United Kingdom is London, the United States is Washington D.C., Japan is Tokyo, and India is New Delhi.",
+    "translations": {
+      "hi": {
+        "title": "विश्व की राजधानियाँ (World Capitals)",
+        "summary": "प्रमुख देशों की राजधानियों की सूची: फ्रांस (पेरिस), ब्रिटेन (लंदन), अमेरिका (वाशिंगटन), जापान (टोक्यो)।",
+        "content": "### प्रमुख देशों की राजधानियाँ 🌍\n\n- **फ्रांस:** पेरिस\n- **भारत:** नई दिल्ली\n- **अमेरिका:** वाशिंगटन डी.सी.\n- **ब्रिटेन:** लंदन\n- **जापान:** टोक्यो\n- **जर्मनी:** बर्लिन\n- **रूस:** मॉस्को\n- **ऑस्ट्रेलिया:** कैनबरा\n- **कनाडा:** ओटावा",
+        "spokenSummary": "फ्रांस की राजधानी पेरिस है, अमेरिका की वाशिंगटन डीसी, ब्रिटेन की लंदन और भारत की नई दिल्ली है।"
+      },
+      "mr": {
+        "title": "जगातील प्रमुख देशांच्या राजधान्या",
+        "summary": "प्रमुख देशांच्या राजधान्या: फ्रान्स (पॅरिस), ब्रिटन (लंडन), अमेरिका (वॉशिंग्टन), जपान (टोकियो).",
+        "content": "### जगातील प्रमुख देशांच्या राजधान्या 🌍\n\n- **फ्रान्स:** पॅरिस\n- **भारत:** नवी दिल्ली\n- **अमेरिका:** वॉशिंग्टन डी.सी.\n- **ब्रिटन:** लंडन\n- **जपान:** टोकियो\n- **जर्मनी:** बर्लिन\n- **ऑस्ट्रेलिया:** कॅनबेरा\n- **कॅनडा:** ओटावा",
+        "spokenSummary": "फ्रान्सची राजधानी पॅरिस आहे, अमेरिकेची वॉशिंग्टन डीसी, ब्रिटनची लंडन आणि भारताची नवी दिल्ली आहे."
       }
     }
   }

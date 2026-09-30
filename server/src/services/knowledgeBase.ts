@@ -64,8 +64,15 @@ export interface SearchMatch {
  * Searches the Knowledge Catalog for matching knowledge items based on query tokens.
  */
 export function searchKnowledge(query: string, language: string = 'en'): SearchMatch | null {
-  const normalized = (query || '').toLowerCase().trim();
+  let normalized = (query || '').toLowerCase().trim();
   if (normalized.length < 2) return null;
+
+  // Normalize common phonetic spellings & typos
+  normalized = normalized
+    .replace(/\bmathma\b|\bmahtma\b|\bmahatmaji\b/g, 'mahatma')
+    .replace(/\bghandi\b|\bgandhiji\b|\bghandhi\b/g, 'gandhi')
+    .replace(/\bshivaji\s*maharaj\b/g, 'shivaji')
+    .replace(/\bambedkar\s*ji\b|\bbabasaheb\b/g, 'ambedkar');
 
   const stopWords = new Set([
     'what', 'is', 'the', 'a', 'an', 'tell', 'me', 'about', 'how', 'does', 'work',

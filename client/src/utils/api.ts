@@ -9,11 +9,21 @@ export async function sendChatMessage(payload: {
   image?: string;
   language: string;
   history: Array<{ role: 'user' | 'assistant'; content: string }>;
+  geminiApiKey?: string;
 }) {
+  const storedKey = typeof window !== 'undefined' ? localStorage.getItem('vaani_gemini_api_key') : null;
+  const fullPayload = {
+    ...payload,
+    geminiApiKey: payload.geminiApiKey || storedKey || undefined
+  };
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (storedKey) {
+    headers['x-gemini-api-key'] = storedKey;
+  }
   const res = await fetch(`${API_BASE}/chat`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    headers,
+    body: JSON.stringify(fullPayload)
   });
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));

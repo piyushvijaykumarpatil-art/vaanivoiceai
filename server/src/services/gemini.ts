@@ -6,13 +6,21 @@ import { getIndianCalendarContext, evaluateQuickMath } from './calendarService.j
 import { localDb } from '../db/acidEngine.js';
 import { searchKnowledge, getKnowledgeContextForPrompt } from './knowledgeBase.js';
 
-function getAiClient(): GoogleGenAI | null {
-  const apiKey = process.env.GEMINI_API_KEY || '';
+const CANDIDATE_MODELS = [
+  'gemini-3.5-flash',
+  'gemini-flash-lite-latest',
+  'gemini-3.8-flash',
+  'gemini-3.7-flash',
+  'gemini-flash-latest'
+];
+
+function getAiClient(clientKey?: string): GoogleGenAI | null {
+  const apiKey = clientKey || process.env.GEMINI_API_KEY || '';
   if (apiKey && apiKey.length > 5) {
     try {
       return new GoogleGenAI({ apiKey });
     } catch (err) {
-      console.warn('Could not initialize GoogleGenAI with provided key:', err);
+      console.warn('Could not initialize GoogleGenAI with key:', err);
     }
   }
   return null;
@@ -68,7 +76,8 @@ export async function generateChatResponse(
   message: string,
   language: string = 'en',
   history: ChatTurn[] = [],
-  image?: string
+  image?: string,
+  clientApiKey?: string
 ): Promise<ChatServiceResponse> {
   const calendar = getIndianCalendarContext();
   const lowerMsg = (message || '').toLowerCase().trim();
@@ -173,8 +182,8 @@ export async function generateChatResponse(
   const knowledgeMatch = searchKnowledge(message, language);
   const knowledgeContext = getKnowledgeContextForPrompt(message);
 
-  // 7. Query Gemini API with gemini-3.8-flash and automatic retry
-  const aiClient = getAiClient();
+  // 7. Query Gemini API across candidate models pool
+  const aiClient = getAiClient(clientApiKey);
   if (aiClient) {
     try {
       const historyContext = history.slice(-6).map(h => `${h.role === 'user' ? 'User' : 'Vaani'}: ${h.content}`).join('\n');
@@ -218,24 +227,22 @@ Formatting: Use clean ChatGPT-style Markdown with clear headings (###), bold hig
       }
       parts.push({ text: `${dynamicInstruction}\n\n${promptText}` });
 
-      // Retry mechanism for gemini-3.8-flash (handles temporary 503 spikes)
+      // Model waterfall pool for zero-failure generative intelligence
       let responseText = '';
-      let lastErr: any = null;
 
-      for (let attempt = 1; attempt <= 2; attempt++) {
+      for (const modelName of CANDIDATE_MODELS) {
         try {
           const response = await aiClient.models.generateContent({
-            model: 'gemini-3.8-flash',
+            model: modelName,
             contents: [{ role: 'user', parts }]
           });
           responseText = response.text || '';
-          if (responseText.trim().length > 0) break;
-        } catch (apiError: any) {
-          lastErr = apiError;
-          console.warn(`[Gemini API] Attempt ${attempt} failed:`, apiError?.message || apiError);
-          if (attempt < 2) {
-            await new Promise(res => setTimeout(res, 800));
+          if (responseText.trim().length > 0) {
+            console.log(`[Gemini API] Successfully generated with model: ${modelName}`);
+            break;
           }
+        } catch (apiError: any) {
+          console.warn(`[Gemini API] Model ${modelName} unavailable, trying next candidate:`, apiError?.message?.substring(0, 80) || apiError);
         }
       }
 

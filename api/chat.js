@@ -74,9 +74,17 @@ function sanitizeTextForTTS(text) {
     .trim();
 }
 
+const CANDIDATE_MODELS = ['gemini-3.5-flash', 'gemini-flash-lite-latest', 'gemini-3.8-flash'];
+
 function matchKnowledge(query, language) {
-  const q = (query || '').toLowerCase().trim();
+  let q = (query || '').toLowerCase().trim();
   if (q.length < 2) return null;
+
+  q = q
+    .replace(/\bmathma\b|\bmahtma\b|\bmahatmaji\b/g, 'mahatma')
+    .replace(/\bghandi\b|\bgandhiji\b|\bghandhi\b/g, 'gandhi')
+    .replace(/\bshivaji\s*maharaj\b/g, 'shivaji')
+    .replace(/\bambedkar\s*ji\b|\bbabasaheb\b/g, 'ambedkar');
 
   const stopWords = new Set(['what', 'is', 'the', 'a', 'an', 'tell', 'me', 'about', 'how', 'does', 'who', 'in', 'on', 'of', 'and', 'to', 'for', 'explain', 'kya', 'hai', 'batao', 'sang', 'aahe', 'kay']);
   const words = q.replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w.length > 1 && !stopWords.has(w));
@@ -131,7 +139,7 @@ module.exports = async function handler(req, res) {
 
   try {
     const { sessionId, message = '', image, language = 'en', history = [] } = req.body || {};
-    const apiKey = process.env.GEMINI_API_KEY || req.headers['x-gemini-api-key'] || '';
+    const apiKey = (req.body && req.body.geminiApiKey) || process.env.GEMINI_API_KEY || req.headers['x-gemini-api-key'] || '';
     const calendar = getIndianCalendarContext();
     const lower = (message || '').toLowerCase().trim();
 
@@ -170,7 +178,7 @@ module.exports = async function handler(req, res) {
     // 3. Search Knowledge Match
     const km = matchKnowledge(message, language);
 
-    // 4. Call Gemini API if Key is Available
+    // 4. Call Gemini API across candidate models pool
     if (apiKey && apiKey.length > 5) {
       try {
         const contents = history.slice(-6).map(h => ({
@@ -197,9 +205,9 @@ module.exports = async function handler(req, res) {
         });
 
         let replyText = '';
-        for (let attempt = 1; attempt <= 2; attempt++) {
+        for (const model of CANDIDATE_MODELS) {
           try {
-            const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
+            const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -212,11 +220,9 @@ module.exports = async function handler(req, res) {
               const data = await geminiRes.json();
               replyText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
               if (replyText) break;
-            } else if (geminiRes.status === 503 || geminiRes.status === 429) {
-              if (attempt < 2) await new Promise(r => setTimeout(r, 800));
             }
           } catch {
-            if (attempt < 2) await new Promise(r => setTimeout(r, 800));
+            // try next model in candidate pool
           }
         }
 
