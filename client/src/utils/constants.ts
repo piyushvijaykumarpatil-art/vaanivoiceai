@@ -179,7 +179,7 @@ export const VOICE_MODELS: VoiceModelConfig[] = [
     rate: 1.02,
     avatar: '👑',
     description: 'Warm, melodious, royal and culturally resonant female cadence.',
-    sampleText: 'Greetings, sovereign seeker. I am VAANI • IMPERIAL EDITION, made by Piyush • 1st year student of SGU.'
+    sampleText: 'Greetings, sovereign seeker. I am VAANI • IMPERIAL EDITION, made by Piyush • 1st year student of NIAT X SGU.'
   },
   {
     id: 'vaani-sovereign',

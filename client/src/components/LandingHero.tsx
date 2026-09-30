@@ -68,7 +68,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             </button>
           )}
 
-          {/* Top-right Pill Badge: Made by Piyush • 1st Year Student of SGU */}
+          {/* Top-right Pill Badge: Made by Piyush • 1st Year Student of NIAT X SGU */}
           <CreatorBadge primaryColor={primaryColor} variant="compact" />
         </div>
       </header>
@@ -78,7 +78,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
         {/* Centered Security / Attribution Badge */}
         <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-amber-400/30 bg-black/60 backdrop-blur-xl text-xs sm:text-sm font-medium text-slate-200 shadow-[0_0_20px_rgba(245,158,11,0.15)] animate-fadeIn">
           <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-          <span>✨ A Sovereign Indian Voice Companion Conceived by <strong>Piyush (1st Year Student of SGU)</strong></span>
+          <span>✨ A Sovereign Indian Voice Companion Conceived by <strong>Piyush (1st Year Student of NIAT X SGU)</strong></span>
         </div>
 
         {/* Hero Typography */}
@@ -97,7 +97,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             </span>
           </h2>
           <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
-            Experience studio-grade human neural voice synthesis (1st 1st Student of SGU)
+            Experience studio-grade human neural voice synthesis, real-time microphone conversation, and sovereign AI knowledge.
           </p>
         </div>
 
@@ -195,7 +195,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
       {/* Footer */}
       <footer className="py-4 border-t border-white/10 text-center text-xs text-slate-400">
         <p>
-          VAANI • IMPERIAL EDITION &copy; 2026. Made with pride by <strong>Piyush (1st Year Student of SGU)</strong>.
+          VAANI • IMPERIAL EDITION &copy; 2026. Made with pride by <strong>Piyush (1st Year Student of NIAT X SGU)</strong>.
         </p>
       </footer>
     </div>

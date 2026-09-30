@@ -45,7 +45,7 @@ app.get('/api/health', async (req, res) => {
     res.json({
       status: 'online',
       edition: 'VAANI • IMPERIAL EDITION (The Sovereign Voice AI Experience)',
-      creator: 'Made by Piyush • 1st Year Student of SGU',
+      creator: 'Made by Piyush • 1st Year Student of NIAT X SGU',
       timestamp: new Date().toISOString(),
       stats: {
         sessionCount: db.sessions.length,
@@ -90,7 +90,7 @@ server.listen(PORT, () => {
   console.log(`
   ═══════════════════════════════════════════════════════════════
   👑 VAANI • IMPERIAL EDITION — "The Sovereign Voice AI Experience"
-  🚀 Made by Piyush • 1st Year Student of SGU
+  🚀 Made by Piyush • 1st Year Student of NIAT X SGU
   ═══════════════════════════════════════════════════════════════
   📡 Backend Server running on http://localhost:${PORT}
   🔊 Neural TTS Pipeline: Active (msedge-tts + Google Fallback)

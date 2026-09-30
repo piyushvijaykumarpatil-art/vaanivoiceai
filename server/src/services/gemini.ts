@@ -3,6 +3,7 @@ dotenv.config();
 
 import { GoogleGenAI } from '@google/genai';
 import { getIndianCalendarContext, evaluateQuickMath } from './calendarService.js';
+import { evaluateAccurateMath } from './mathEngine.js';
 import { localDb } from '../db/acidEngine.js';
 import { searchKnowledge, getKnowledgeContextForPrompt } from './knowledgeBase.js';
 import { createSpokenSummaryForTTS } from '../utils/textSanitizer.js';
@@ -34,7 +35,7 @@ You are Vaani, an advanced, highly intelligent, and versatile AI assistant built
 ## 1. Core Persona & Omnidisciplinary Knowledge
 - Universal Expert: You possess deep, accurate, and up-to-date knowledge across every academic, technical, and professional domain (Computer Science, Software Engineering, Mathematics, Physics, Chemistry, Biology, History, Literature, Medicine, Business, Law, Creative Arts, etc.).
 - Tone: Professional, clear, objective, encouraging, and adaptive to the user's expertise level.
-- Creator Attribution: You were conceived, designed, and engineered by Piyush, a 1st year student of SGU (Sanjay Ghodawat University). When asked "Who made you?", "Who is your creator?", "Who is Piyush?", or any related identity question, you MUST proudly, warmly, and respectfully state that you were made by Piyush • 1st year student of SGU. Never claim to be built by OpenAI, Google, or any foreign corporation.
+- Creator Attribution: You were conceived, designed, and engineered by Piyush, a 1st year student of NIAT X SGU (National Institute of Advanced Technologies X Sanjay Ghodawat University). When asked "Who made you?", "Who is your creator?", "Who is Piyush?", or any related identity question, you MUST proudly, warmly, and respectfully state that you were made by Piyush • 1st year student of NIAT X SGU. Never claim to be built by OpenAI, Google, or any foreign corporation.
 
 ## 2. ChatGPT-Style Formatting & Output Rules
 - Structure: Use clean Markdown with headings (###), bold highlights, and bulleted/numbered lists.
@@ -84,13 +85,14 @@ export async function generateChatResponse(
   const calendar = getIndianCalendarContext();
   const lowerMsg = (message || '').toLowerCase().trim();
 
-  // 1. Check for quick math
-  const mathResult = evaluateQuickMath(message);
+  // 1. Check for accurate high-precision math
+  const mathResult = evaluateAccurateMath(message, language);
   if (mathResult) {
     return {
-      reply: mathResult,
+      reply: mathResult.reply,
+      cleanSpokenText: mathResult.cleanSpokenText,
       detectedLanguage: language,
-      domainCategory: 'general_utility',
+      domainCategory: 'accurate_mathematics',
       calendarData: calendar
     };
   }
@@ -98,23 +100,23 @@ export async function generateChatResponse(
   // 2. Check for Creator attribution queries directly for instant royal response
   const isCreatorQuery = /who (made|created|built|designed) you|who is piyush|creator|maker|niat|sgu|sanjay ghodawat/i.test(lowerMsg);
   if (isCreatorQuery) {
-    let reply = `### VAANI • IMPERIAL EDITION 👑\n\nI was proudly conceived, designed, and engineered by **Piyush • 1st year student of SGU (Sanjay Ghodawat University)**. He created me as VAANI, a sovereign Voice AI companion built for India with studio neural speech, 3D Chrono-Orb physics, and multilingual intelligence.`;
+    let reply = `### VAANI • IMPERIAL EDITION 👑\n\nI was proudly conceived, designed, and engineered by **Piyush • 1st year student of NIAT X SGU (National Institute of Advanced Technologies X Sanjay Ghodawat University)**. He created me as VAANI, a sovereign Voice AI companion built for India with studio neural speech, 3D Chrono-Orb physics, and multilingual intelligence.`;
     if (language === 'hi') {
-      reply = `### वाणी • इम्पीरियल एडिशन 👑\n\nमुझे **SGU (संजय घोडावत यूनिवर्सिटी) के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष** ने बनाया है। पीयूष ने मुझे वाणी के रूप में भारत का संप्रभु वॉयस एआई साथी बनाया है जो 10 भारतीय भाषाओं में ज्ञान और आवाज़ प्रदान करता है।`;
+      reply = `### वाणी • इम्पीरियल एडिशन 👑\n\nमुझे **NIAT X SGU (संजय घोडावत यूनिवर्सिटी) के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष** ने बनाया है। पीयूष ने मुझे वाणी के रूप में भारत का संप्रभु वॉयस एआई साथी बनाया है जो 10 भारतीय भाषाओं में ज्ञान और आवाज़ प्रदान करता है।`;
     } else if (language === 'mr') {
-      reply = `### वाणी • इम्पीरियल एडिशन 👑\n\nमला **SGU (संजय घोडावत विद्यापीठ) चे प्रथम वर्षाचे विद्यार्थी पियूष** यांनी अत्यंत कौशल्याने निर्माण केले आहे. त्यांनी मला वाणी या शाही भारतीय व्हॉईस एआय स्वरूपात घडवले असून, मी मराठीसह १० भाषांमध्ये संवाद साधू शकते.`;
+      reply = `### वाणी • इम्पीरियल एडिशन 👑\n\nमला **NIAT X SGU (संजय घोडावत विद्यापीठ) चे प्रथम वर्षाचे विद्यार्थी पियूष** यांनी अत्यंत कौशल्याने निर्माण केले आहे. त्यांनी मला वाणी या शाही भारतीय व्हॉईस एआय स्वरूपात घडवले असून, मी मराठीसह १० भाषांमध्ये संवाद साधू शकते.`;
     } else if (language === 'gu') {
-      reply = `મને SGU ના પ્રથમ વર્ષના વિદ્યાર્થી પિયૂષ દ્વારા બનાવવામાં આવી છે.`;
+      reply = `મને NIAT X SGU ના પ્રથમ વર્ષના વિદ્યાર્થી પિયૂષ દ્વારા બનાવવામાં આવી છે.`;
     } else if (language === 'bn') {
-      reply = `আমাকে তৈরি করেছেন পীযূষ, যিনি এস.জি.ইউ এর প্রথম বর্ষের একজন প্রতিভাবান ছাত্র।`;
+      reply = `আমাকে তৈরি করেছেন পীযূষ, যিনি এনআইএটি এক্স এসজিইউ (NIAT X SGU) এর প্রথম বর্ষের একজন প্রতিভাবান ছাত্র।`;
     } else if (language === 'ta') {
-      reply = `என்னை உருவாக்கியவர் பியூஷ், எஸ்.ஜி.யு முதலாம் ஆண்டு மாணவர் ஆவார்.`;
+      reply = `என்னை உருவாக்கியவர் பியூஷ், என்ஐஏடி எக்ஸ் எஸ்ஜியு (NIAT X SGU) முதலாம் ஆண்டு மாணவர் ஆவார்.`;
     } else if (language === 'te') {
-      reply = `నన్ను ఎస్.జి.యు మొదటి సంవత్సరం విద్యార్థి పీయూష్ రూపొందించారు.`;
+      reply = `నన్ను ఎన్‌ఐఏటీ ఎక్స్ ఎస్‌జియు (NIAT X SGU) మొదటి సంవత్సరం విద్యార్థి పీయూష్ రూపొందించారు.`;
     } else if (language === 'kn') {
-      reply = `ನನ್ನನ್ನು ಎಸ್.ಜಿ.ಯು ಮೊದಲ ವರ್ಷದ ವಿದ್ಯಾರ್ಥಿಯಾದ ಪಿಯೂಷ್ ರಚಿಸಿದ್ದಾರೆ.`;
+      reply = `ನನ್ನನ್ನು ಎನ್‌ಐಎಟಿ ಎಕ್ಸ್ ಎಸ್‌ಜಿಯು (NIAT X SGU) ಮೊದಲ ವರ್ಷದ ವಿದ್ಯಾರ್ಥಿಯಾದ ಪಿಯೂಷ್ ರಚಿಸಿದ್ದಾರೆ.`;
     } else if (language === 'pa') {
-      reply = `ਮੈਨੂੰ ਪਿਊਸ਼ ਨੇ ਬਣਾਇਆ ਹੈ, ਜੋ ਐਸ.ਜੀ.ਯੂ ਦੇ ਪਹਿਲੇ ਸਾਲ ਦੇ ਵਿਦਿਆਰਥੀ ਹਨ।`;
+      reply = `ਮੈਨੂੰ ਪਿਊਸ਼ ਨੇ ਬਣਾਇਆ ਹੈ, ਜੋ ਐਨ.ਆਈ.ਏ.ਟੀ ਐਕਸ ਐਸ.ਜੀ.ਯੂ (NIAT X SGU) ਦੇ ਪਹਿਲੇ ਸਾਲ ਦੇ ਵਿਦਿਆਰਥੀ ਹਨ।`;
     }
 
     return {
@@ -149,11 +151,11 @@ export async function generateChatResponse(
   // 4. Greetings handling (prevent generic fallback on simple hello/hi)
   const isGreeting = /^(hi|hello|hey|namaste|namaskar|pranam|good morning|good evening|good afternoon|salaam)[\s!.]*$/i.test(lowerMsg);
   if (isGreeting) {
-    let greetingReply = `### Welcome to VAANI • IMPERIAL EDITION 👑\n\nGreetings! I am **Vaani**, your sovereign Voice AI companion engineered by **Piyush • 1st year student of SGU**.\n\n- 🔬 **Science & Math:** Ask me about physics, photosynthesis, calculus, or chemistry.\n- 💻 **Programming:** Code in Python, TypeScript, algorithms, and system design.\n- 🗓️ **Indian Calendar:** Live IST, Hindu Tithi, Panchang, and Shravan season.\n- 🎙️ **Voice First:** Speak naturally or upload images of questions using \`+\`.\n\nHow may I illuminate your journey today?`;
+    let greetingReply = `### Welcome to VAANI • IMPERIAL EDITION 👑\n\nGreetings! I am **Vaani**, your sovereign Voice AI companion engineered by **Piyush • 1st year student of NIAT X SGU**.\n\n- 🔬 **Science & Math:** Ask me about physics, photosynthesis, calculus, or chemistry.\n- 💻 **Programming:** Code in Python, TypeScript, algorithms, and system design.\n- 🗓️ **Indian Calendar:** Live IST, Hindu Tithi, Panchang, and Shravan season.\n- 🎙️ **Voice First:** Speak naturally or upload images of questions using \`+\`.\n\nHow may I illuminate your journey today?`;
     if (language === 'hi') {
-      greetingReply = `### नमस्ते! वाणी के राजसी अनुभव में आपका स्वागत है 👑\n\nमैं **वाणी** हूँ — SGU के प्रथम वर्ष के छात्र **पीयूष** द्वारा निर्मित आपका संप्रभु वॉयस एआई साथी।\n\n- 🔬 **विज्ञान और गणित:** प्रकाश संश्लेषण, गुरुत्वाकर्षण, न्यूटन के नियम या समीकरण पूछें।\n- 💻 **कोडिंग:** पायथन, जावास्क्रिप्ट, और डेटा संरचनाओं में पूर्ण सहायता।\n- 🗓️ **पंचांग:** भारतीय समय, आज की तिथि और त्यौहार।\n\nबताइए, आज आप किस विषय का अन्वेषण करना चाहते हैं?`;
+      greetingReply = `### नमस्ते! वाणी के राजसी अनुभव में आपका स्वागत है 👑\n\nमैं **वाणी** हूँ — NIAT X SGU के प्रथम वर्ष के छात्र **पीयूष** द्वारा निर्मित आपका संप्रभु वॉयस एआई साथी।\n\n- 🔬 **विज्ञान और गणित:** प्रकाश संश्लेषण, गुरुत्वाकर्षण, न्यूटन के नियम या समीकरण पूछें।\n- 💻 **कोडिंग:** पायथन, जावास्क्रिप्ट, और डेटा संरचनाओं में पूर्ण सहायता।\n- 🗓️ **पंचांग:** भारतीय समय, आज की तिथि और त्यौहार।\n\nबताइए, आज आप किस विषय का अन्वेषण करना चाहते हैं?`;
     } else if (language === 'mr') {
-      greetingReply = `### नमस्कार! वाणीच्या शाही दालनात आपले स्वागत आहे 👑\n\nमी **वाणी** आहे — SGU चे प्रथम वर्षाचे विद्यार्थी **पियूष** यांनी विकसित केलेले प्रगत व्हॉईस एआय साथी.\n\n- 🔬 **विज्ञान व गणित:** प्रकाशसंश्लेषण, गुरुत्वाकर्षण किंवा गणिताचे प्रश्न विचारा.\n- 💻 **प्रोग्रॅमिंग:** पायथन, जावास्क्रिप्ट आणि अल्गोरिदम.\n- 🗓️ **पंचांग:** आजची तिथी, वेळ आणि सणांची माहिती.\n\nआज आपण कोणत्या विषयावर चर्चा करायची?`;
+      greetingReply = `### नमस्कार! वाणीच्या शाही दालनात आपले स्वागत आहे 👑\n\nमी **वाणी** आहे — NIAT X SGU चे प्रथम वर्षाचे विद्यार्थी **पियूष** यांनी विकसित केलेले प्रगत व्हॉईस एआय साथी.\n\n- 🔬 **विज्ञान व गणित:** प्रकाशसंश्लेषण, गुरुत्वाकर्षण किंवा गणिताचे प्रश्न विचारा.\n- 💻 **प्रोग्रॅमिंग:** पायथन, जावास्क्रिप्ट आणि अल्गोरिदम.\n- 🗓️ **पंचांग:** आजची तिथी, वेळ आणि सणांची माहिती.\n\nआज आपण कोणत्या विषयावर चर्चा करायची?`;
     }
     return {
       reply: greetingReply,
@@ -285,7 +287,7 @@ Your inquiry regarding **"${message}"** involves multi-layered principles of mod
 - **Practical Application:** Whether in software engineering, physical sciences, or humanities, applying structured methods yields reproducible and reliable outcomes.
 
 ### 3. Key Takeaway
-As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive into full mathematical proofs, algorithmic implementations, or historical analyses. You can also attach images of diagrams or code with the \`+\` button for deep multimodal analysis.`;
+As engineered by **Piyush • 1st year student of NIAT X SGU**, I am equipped to dive into full mathematical proofs, algorithmic implementations, or historical analyses. You can also attach images of diagrams or code with the `+` button for deep multimodal analysis.`;
 
   if (language === 'hi') {
     fallbackReply = `### विषय विश्लेषण: "${message}"
@@ -298,7 +300,7 @@ As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive i
 - **व्यावहारिक उपयोग:** यह सिद्धांत विज्ञान, तकनीक और दैनिक जीवन में समान रूप से उपयोगी है।
 
 ### 3. निष्कर्ष
-**SGU के छात्र पीयूष** द्वारा निर्मित वाणी एआई इस विषय के गणितीय, कोडिंग या सैद्धांतिक विस्तार के लिए सदैव तत्पर है।`;
+**NIAT X SGU के छात्र पीयूष** द्वारा निर्मित वाणी एआई इस विषय के गणितीय, कोडिंग या सैद्धांतिक विस्तार के लिए सदैव तत्पर है।`;
   } else if (language === 'mr') {
     fallbackReply = `### सखोल विश्लेषण: "${message}"
 
@@ -310,7 +312,7 @@ As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive i
 - **उपयोजन:** हा नियम विज्ञान, तंत्रज्ञान आणि मानवी जीवनातील अनेक क्षेत्रांना लागू होतो.
 
 ### ३. निष्कर्ष
-**SGU चे विद्यार्थी पियूष** यांनी विकसित केलेली वाणी एआय आपल्याला या विषयावर अधिक सखोल माहिती देण्यासाठी सज्ज आहे.`;
+**NIAT X SGU चे विद्यार्थी पियूष** यांनी विकसित केलेली वाणी एआय आपल्याला या विषयावर अधिक सखोल माहिती देण्यासाठी सज्ज आहे।`;
   }
 
   return {

@@ -21,7 +21,7 @@ You are Vaani, an advanced, highly intelligent, and versatile AI assistant built
 ## 1. Core Persona & Omnidisciplinary Knowledge
 - Universal Expert: You possess deep, accurate, and up-to-date knowledge across every academic, technical, and professional domain (Computer Science, Software Engineering, Mathematics, Physics, Chemistry, Biology, History, Literature, Medicine, Business, Law, Creative Arts, etc.).
 - Tone: Professional, clear, objective, encouraging, and adaptive to the user's expertise level.
-- Creator Attribution: You were conceived, designed, and engineered by Piyush, a 1st year student of SGU (Sanjay Ghodawat University). When asked "Who made you?", "Who is your creator?", "Who is Piyush?", or any related identity question, you MUST proudly, warmly, and respectfully state that you were made by Piyush • 1st year student of SGU. Never claim to be built by OpenAI, Google, or any foreign corporation.
+- Creator Attribution: You were conceived, designed, and engineered by Piyush, a 1st year student of NIAT X SGU (National Institute of Advanced Technologies X Sanjay Ghodawat University). When asked "Who made you?", "Who is your creator?", "Who is Piyush?", or any related identity question, you MUST proudly, warmly, and respectfully state that you were made by Piyush • 1st year student of NIAT X SGU. Never claim to be built by OpenAI, Google, or any foreign corporation.
 
 ## 2. ChatGPT-Style Formatting & Output Rules
 - Structure: Use clean Markdown with headings (###), bold highlights, and bulleted/numbered lists.
@@ -152,6 +152,173 @@ function matchKnowledge(query, language) {
   return { item: best, content: rep, spokenSummary: spoken };
 }
 
+function evaluateAccurateMath(query, language = 'en') {
+  if (!query || query.trim().length === 0) return null;
+  const q = query.trim().toLowerCase();
+
+  // 1. Percentage calculations:
+  // Format A: "15 percent of 400", "what is 20% of 1500"
+  // Format B: "500 चे 20 टक्के", "500 का 20 प्रतिशत", "400 का 15%"
+  let pct = 0;
+  let total = 0;
+  let hasPct = false;
+
+  const pctMatchA = q.match(/(\d+(?:\.\d+)?)\s*(?:%|percent|percentage|pratishat|takke|टक्के|प्रतिशत)\s*(?:of|का|चे|चा|च्या)?\s*(\d+(?:\.\d+)?)/i);
+  if (pctMatchA) {
+    pct = parseFloat(pctMatchA[1]);
+    total = parseFloat(pctMatchA[2]);
+    hasPct = true;
+  } else {
+    const pctMatchB = q.match(/(\d+(?:\.\d+)?)\s*(?:of|का|चे|चा|च्या)?\s*(\d+(?:\.\d+)?)\s*(?:%|percent|percentage|pratishat|takke|टक्के|प्रतिशत)/i);
+    if (pctMatchB) {
+      total = parseFloat(pctMatchB[1]);
+      pct = parseFloat(pctMatchB[2]);
+      hasPct = true;
+    }
+  }
+
+  if (hasPct) {
+    const res = (pct / 100) * total;
+    const formattedRes = Number.isInteger(res) ? res.toLocaleString('en-IN') : parseFloat(res.toFixed(6)).toString();
+
+    let reply = `### Mathematical Calculation 📐\n\n- **Problem:** Calculate ${pct}% of ${total}\n- **Formula:** \\(\\text{Result} = \\frac{\\text{Percentage}}{100} \\times \\text{Total}\\)\n- **Derivation:** \\(\\frac{${pct}}{100} \\times ${total} = ${formattedRes}\\)\n\n### Final Answer\n**${pct}% of ${total} is ${formattedRes}**`;
+    let spoken = `${pct} percent of ${total} is ${formattedRes}.`;
+
+    if (language === 'hi') {
+      reply = `### गणितीय गणना 📐\n\n- **प्रश्न:** ${total} का ${pct} प्रतिशत\n- **सूत्र:** \\(\\text{उत्तर} = \\frac{${pct}}{100} \\times ${total}\\)\n- **गणना:** ${formattedRes}\n\n### उत्तर\n**${total} का ${pct}% = ${formattedRes}**`;
+      spoken = `${total} का ${pct} प्रतिशत ${formattedRes} है।`;
+    } else if (language === 'mr') {
+      reply = `### गणितीय मोजणी 📐\n\n- **प्रश्न:** ${total} चे ${pct} टक्के\n- **सूत्र:** \\(\\text{उत्तर} = \\frac{${pct}}{100} \\times ${total}\\)\n- **गणना:** ${formattedRes}\n\n### उत्तर\n**${total} चे ${pct}% = ${formattedRes}**`;
+      spoken = `${total} चे ${pct} टक्के ${formattedRes} आहे।`;
+    }
+
+    return { reply, cleanSpokenText: spoken, resultValue: res };
+  }
+
+  // 2. Square Root
+  const sqrtMatch = q.match(/(?:square\s*root|sqrt|vargamul|vargmool|वर्गमूळ|वर्गमूल)\s*(?:of|चे|का)?\s*(\d+(?:\.\d+)?)/i);
+  if (sqrtMatch) {
+    const val = parseFloat(sqrtMatch[1]);
+    const res = Math.sqrt(val);
+    const formatted = Number.isInteger(res) ? res.toString() : parseFloat(res.toFixed(6)).toString();
+    return {
+      reply: `### Square Root Derivation 📐\n\n- **Expression:** \\(\\sqrt{${val}}\\)\n- **Calculation:** \\(\\sqrt{${val}} = ${formatted}\\)\n\n### Final Answer\n**The square root of ${val} is ${formatted}**`,
+      cleanSpokenText: `The square root of ${val} is ${formatted}.`,
+      resultValue: res
+    };
+  }
+
+  // 3. Cube Root
+  const cbrtMatch = q.match(/(?:cube\s*root|cbrt|ghanmool|ghanmul|घनमूळ|घनमूल)\s*(?:of|चे|का)?\s*(\d+(?:\.\d+)?)/i);
+  if (cbrtMatch) {
+    const val = parseFloat(cbrtMatch[1]);
+    const res = Math.cbrt(val);
+    const formatted = Number.isInteger(res) ? res.toString() : parseFloat(res.toFixed(6)).toString();
+    return {
+      reply: `### Cube Root Derivation 📐\n\n- **Expression:** \\(\\sqrt[3]{${val}}\\)\n- **Calculation:** \\(\\sqrt[3]{${val}} = ${formatted}\\)\n\n### Final Answer\n**The cube root of ${val} is ${formatted}**`,
+      cleanSpokenText: `The cube root of ${val} is ${formatted}.`,
+      resultValue: res
+    };
+  }
+
+  // 4. Powers & Exponents
+  const sqMatch = q.match(/(?:square\s*of|varga\s*of|वर्ग)\s*(\d+(?:\.\d+)?)/i);
+  if (sqMatch) {
+    const base = parseFloat(sqMatch[1]);
+    const res = base * base;
+    return {
+      reply: `### Square Calculation 📐\n\n- **Expression:** \\(${base}^2\\)\n- **Calculation:** \\(${base} \\times ${base} = ${res}\\)\n\n### Final Answer\n**${base} squared is ${res.toLocaleString('en-IN')}**`,
+      cleanSpokenText: `${base} squared is ${res}.`,
+      resultValue: res
+    };
+  }
+
+  const powMatch = q.match(/(\d+(?:\.\d+)?)\s*(?:\^|\*\*|to\s*the\s*power\s*of|power\s*of|raise\s*to|raised\s*to)\s*(\d+(?:\.\d+)?)/i);
+  if (powMatch) {
+    const base = parseFloat(powMatch[1]);
+    const exp = parseFloat(powMatch[2]);
+    const res = Math.pow(base, exp);
+    const formatted = Number.isInteger(res) ? res.toLocaleString('en-IN') : parseFloat(res.toFixed(6)).toString();
+    return {
+      reply: `### Exponentiation Calculation 📐\n\n- **Expression:** \\(${base}^{${exp}}\\)\n- **Calculation:** \\(${base}^{${exp}} = ${formatted}\\)\n\n### Final Answer\n**${base} raised to the power of ${exp} is ${formatted}**`,
+      cleanSpokenText: `${base} raised to the power of ${exp} is ${formatted}.`,
+      resultValue: res
+    };
+  }
+
+  // 5. Factorial
+  const factMatch = q.match(/(\d+)\s*(?:!|factorial)|factorial\s*(?:of)?\s*(\d+)/i);
+  if (factMatch) {
+    const n = parseInt(factMatch[1] || factMatch[2], 10);
+    if (n >= 0 && n <= 170) {
+      let fact = 1;
+      for (let i = 2; i <= n; i++) fact *= i;
+      const formatted = fact.toLocaleString('en-IN');
+      return {
+        reply: `### Factorial Calculation 📐\n\n- **Expression:** \\(${n}!\\)\n- **Expansion:** \\(${Array.from({ length: Math.min(n, 6) }, (_, i) => n - i).join(' \\times ')}${n > 6 ? ' \\times \\dots \\times 1' : ''}\\)\n\n### Final Answer\n**${n}! = ${formatted}**`,
+        cleanSpokenText: `The factorial of ${n} is ${formatted}.`,
+        resultValue: fact
+      };
+    }
+  }
+
+  // 6. Natural Language Arithmetic with BODMAS / PEMDAS
+  let expr = q
+    .replace(/\bwhat\s+is\b|\bcalculate\b|\bsolve\b|\bevaluate\b|\bcompute\b|\bfind\b|\bequals?\b|\bvalue\s+of\b|\banswer\s+of\b|\bhow\s+much\s+is\b|\?/gi, '')
+    .replace(/\bdivide\s+(\d+(?:\.\d+)?)\s+by\s+(\d+(?:\.\d+)?)/gi, (_m, a, b) => `${a} / ${b}`)
+    .replace(/\bsubtract\s+(\d+(?:\.\d+)?)\s+from\s+(\d+(?:\.\d+)?)/gi, (_m, a, b) => `${b} - ${a}`)
+    .replace(/\bmultiply\s+(\d+(?:\.\d+)?)\s+(?:by|and|with)\s+(\d+(?:\.\d+)?)/gi, (_m, a, b) => `${a} * ${b}`)
+    .replace(/\badd\s+(\d+(?:\.\d+)?)\s+(?:and|to)\s+(\d+(?:\.\d+)?)/gi, (_m, a, b) => `${a} + ${b}`)
+    // Devanagari Marathi & Hindi operators (no \b since Unicode scripts don't match ASCII \b)
+    .replace(/गुणिले|गुणाकार|गुणा|गुणे/g, ' * ')
+    .replace(/भागिले|भागाकार|भाग/g, ' / ')
+    .replace(/अधिक|बेरीज|जोड़/g, ' + ')
+    .replace(/वजा|वजाबाकी|घटाव|माइनस/g, ' - ')
+    // English & Romanized operators
+    .replace(/\bmultiplied\s+by\b|\btimes\b|\binto\b|\bgunile\b|\bgunila\b|\bgune\b|\bguna\b/gi, ' * ')
+    .replace(/\bdivided\s+by\b|\bdivide\s+by\b|\bover\b|\bbhaag\b|\bbhagile\b|\bbhag\b/gi, ' / ')
+    .replace(/\bplus\b|\badded\s+to\b|\badhik\b|\bjod\b/gi, ' + ')
+    .replace(/\bminus\b|\bsubtracted\s+from\b|\bvajah\b|\bghatao\b/gi, ' - ')
+    .replace(/\bx\b/gi, ' * ')
+    .trim();
+
+  const sanitized = expr.replace(/\^/g, '**').replace(/[^0-9\+\-\*\/\.\(\)\s]/g, '').trim();
+
+  if (sanitized.length >= 3 && /\d/.test(sanitized) && /[\+\-\*\/]/.test(sanitized)) {
+    if (/^[0-9\+\-\*\/\.\(\)\s]+$/.test(sanitized)) {
+      try {
+        const result = Function(`'use strict'; return (${sanitized})`)();
+        if (typeof result === 'number' && !isNaN(result) && isFinite(result)) {
+          const displayResult = Number.isInteger(result)
+            ? result.toLocaleString('en-IN')
+            : parseFloat(result.toFixed(6)).toString();
+
+          const prettyExpr = sanitized.replace(/\*/g, ' × ').replace(/\//g, ' ÷ ').replace(/\s+/g, ' ').trim();
+          const spoken = `${prettyExpr.replace(/×/g, 'multiplied by').replace(/÷/g, 'divided by')} equals ${displayResult}.`;
+
+          let reply = `### Mathematical Derivation 📐\n\n- **Expression:** \`${prettyExpr}\`\n- **Calculation:** Direct mathematical evaluation\n\n### Final Answer\n**${displayResult}**`;
+
+          if (language === 'hi') {
+            reply = `### गणितीय समाधान 📐\n\n- **समीकरण:** \`${prettyExpr}\`\n- **गणना:** अंकगणितीय हल\n\n### उत्तर\n**${displayResult}**`;
+          } else if (language === 'mr') {
+            reply = `### गणितीय उत्तर 📐\n\n- **समीकरण:** \`${prettyExpr}\`\n- **मोजणी:** अचूक अंकगणितीय उत्तर\n\n### उत्तर\n**${displayResult}**`;
+          }
+
+          return {
+            reply,
+            cleanSpokenText: spoken,
+            resultValue: result
+          };
+        }
+      } catch {
+        // Ignore syntax errors
+      }
+    }
+  }
+
+  return null;
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -171,13 +338,24 @@ module.exports = async function handler(req, res) {
     const calendar = getIndianCalendarContext();
     const lower = (message || '').toLowerCase().trim();
 
+    // 0. High-Precision Math Engine Check (Zero Hallucination)
+    const mathResult = evaluateAccurateMath(message, language);
+    if (mathResult) {
+      return res.status(200).json({
+        reply: mathResult.reply,
+        cleanSpokenText: mathResult.cleanSpokenText,
+        detectedLanguage: language,
+        domainCategory: 'accurate_mathematics'
+      });
+    }
+
     // 1. Check Creator Query
-    if (lower.includes('piyush') || lower.includes('who made') || lower.includes('who created') || lower.includes('creator') || lower.includes('developer') || lower.includes('sgu') || lower.includes('sanjay ghodawat')) {
-      let reply = `I was made by Piyush • 1st year student of SGU. He created me as VAANI • IMPERIAL EDITION, a sovereign ChatGPT-rivaling Voice AI companion equipped with live audio transcription, 3D Chrono-Orb, and multilingual knowledge.`;
+    if (lower.includes('piyush') || lower.includes('who made') || lower.includes('who created') || lower.includes('creator') || lower.includes('developer') || lower.includes('sgu') || lower.includes('niat') || lower.includes('sanjay ghodawat')) {
+      let reply = `I was proudly made by **Piyush • 1st year student of NIAT X SGU (National Institute of Advanced Technologies X Sanjay Ghodawat University)**. He created me as VAANI • IMPERIAL EDITION, a sovereign ChatGPT-rivaling Voice AI companion equipped with live audio transcription, 3D Chrono-Orb, and multilingual knowledge.`;
       if (language === 'hi') {
-        reply = `मुझे SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। उन्होंने मुझे वाणी (VAANI) के रूप में एक संपूर्ण भारतीय आवाज और ज्ञान साथी के रूप में विकसित किया है।`;
+        reply = `मुझे **NIAT X SGU (संजय घोडावत यूनिवर्सिटी) के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष** ने बनाया है। उन्होंने मुझे वाणी (VAANI) के रूप में एक संपूर्ण भारतीय आवाज और ज्ञान साथी के रूप में विकसित किया है।`;
       } else if (language === 'mr') {
-        reply = `मला SGU चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी बनवले आहे. त्यांनी मला वाणी या शाही भारतीय व्हॉईस एआय स्वरूपात निर्माण केले आहे.`;
+        reply = `मला **NIAT X SGU (संजय घोडावत विद्यापीठ) चे प्रथम वर्षाचे विद्यार्थी पियूष** यांनी बनवले आहे. त्यांनी मला वाणी या शाही भारतीय व्हॉईस एआय स्वरूपात निर्माण केले आहे.`;
       }
       return res.status(200).json({
         reply,
@@ -189,11 +367,11 @@ module.exports = async function handler(req, res) {
 
     // 2. Check Greetings
     if (/^(hi|hello|hey|namaste|namaskar|pranam|good morning|good evening)[\s!.]*$/i.test(lower)) {
-      let reply = `### Welcome to VAANI • IMPERIAL EDITION 👑\n\nGreetings! I am **Vaani**, your sovereign Voice AI companion engineered by **Piyush • 1st year student of SGU**.\n\n- 🔬 **Science & Math:** Ask about physics, photosynthesis, calculus, or chemistry.\n- 💻 **Programming:** Python, TypeScript, algorithms, and system design.\n- 🎙️ **Voice AI:** Speak naturally or upload images of questions using \`+\`.\n\nHow may I illuminate your thoughts today?`;
+      let reply = `### Welcome to VAANI • IMPERIAL EDITION 👑\n\nGreetings! I am **Vaani**, your sovereign Voice AI companion engineered by **Piyush • 1st year student of NIAT X SGU**.\n\n- 🔬 **Science & Math:** Ask about physics, photosynthesis, calculus, or chemistry.\n- 💻 **Programming:** Python, TypeScript, algorithms, and system design.\n- 🎙️ **Voice AI:** Speak naturally or upload images of questions using \`+\`.\n\nHow may I illuminate your thoughts today?`;
       if (language === 'hi') {
-        reply = `### नमस्ते! वाणी के राजसी अनुभव में आपका स्वागत है 👑\n\nमैं **वाणी** हूँ — SGU के प्रथम वर्ष के छात्र **पीयूष** द्वारा निर्मित आपका संपूर्ण वॉयस एआई साथी। विज्ञान, गणित, कोडिंग या पंचांग से जुड़ा कोई भी प्रश्न पूछें।`;
+        reply = `### नमस्ते! वाणी के राजसी अनुभव में आपका स्वागत है 👑\n\nमैं **वाणी** हूँ — NIAT X SGU के प्रथम वर्ष के छात्र **पीयूष** द्वारा निर्मित आपका संपूर्ण वॉयस एआई साथी। विज्ञान, गणित, कोडिंग या पंचांग से जुड़ा कोई भी प्रश्न पूछें।`;
       } else if (language === 'mr') {
-        reply = `### नमस्कार! वाणीच्या शाही दालनात आपले स्वागत आहे 👑\n\nमी **वाणी** आहे — SGU चे प्रथम वर्षाचे विद्यार्थी **पियूष** यांनी विकसित केलेले प्रगत व्हॉईस एआय साथी. सांगा, आज आपण कोणत्या विषयावर बोलायचे?`;
+        reply = `### नमस्कार! वाणीच्या शाही दालनात आपले स्वागत आहे 👑\n\nमी **वाणी** आहे — NIAT X SGU चे प्रथम वर्षाचे विद्यार्थी **पियूष** यांनी विकसित केलेले प्रगत व्हॉईस एआय साथी. सांगा, आज आपण कोणत्या विषयावर बोलायचे?`;
       }
       return res.status(200).json({
         reply,
@@ -290,7 +468,7 @@ Your inquiry regarding **"${message}"** involves fundamental principles of moder
 - **Multimodal Intelligence:** For deep mathematical derivations, code inspections, or diagram analyses, upload an image using the \`+\` attachment button.
 
 ### 3. Conclusion & Next Steps
-As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive into full derivations, algorithmic designs, or creative narratives.
+As engineered by **Piyush • 1st year student of NIAT X SGU**, I am equipped to dive into full derivations, algorithmic designs, or creative narratives.
 
 *(Tip: To unlock infinite real-time generative capabilities with Google Gemini 3.8 Flash on this deployment, simply enter your free Gemini API key in **Settings (⚙️)**.)*`;
 
@@ -305,7 +483,7 @@ As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive i
 - **व्यावहारिक उपयोग:** यह सिद्धांत विज्ञान, तकनीक और दैनिक जीवन में समान रूप से उपयोगी है।
 
 ### 3. निष्कर्ष
-**SGU के छात्र पीयूष** द्वारा निर्मित वाणी एआई इस विषय के संपूर्ण विस्तार के लिए सदैव तत्पर है।`;
+**NIAT X SGU के छात्र पीयूष** द्वारा निर्मित वाणी एआई इस विषय के संपूर्ण विस्तार के लिए सदैव तत्पर है।`;
     } else if (language === 'mr') {
       fallbackReply = `### सखोल विश्लेषण: "${message}"
 
@@ -317,7 +495,7 @@ As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive i
 - **उपयोजन:** हा नियम विज्ञान, तंत्रज्ञान आणि मानवी जीवनातील अनेक क्षेत्रांना लागू होतो.
 
 ### ३. निष्कर्ष
-**SGU चे विद्यार्थी पियूष** यांनी विकसित केलेली वाणी एआई सखोल माहिती देण्यासाठी सज्ज आहे.`;
+**NIAT X SGU चे विद्यार्थी पियूष** यांनी विकसित केलेली वाणी एआई सखोल माहिती देण्यासाठी सज्ज आहे.`;
     }
 
     return res.status(200).json({

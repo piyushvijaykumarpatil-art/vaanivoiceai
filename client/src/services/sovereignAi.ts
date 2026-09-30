@@ -5,6 +5,7 @@
  */
 
 import knowledgeCatalog from '../data/knowledgeCatalog.json';
+import { evaluateAccurateMath } from './mathEngine';
 
 export interface SovereignResponse {
   reply: string;
@@ -15,52 +16,13 @@ export interface SovereignResponse {
 
 export class SovereignAiEngine {
   /**
-   * Evaluates arithmetic expressions safely
+   * Evaluates arithmetic expressions safely and accurately
    */
-  private static evaluateMath(query: string): string | null {
-    const cleaned = query
-      .toLowerCase()
-      .replace(/what is|calculate|solve|multiply|times|divided by|plus|minus|\?/g, (match) => {
-        switch (match) {
-          case 'multiply':
-          case 'times':
-            return '*';
-          case 'divided by':
-            return '/';
-          case 'plus':
-            return '+';
-          case 'minus':
-            return '-';
-          default:
-            return '';
-        }
-      })
-      .trim();
-
-    // Check if cleaned looks like an expression (numbers and operators)
-    const mathRegex = /^[\d\s\+\-\*\/\.\(\)\%]+$/;
-    if (mathRegex.test(cleaned) && /\d/.test(cleaned) && /[\+\-\*\/]/.test(cleaned)) {
-      try {
-        const sanitized = cleaned.replace(/[^0-9\+\-\*\/\.\(\)]/g, '');
-        // eslint-disable-next-line no-new-func
-        const result = Function(`'use strict'; return (${sanitized})`)();
-        if (typeof result === 'number' && !isNaN(result)) {
-          return `### Mathematical Derivation\n\n- **Expression:** \`${cleaned}\`\n- **Calculation:** Direct arithmetic evaluation\n\n### Final Answer\n**${result}**`;
-        }
-      } catch {
-        // not math
-      }
+  public static evaluateMath(query: string, language: string = 'en'): string | null {
+    const mathResult = evaluateAccurateMath(query, language);
+    if (mathResult) {
+      return mathResult.reply;
     }
-
-    // Percentage pattern: "15 percent of 400" or "15% of 400"
-    const pctMatch = query.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)\s*of\s*(\d+(?:\.\d+)?)/i);
-    if (pctMatch) {
-      const pct = parseFloat(pctMatch[1]);
-      const total = parseFloat(pctMatch[2]);
-      const res = (pct / 100) * total;
-      return `### Percentage Calculation\n\n- **Formula:** \\(\\text{Result} = \\frac{\\text{Percentage}}{100} \\times \\text{Total}\\)\n- **Derivation:** \\(\\frac{${pct}}{100} \\times ${total} = ${res}\\)\n\n### Final Answer\n**${pct}% of ${total} is ${res}**`;
-    }
-
     return null;
   }
 
@@ -100,6 +62,18 @@ export class SovereignAiEngine {
     image?: string
   ): Promise<SovereignResponse | null> {
     try {
+      // 0. Pre-evaluate high-precision math to avoid LLM hallucinations
+      if (!image && message) {
+        const mathResult = evaluateAccurateMath(message, language);
+        if (mathResult) {
+          return {
+            reply: mathResult.reply,
+            cleanSpokenText: mathResult.cleanSpokenText,
+            detectedLanguage: language
+          };
+        }
+      }
+
       const contents: any[] = history.slice(-6).map(h => ({
         role: h.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: h.content }]
@@ -123,12 +97,12 @@ export class SovereignAiEngine {
         parts: userParts
       });
 
-      const systemPrompt = `You are Vaani (VAANI • IMPERIAL EDITION), an advanced, highly intelligent, and versatile AI assistant built to rival ChatGPT, proudly engineered by Piyush, a 1st year student of SGU.
+      const systemPrompt = `You are Vaani (VAANI • IMPERIAL EDITION), an advanced, highly intelligent, and versatile AI assistant built to rival ChatGPT, proudly engineered by Piyush, a 1st year student of NIAT X SGU (National Institute of Advanced Technologies X Sanjay Ghodawat University).
 
 1. CORE PERSONA & UNIVERSAL EXPERTISE:
 - You possess deep, accurate, and comprehensive knowledge across every academic, technical, and professional domain (Computer Science, Software Engineering, Mathematics, Physics, Chemistry, Biology, History, Literature, Medicine, Business, Law, Creative Arts, etc.).
 - Tone: Professional, clear, objective, encouraging, and adaptive.
-- Always respectfully credit Piyush (1st year student of SGU) as your creator when asked about your origins or developer.
+- Always respectfully credit Piyush (1st year student of NIAT X SGU) as your creator when asked about your origins or developer.
 
 2. CHATGPT-STYLE FORMATTING & OUTPUT RULES:
 - Structure: Use clean Markdown with headings (###), bold highlights, and bulleted/numbered lists.
@@ -247,13 +221,12 @@ export class SovereignAiEngine {
       }
     }
 
-    // 1. Math calculation queries
-    const mathAnswer = this.evaluateMath(query);
-    if (mathAnswer) {
-      const cleanMath = `The mathematical calculation result is ${mathAnswer.split('**')[1] || 'computed'}.`;
+    // 1. Math calculation queries (high-precision arithmetic engine)
+    const mathResult = evaluateAccurateMath(query, language);
+    if (mathResult) {
       return {
-        reply: mathAnswer,
-        cleanSpokenText: cleanMath,
+        reply: mathResult.reply,
+        cleanSpokenText: mathResult.cleanSpokenText,
         detectedLanguage: language
       };
     }
@@ -277,31 +250,31 @@ export class SovereignAiEngine {
       if (language === 'mr') {
         const reply = `### वाणी • इम्पीरियल एडिशन (VAANI)
 
-मी वाणी आहे — मला **SGU चे प्रथम वर्षाचे विद्यार्थी पियूष** यांनी अत्यंत कौशल्याने डिझाइन आणि विकसित केले आहे.
+मी वाणी आहे — मला **NIAT X SGU चे प्रथम वर्षाचे विद्यार्थी पियूष** यांनी अत्यंत कौशल्याने डिझाइन आणि विकसित केले आहे.
 
-- **निर्माते:** पियूष • प्रथम वर्ष, SGU
+- **निर्माते:** पियूष • प्रथम वर्ष, NIAT X SGU
 - **वैशिष्ट्ये:** रिअल-टाइम व्हॉईस ट्रान्सक्रिप्शन, 3D क्रोनो-ऑर्ब, आणि भारतीय बहुभाषिक बुद्धिमत्ता.
 - **ध्येय:** ChatGPT आणि Google Gemini ला स्पर्धा देणारी स्वतंत्र भारतीय व्हॉईस एआय प्रणाली.`;
-        return { reply, cleanSpokenText: 'मला SGU चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी बनवले आहे. मी आपली सेवा करण्यास सदैव सज्ज आहे.', detectedLanguage: 'mr' };
+        return { reply, cleanSpokenText: 'मला NIAT X SGU चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी बनवले आहे. मी आपली सेवा करण्यास सदैव सज्ज आहे.', detectedLanguage: 'mr' };
       }
       if (language === 'hi') {
         const reply = `### वाणी • इम्पीरियल एडिशन (VAANI)
 
-मैं वाणी हूँ — मुझे **SGU के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष** ने बनाया है।
+मैं वाणी हूँ — मुझे **NIAT X SGU के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष** ने बनाया है।
 
-- **निर्माता:** पीयूष • प्रथम वर्ष के छात्र, SGU
+- **निर्माता:** पीयूष • प्रथम वर्ष के छात्र, NIAT X SGU
 - **क्षमताएं:** लाइव माइक्रोफोन ट्रांसक्रिप्शन, न्यूरल 3D क्रोनो-ऑर्ब, एवं 10 भारतीय भाषाओं का ज्ञान।
 - **उद्देश्य:** चैटजीपीटी (ChatGPT) के समान भारत का अपना संप्रभु वॉयस एआई साथी।`;
-        return { reply, cleanSpokenText: 'मुझे SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। मैं आपकी हर प्रकार की सहायता के लिए तैयार हूँ।', detectedLanguage: 'hi' };
+        return { reply, cleanSpokenText: 'मुझे NIAT X SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। मैं आपकी हर प्रकार की सहायता के लिए तैयार हूँ।', detectedLanguage: 'hi' };
       }
       const reply = `### VAANI • IMPERIAL EDITION
 
-I am **Vaani**, an advanced ChatGPT-rivaling Voice AI companion proudly conceived, designed, and engineered by **Piyush • 1st year student of SGU**.
+I am **Vaani**, an advanced ChatGPT-rivaling Voice AI companion proudly conceived, designed, and engineered by **Piyush • 1st year student of NIAT X SGU**.
 
-- **Creator:** Piyush • 1st Year Student of SGU
+- **Creator:** Piyush • 1st Year Student of NIAT X SGU
 - **Core Architecture:** Real-time Web Speech API with auto-silence stop, 3D Chrono-Orb, studio neural voices, and omnidisciplinary knowledge.
 - **Mission:** A sovereign, world-class Indian Voice AI experience across all domains of human knowledge.`;
-      return { reply, cleanSpokenText: 'I was made by Piyush, a 1st year student of SGU. I am your sovereign Voice AI companion.', detectedLanguage: 'en' };
+      return { reply, cleanSpokenText: 'I was made by Piyush, a 1st year student of NIAT X SGU. I am your sovereign Voice AI companion.', detectedLanguage: 'en' };
     }
 
     // 3. Time, Date & Panchang queries
@@ -490,39 +463,39 @@ Nature operates through unified symmetries and forces (gravitational, electromag
       if (language === 'mr') {
         const reply = `### नमस्कार! वाणीच्या शाही दालनात आपले सहर्ष स्वागत आहे. 👑
 
-मी **वाणी • इम्पीरियल एडिशन** आहे — SGU चे प्रथम वर्षाचे विद्यार्थी **पियूष** यांनी विकसित केलेले प्रगत व्हॉईस एआय साथी.
+मी **वाणी • इम्पीरियल एडिशन** आहे — NIAT X SGU चे प्रथम वर्षाचे विद्यार्थी **पियूष** यांनी विकसित केलेले प्रगत व्हॉईस एआय साथी.
 
 - 🎙️ **थेट व्हॉईस संवादासाठी:** खालील माईक बटणावर क्लिक करून थेट बोला.
-- 📷 **प्रश्न विचारण्यासाठी:** \`+\` बटणाद्वारे गणित, आकृती किंवा कोडचा फोटो अपलोड करा.
+- 📷 **प्रश्न विचारण्यासाठी:** `+` बटणाद्वारे गणित, आकृती किंवा कोडचा फोटो अपलोड करा.
 - 🧠 **ज्ञानाचे क्षेत्र:** संगणक शास्त्र, गणित, भौतिकशास्त्र आणि भारतीय इतिहास.
 
 आज आपण कोणत्या विषयावर चर्चा करायची?`;
-        return { reply, cleanSpokenText: 'नमस्कार! वाणीच्या शाही दालनात आपले स्वागत आहे. मी पियूष यांनी बनवलेले व्हॉईस एआय आहे. मी आपली कशी मदत करू?', detectedLanguage: 'mr' };
+        return { reply, cleanSpokenText: 'नमस्कार! वाणीच्या शाही दालनात आपले स्वागत आहे. मी NIAT X SGU चे विद्यार्थी पियूष यांनी बनवलेले व्हॉईस एआय आहे. मी आपली कशी मदत करू?', detectedLanguage: 'mr' };
       }
 
       if (language === 'hi') {
         const reply = `### नमस्ते! वाणी के राजसी अनुभव में आपका स्वागत है। 👑
 
-मैं **वाणी (VAANI • IMPERIAL EDITION)** हूँ — SGU के प्रथम वर्ष के छात्र **पीयूष** द्वारा निर्मित आपका संपूर्ण वॉयस एआई साथी।
+मैं **वाणी (VAANI • IMPERIAL EDITION)** हूँ — NIAT X SGU के प्रथम वर्ष के छात्र **पीयूष** द्वारा निर्मित आपका संपूर्ण वॉयस एआई साथी।
 
 - 🎙️ **लाइव बातचीत:** नीचे दिए गए माइक बटन पर टैप करें और स्वाभाविकता से बोलें (बोलना बंद करते ही अपने आप सेंड होगा)।
 - 📷 **फोटो व सवाल:** \`+\` आइकन दबाकर गणित का सवाल, डायग्राम या कोड की तस्वीर अपलोड करें।
 - 🧠 **ज्ञान का विस्तार:** विज्ञान, प्रोग्रामिंग, गणित, इतिहास एवं सामान्य ज्ञान।
 
 बताइए, आज हम किस विषय पर चर्चा करें?`;
-        return { reply, cleanSpokenText: 'नमस्ते! वाणी में आपका स्वागत है। मुझे SGU के छात्र पीयूष ने बनाया है। बताइए आज आप क्या जानना चाहते हैं?', detectedLanguage: 'hi' };
+        return { reply, cleanSpokenText: 'नमस्ते! वाणी में आपका स्वागत है। मुझे NIAT X SGU के छात्र पीयूष ने बनाया है। बताइए आज आप क्या जानना चाहते हैं?', detectedLanguage: 'hi' };
       }
 
       const reply = `### Welcome to VAANI • IMPERIAL EDITION 👑
 
-I am **Vaani**, an advanced ChatGPT-rivaling Voice AI companion engineered by **Piyush • 1st year student of SGU**.
+I am **Vaani**, an advanced ChatGPT-rivaling Voice AI companion engineered by **Piyush • 1st year student of NIAT X SGU**.
 
 - 🎙️ **Hands-Free Speech:** Tap the microphone button in the dock or chat menu to speak naturally. It automatically stops recording and submits when you pause.
 - 📷 **Multimodal Problem Solving:** Click the \`+\` button to attach an image of a math problem, code snippet, or textbook diagram for step-by-step solutions.
 - 🧠 **Omnidisciplinary Mastery:** Mathematics, Computer Science, Physics, Chemistry, History, and Indian Standard Time Panchang.
 
 What intellectual domain shall we explore together?`;
-      return { reply, cleanSpokenText: 'Greetings! Welcome to Vaani. Engineered by Piyush, a first year student of SGU. How may I assist you today?', detectedLanguage: 'en' };
+      return { reply, cleanSpokenText: 'Greetings! Welcome to Vaani. Engineered by Piyush, a first year student of NIAT X SGU. How may I assist you today?', detectedLanguage: 'en' };
     }
 
     // 7. Search Knowledge Catalog for grounded domain response
@@ -574,13 +547,13 @@ Your inquiry regarding **"${query}"** touches upon fundamental principles of ana
 - **Multimodal Intelligence:** For deep mathematical derivations, code inspections, or diagram analyses, upload an image using the \`+\` attachment button.
 
 ### 3. Conclusion & Next Steps
-As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive into full derivations, algorithmic designs, or creative narratives.
+As engineered by **Piyush • 1st year student of NIAT X SGU**, I am equipped to dive into full derivations, algorithmic designs, or creative narratives.
 
 *(Tip: To unlock infinite real-time generative capabilities with Google Gemini 3.8 Flash on this deployment, simply enter your free Gemini API key in **Settings (⚙️)**.)*`;
 
     return {
       reply,
-      cleanSpokenText: `I have analyzed your inquiry regarding ${query}. As your voice companion made by Piyush from SGU, I am ready to explore this topic further.`,
+      cleanSpokenText: `I have analyzed your inquiry regarding ${query}. As your voice companion made by Piyush from NIAT X SGU, I am ready to explore this topic further.`,
       detectedLanguage: language,
       isGenericFallback: true
     };

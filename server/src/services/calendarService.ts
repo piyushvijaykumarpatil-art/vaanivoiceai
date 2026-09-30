@@ -103,21 +103,10 @@ export function getIndianCalendarContext(): CalendarInfo {
   };
 }
 
-export function evaluateQuickMath(query: string): string | null {
-  // Check if string is a simple math query like "what is 45 * 12" or "15 + 30"
-  const clean = query.toLowerCase().replace(/what is|calculate|solve|equals|\?/g, '').trim();
-  if (/^[0-9\s\+\-\*\/\.\(\)\^]+$/.test(clean) && /[0-9]/.test(clean) && /[\+\-\*\/]/.test(clean)) {
-    try {
-      // Safe math evaluator without eval()
-      const sanitized = clean.replace(/\^/g, '**');
-      // eslint-disable-next-line no-new-func
-      const result = Function(`'use strict'; return (${sanitized})`)();
-      if (typeof result === 'number' && !isNaN(result)) {
-        return `The calculated result is ${result}.`;
-      }
-    } catch {
-      return null;
-    }
-  }
-  return null;
+import { evaluateAccurateMath } from './mathEngine.js';
+
+export function evaluateQuickMath(query: string, language: string = 'en'): string | null {
+  const result = evaluateAccurateMath(query, language);
+  return result ? result.reply : null;
 }
+

@@ -28,7 +28,7 @@ export const CreatorBadge: React.FC<CreatorBadgeProps> = ({
       >
         <span className="animate-pulse">👑</span>
         <span className="text-white font-semibold tracking-wide">
-          Made by Piyush • 1st Year Student of SGU
+          Made by Piyush • 1st Year Student of NIAT X SGU
         </span>
       </button>
 
@@ -57,7 +57,7 @@ export const CreatorBadge: React.FC<CreatorBadgeProps> = ({
                 <h3 className="text-lg font-bold text-white font-cinzel">Piyush</h3>
                 <p className="text-xs text-slate-300 flex items-center gap-1">
                   <GraduationCap className="w-3.5 h-3.5 text-amber-400" />
-                  1st Year Student of SGU
+                  1st Year Student • NIAT X SGU
                 </p>
               </div>
             </div>
@@ -66,7 +66,7 @@ export const CreatorBadge: React.FC<CreatorBadgeProps> = ({
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Institution:</strong> SGU (Sanjay Ghodawat University)
+                  <strong>Institution:</strong> NIAT X SGU (National Institute of Advanced Technologies X Sanjay Ghodawat University)
                 </span>
               </div>
               <div className="flex items-start gap-2.5">
