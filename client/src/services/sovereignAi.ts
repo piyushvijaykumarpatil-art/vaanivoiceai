@@ -4,6 +4,8 @@
  * Also supports direct user-provided Google Gemini API key for infinite generative knowledge.
  */
 
+import knowledgeCatalog from '../data/knowledgeCatalog.json';
+
 export interface SovereignResponse {
   reply: string;
   cleanSpokenText: string;
@@ -144,18 +146,29 @@ export class SovereignAiEngine {
 - Requested language: ${language}.
 - If user input or image is ambiguous or lacks context, ask a brief, helpful clarifying question rather than guessing.`;
 
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents,
-          systemInstruction: { parts: [{ text: systemPrompt }] }
-        })
-      });
+      let rawText = '';
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents,
+              systemInstruction: { parts: [{ text: systemPrompt }] }
+            })
+          });
 
-      if (!res.ok) return null;
-      const data = await res.json();
-      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (res.ok) {
+            const data = await res.json();
+            rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            if (rawText) break;
+          } else if (res.status === 503 || res.status === 429) {
+            if (attempt < 2) await new Promise(r => setTimeout(r, 800));
+          }
+        } catch {
+          if (attempt < 2) await new Promise(r => setTimeout(r, 800));
+        }
+      }
       if (!rawText) return null;
 
       // Prepare clean spoken text for TTS without markdown code blocks, backticks, or symbols
@@ -470,7 +483,44 @@ What intellectual domain shall we explore together?`;
       return { reply, cleanSpokenText: 'Greetings! Welcome to Vaani. Engineered by Piyush, a first year student of SGU. How may I assist you today?', detectedLanguage: 'en' };
     }
 
-    // 7. General Knowledge / Deep Reasoning
+    // 7. Search Knowledge Catalog for grounded domain response
+    const stopWords = new Set(['what', 'is', 'the', 'a', 'an', 'tell', 'me', 'about', 'how', 'does', 'who', 'in', 'on', 'of', 'and', 'to', 'for', 'explain', 'kya', 'hai', 'batao', 'sang', 'aahe', 'kay']);
+    const words = q.replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w.length > 1 && !stopWords.has(w));
+
+    let matchedItem: any = null;
+    let highestScore = 0;
+
+    for (const item of (knowledgeCatalog as any[])) {
+      let score = 0;
+      if (q.includes(item.title.toLowerCase())) score += 50;
+      for (const kw of item.keywords) {
+        const lkw = kw.toLowerCase();
+        if (q.includes(lkw)) score += 30;
+        for (const w of words) {
+          if (lkw === w) score += 20;
+          else if (lkw.includes(w) && w.length >= 4) score += 10;
+        }
+      }
+      if (score > highestScore && score >= 25) {
+        highestScore = score;
+        matchedItem = item;
+      }
+    }
+
+    if (matchedItem) {
+      let rep = matchedItem.content;
+      let spoken = matchedItem.spokenSummary;
+      if (language === 'hi' && matchedItem.translations?.hi) {
+        rep = matchedItem.translations.hi.content;
+        spoken = matchedItem.translations.hi.spokenSummary;
+      } else if (language === 'mr' && matchedItem.translations?.mr) {
+        rep = matchedItem.translations.mr.content;
+        spoken = matchedItem.translations.mr.spokenSummary;
+      }
+      return { reply: rep, cleanSpokenText: spoken, detectedLanguage: language };
+    }
+
+    // 8. General Knowledge / Deep Reasoning
     const reply = `### Universal Knowledge Synthesis: "${query}"
 
 ### 1. Conceptual Overview
@@ -484,7 +534,7 @@ Your inquiry regarding **"${query}"** touches upon fundamental principles of ana
 ### 3. Conclusion & Next Steps
 As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive into full derivations, algorithmic designs, or creative narratives.
 
-*(Tip: To unlock infinite real-time generative capabilities with Google Gemini 2.5 Flash on this Vercel deployment, simply enter your free Gemini API key in **Settings (⚙️)**.)*`;
+*(Tip: To unlock infinite real-time generative capabilities with Google Gemini 3.8 Flash on this deployment, simply enter your free Gemini API key in **Settings (⚙️)**.)*`;
 
     return {
       reply,

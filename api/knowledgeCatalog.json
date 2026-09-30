@@ -1,0 +1,320 @@
+[
+  {
+    "id": "know_photosynthesis",
+    "title": "Photosynthesis & Plant Energy Cycle",
+    "category": "science",
+    "keywords": [
+      "photosynthesis", "plant", "plants", "chlorophyll", "chloroplast",
+      "sunlight", "carbon dioxide", "oxygen", "glucose", "calvin cycle",
+      "light reaction", "vanaspati", "prakash sanshleshan", "biology"
+    ],
+    "summary": "The biological process by which green plants and certain organisms transform sunlight, water, and carbon dioxide into chemical energy (glucose) and oxygen.",
+    "content": "### Photosynthesis: The Engine of Life on Earth 🌿\n\n**Photosynthesis** is the biochemical process by which photoautotrophic organisms (green plants, algae, and cyanobacteria) convert light energy into chemical energy stored in carbohydrate molecules (glucose).\n\n### 1. The Master Chemical Equation\n$$\\text{6CO}_2 + \\text{6H}_2\\text{O} + \\text{Light Energy} \\xrightarrow{\\text{Chlorophyll}} \\text{C}_6\\text{H}_{12}\\text{O}_6 + \\text{6O}_2$$\n\n- **Reactants:** Carbon dioxide (absorbed through leaf stomata) + Water (absorbed by roots via xylem) + Solar photons.\n- **Products:** Glucose (used for cellular respiration and cellulose structure) + Oxygen (released as a vital byproduct).\n\n### 2. The Two Stages of Photosynthesis\n1. **Light-Dependent Reactions (in Thylakoid Membranes):**\n   - Chlorophyll absorbs photons in the blue and red wavelengths.\n   - Water molecules undergo photolysis: 2H₂O -> 4H⁺ + 4e⁻ + O₂.\n   - Generates high-energy carriers: **ATP** and **NADPH**.\n2. **Light-Independent Reactions / The Calvin Cycle (in Stroma):**\n   - Carbon fixation catalyzed by the enzyme **RuBisCO**.\n   - ATP and NADPH reduce 3-PGA into glyceraldehyde-3-phosphate (G3P), synthesizing glucose.\n\n### 3. Biological & Global Importance\n- Produces nearly **100% of atmospheric oxygen** supporting aerobic life.\n- Acts as the foundational primary producer in terrestrial and aquatic food webs.\n- Crucial carbon sink mitigating planetary greenhouse warming.",
+    "spokenSummary": "Photosynthesis is the process where green plants use sunlight, water, and carbon dioxide to produce glucose and oxygen, driven by chlorophyll in chloroplasts.",
+    "translations": {
+      "hi": {
+        "title": "प्रकाश संश्लेषण (Photosynthesis)",
+        "summary": "वह जैविक प्रक्रिया जिसके द्वारा हरे पौधे सूर्य के प्रकाश, जल और कार्बन डाइऑक्साइड से ग्लूकोज और ऑक्सीजन का निर्माण करते हैं।",
+        "content": "### प्रकाश संश्लेषण (Photosynthesis) 🌿\n\n**प्रकाश संश्लेषण** वह रासायनिक प्रक्रिया है जिसके माध्यम से हरे पौधे, शैवाल और कुछ जीवाणु सूर्य के प्रकाश की ऊर्जा का उपयोग करके अपना भोजन (ग्लूकोज) तैयार करते हैं।\n\n### रासायनिक समीकरण:\n$$\\text{6CO}_2 + \\text{6H}_2\\text{O} + \\text{सूर्य का प्रकाश} \\xrightarrow{\\text{क्लोरोफिल}} \\text{C}_6\\text{H}_{12}\\text{O}_6 + \\text{6O}_2$$\n\n### मुख्य चरण:\n1. **प्रकाशिक अभिक्रिया (Light Reactions):** यह क्लोरोप्लास्ट के थाइलाकोइड में होती है, जहाँ जल के अणु टूटते हैं और ऑक्सीजन गैस मुक्त होती है।\n2. **अप्रकाशिक अभिक्रिया (Calvin Cycle):** यह स्ट्रोमा में होती है, जहाँ कार्बन डाइऑक्साइड से ग्लूकोज का निर्माण होता है।",
+        "spokenSummary": "प्रकाश संश्लेषण वह प्रक्रिया है जिससे पौधे सूर्य के प्रकाश, पानी और कार्बन डाइऑक्साइड की सहायता से अपना भोजन बनाते हैं और ऑक्सीजन छोड़ते हैं।"
+      },
+      "mr": {
+        "title": "प्रकाशसंश्लेषण (Photosynthesis)",
+        "summary": "हिरव्या वनस्पती सूर्यप्रकाश, पाणी व कार्बन डायऑक्साइडचा वापर करून अन्न (ग्लुकोज) आणि ऑक्सिजन तयार करण्याची नैसर्गिक प्रक्रिया.",
+        "content": "### प्रकाशसंश्लेषण (Photosynthesis) 🌿\n\n**प्रकाशसंश्लेषण** ही अशी जैविक प्रक्रिया आहे ज्यामध्ये हिरव्या वनस्पती सूर्यप्रकाशातील ऊर्जेचा वापर करून पाणी आणि हवेतील कार्बन डायऑक्साईडचे रूपांतर ग्लुकोज आणि ऑक्सिजनमध्ये करतात.\n\n### मुख्य रासायनिक समीकरण:\n$$\\text{6CO}_2 + \\text{6H}_2\\text{O} + \\text{सूर्यप्रकाश} \\xrightarrow{\\text{हरितद्रव्य}} \\text{C}_6\\text{H}_{12}\\text{O}_6 + \\text{6O}_2$$\n\n- **हरितद्रव्य (Chlorophyll):** पानांमधील पेशींमध्ये सूर्यप्रकाश शोषून घेण्याचे काम करते.\n- **महत्त्व:** पृथ्वीवरील सजीवांना जगण्यासाठी लागणारा ऑक्सिजन आणि अन्न साखळीचा पाया प्रकाशसंश्लेषणावर अवलंबून आहे.",
+        "spokenSummary": "प्रकाशसंश्लेषण ही वनस्पतींची अन्न तयार करण्याची प्रक्रिया आहे, ज्यामध्ये सूर्यप्रकाश, पाणी आणि हवेतील कार्बन डायऑक्साइडपासून ग्लुकोज व ऑक्सिजन तयार होतो."
+      }
+    }
+  },
+  {
+    "id": "know_gravity_physics",
+    "title": "Gravity, Gravitation & Laws of Motion",
+    "category": "science",
+    "keywords": [
+      "gravity", "gravitation", "gravitational", "newton", "newton's laws",
+      "einstein", "relativity", "mass", "acceleration", "force", "spacetime",
+      "gurutvakarshan", "physics", "motion", "f=ma"
+    ],
+    "summary": "The universal fundamental force of attraction between masses, governed classically by Newton's Law of Universal Gravitation and modernly by Einstein's General Theory of Relativity.",
+    "content": "### Universal Gravitation & Fundamental Physics 🌌\n\n**Gravity** is one of the four fundamental interactions in nature (alongside electromagnetism, strong nuclear force, and weak nuclear force). It dictates planetary orbits, tidal rhythms, and the macroscopic structure of the cosmos.\n\n### 1. Newton's Law of Universal Gravitation\nSir Isaac Newton established that every particle of matter attracts every other particle with a force proportional to the product of their masses and inversely proportional to the square of the distance between their centers:\n$$F = G \\frac{m_1 m_2}{r^2}$$\n\n- **G:** Gravitational Constant = 6.67430 x 10⁻¹¹ N·m²/kg².\n- **g:** Earth's acceleration due to gravity = 9.80665 m/s².\n\n### 2. Newton's Three Master Laws of Motion\n1. **First Law (Inertia):** An object remains at rest or in uniform motion unless acted upon by a net external force.\n2. **Second Law (Force & Momentum):** The rate of change of momentum is proportional to the applied force: F = ma.\n3. **Third Law (Action & Reaction):** For every action, there is an equal and opposite reaction.\n\n### 3. Einstein's General Relativity (1915)\nAlbert Einstein revolutionized physics by showing gravity is **not merely an invisible pull**, but the curvature of four-dimensional **spacetime** caused by mass and energy. Massive celestial bodies warp spacetime, causing nearby matter and light to follow curved geodesic paths.",
+    "spokenSummary": "Gravity is the universal force of attraction between masses. Newton described it with inverse-square attraction, while Einstein explained it as the curvature of spacetime.",
+    "translations": {
+      "hi": {
+        "title": "गुरुत्वाकर्षण एवं न्यूटन के नियम (Gravity & Physics)",
+        "summary": "द्रव्यमान वाली वस्तुओं के बीच पारस्परिक आकर्षण बल और गति के मूलभूत सिद्धांत।",
+        "content": "### गुरुत्वाकर्षण और गति के नियम 🌌\n\n**गुरुत्वाकर्षण (Gravity)** वह आकर्षण बल है जो ब्रह्मांड में किन्हीं भी दो द्रव्यमानों के बीच कार्य करता है।\n\n### 1. न्यूटन का गुरुत्वाकर्षण नियम:\n$$F = G \\frac{m_1 m_2}{r^2}$$\nजहाँ G = 6.674 x 10⁻¹¹ N·m²/kg², और पृथ्वी पर गुरुत्वीय त्वरण g ≈ 9.8 m/s² है।\n\n### 2. गति के तीन नियम:\n- **प्रथम नियम (जड़त्व):** कोई वस्तु अपनी अवस्था तब तक नहीं बदलती जब तक उस पर बाह्य बल न लगे।\n- **द्वितीय नियम:** बल संवेग परिवर्तन की दर के समानुपाती होता है (F = ma)।\n- **तृतीय नियम:** प्रत्येक क्रिया की समान और विपरीत प्रतिक्रिया होती है।",
+        "spokenSummary": "गुरुत्वाकर्षण द्रव्यमानों के बीच लगने वाला आकर्षण बल है। न्यूटन के नियम के अनुसार दो पिंडों के बीच बल उनके द्रव्यमान के गुणनफल के समानुपाती और दूरी के वर्ग के व्युत्क्रमानुपाती होता है।"
+      },
+      "mr": {
+        "title": "गुरुत्वाकर्षण आणि गतीचे नियम (Gravity & Motion)",
+        "summary": "दोन वस्तूंमधील वस्तुमानामुळे निर्माण होणारे वैश्विक आकर्षण बल आणि न्यूटनचे भौतिकशास्त्रातील नियम.",
+        "content": "### गुरुत्वाकर्षण आणि भौतिकशास्त्राचे नियम 🌌\n\n**गुरुत्वाकर्षण** हे विश्वातील वस्तुमान असलेल्या कोणत्याही दोन घटकांमधील आकर्षण बल आहे.\n\n### न्यूटनचा वैश्विक गुरुत्वाकर्षणाचा सिद्धांत:\n$$F = G \\frac{m_1 m_2}{r^2}$$\n- पृथ्वीचे गुरुत्वीय त्वरण (g) सरासरी **9.8 m/s²** असते.\n- **आइन्स्टाईनचा सापेक्षता सिद्धांत:** वस्तुमानामुळे स्थल-कालाच्या (Spacetime) वक्रतेतून गुरुत्वाकर्षण निर्माण होते.",
+        "spokenSummary": "गुरुत्वाकर्षण म्हणजे वस्तुमानामुळे निर्माण होणारे नैसर्गिक आकर्षण बल. न्यूटनने याचे सूत्र दिले आणि आइन्स्टाइनने याला स्थल-कालाची वक्रता मानले."
+      }
+    }
+  },
+  {
+    "id": "know_ai_ml",
+    "title": "Artificial Intelligence, Machine Learning & LLMs",
+    "category": "technology",
+    "keywords": [
+      "ai", "artificial intelligence", "machine learning", "ml", "deep learning",
+      "neural network", "llm", "transformer", "chatgpt", "gemini", "nlp",
+      "generative ai", "weights", "tokens", "embeddings"
+    ],
+    "summary": "The field of computer science dedicated to building machines capable of performing tasks requiring human-level reasoning, pattern recognition, and natural language synthesis.",
+    "content": "### Artificial Intelligence, Deep Learning & LLM Architecture 🤖\n\n**Artificial Intelligence (AI)** encompasses algorithmic systems engineered to simulate cognitive functions including pattern recognition, logical deduction, predictive synthesis, and autonomous problem-solving.\n\n### 1. Structural Hierarchy\n1. **Artificial Intelligence (Broadest):** Any computational system demonstrating human-like intellect (rule-based expert systems, heuristic search).\n2. **Machine Learning (Subset):** Statistical algorithms that automatically learn patterns from empirical training data without explicit deterministic programming (Supervised, Unsupervised, Reinforcement Learning).\n3. **Deep Learning (Sub-subset):** Multi-layered Artificial Neural Networks (ANNs, CNNs, Transformers) inspired by biological neuronal synapses.\n4. **Large Language Models & Generative AI:** High-parameter probabilistic models capable of generating fluent code, text, audio, and visual assets.\n\n### 2. The Transformer Architecture (Vaswani et al., 2017)\nModern LLMs (including Google Gemini and ChatGPT) are founded upon the **Transformer** architecture:\n- **Self-Attention Mechanism:** Computes contextual relevance weights across all tokens in parallel using Query (Q), Key (K), and Value (V) matrices.\n- **Tokenization & Vector Embeddings:** Text is converted to discrete semantic vectors in high-dimensional latent space.\n- **Multi-Head Attention:** Allows the model to attend to information from different representation subspaces simultaneously.",
+    "spokenSummary": "Artificial Intelligence enables computers to learn, reason, and solve problems. Modern LLMs use the Transformer architecture with self-attention to process natural language.",
+    "translations": {
+      "hi": {
+        "title": "आर्टिफिशियल इंटेलिजेंस एवं मशीन लर्निंग (AI & ML)",
+        "summary": "कंप्यूटर विज्ञान की वह शाखा जो मशीनों को सोचने, समझने, सीखने और निर्णय लेने की क्षमता प्रदान करती है।",
+        "content": "### आर्टिफिशियल इंटेलिजेंस और मशीन लर्निंग 🤖\n\n**आर्टिफिशियल इंटेलिजेंस (AI)** मशीनों को मानवीय बुद्धिमत्ता के अनुरूप सोचने, निर्णय लेने और सीखने की क्षमता प्रदान करने की तकनीक है।\n\n### प्रमुख श्रेणियां:\n1. **मशीन लर्निंग (ML):** डेटा से पैटर्न पहचानना और अनुभव से सीखना।\n2. **डीप लर्निंग (Deep Learning):** कृत्रिम न्यूरल नेटवर्क द्वारा जटिल डेटा का विश्लेषण।\n3. **लार्ज लैंग्वेज मॉडल्स (LLM):** ट्रांसफॉर्मर आर्किटेक्चर और सेल्फ-अटेंशन पर आधारित प्राकृतिक भाषा मॉडल (जैसे Gemini, ChatGPT, Vaani)।",
+        "spokenSummary": "आर्टिफिशियल इंटेलिजेंस कंप्यूटर को इंसानों की तरह सोचने और सीखने में सक्षम बनाता है। यह मशीन लर्निंग और न्यूरल नेटवर्क पर काम करता है।"
+      },
+      "mr": {
+        "title": "आर्टिफिशियल इंटेलिजेंस (कृत्रिम बुद्धिमत्ता - AI)",
+        "summary": "संगणकाला मानवासारखा विचार करणे, शिकणे आणि समस्या सोडवण्याची क्षमता देणारे अत्याधुनिक तंत्रज्ञान.",
+        "content": "### आर्टिफिशियल इंटेलिजेंस आणि मशीन लर्निंग 🤖\n\n**आर्टिफिशियल इंटेलिजेंस (AI)** हे संगणकीय तंत्रज्ञान आहे ज्याद्वारे संगणक मानवी बुद्धिमत्तेसारखे विश्लेषण, भाषा समजणे आणि निर्णय घेण्याचे कार्य करतो.\n\n- **मशीन लर्निंग:** प्रचंड डेटाच्या आधारे संगणक स्वतः शिकतो.\n- **लार्ज लँग्वेज मॉडेल्स (LLMs):** ट्रान्सफॉर्मर तंत्रज्ञानावर आधारित भाषिक मॉडेल्स (उदा. Google Gemini, Vaani).",
+        "spokenSummary": "आर्टिफिशियल इंटेलिजेंस हे संगणकाला विचार करण्याची आणि स्वतःहून शिकण्याची शक्ती देणारे आधुनिक तंत्रज्ञान आहे."
+      }
+    }
+  },
+  {
+    "id": "know_python_programming",
+    "title": "Python Programming, Data Structures & Best Practices",
+    "category": "programming",
+    "keywords": [
+      "python", "coding", "programming", "code", "function", "class", "oop",
+      "list comprehension", "generator", "decorator", "dictionary", "algorithm",
+      "developer", "syntax"
+    ],
+    "summary": "A high-level, interpreted, dynamically-typed programming language emphasizing developer productivity, elegant syntax, and vast ecosystem support.",
+    "content": "### Python Programming Mastery & Architecture 🐍\n\n**Python** is one of the world's most versatile, elegant, and widely adopted programming languages, excelling in data science, artificial intelligence, backend web systems, and scientific computing.\n\n### 1. Production-Ready Python Pattern\n```python\nfrom typing import List, Dict, Any\nimport time\n\nclass SovereignDataPipeline:\n    \"\"\"Production pipeline demonstrating type hinting, comprehensions, and error handling.\"\"\"\n    \n    def __init__(self, pipeline_name: str) -> None:\n        self.name = pipeline_name\n        self.records_processed: int = 0\n\n    def process_records(self, raw_data: List[Dict[str, Any]]) -> Dict[str, Any]:\n        start_time = time.perf_counter()\n        \n        # High-performance list comprehension with filter\n        valid_items = [\n            {\"id\": item[\"id\"], \"score\": round(item[\"val\"] * 1.5, 2)}\n            for item in raw_data\n            if item.get(\"status\") == \"active\" and isinstance(item.get(\"val\"), (int, float))\n        ]\n        \n        self.records_processed += len(valid_items)\n        elapsed = time.perf_counter() - start_time\n        \n        return {\n            \"pipeline\": self.name,\n            \"processed_count\": len(valid_items),\n            \"execution_seconds\": round(elapsed, 4),\n            \"payload\": valid_items\n        }\n\n# Usage:\npipeline = SovereignDataPipeline(\"TelemetryEngine\")\nresult = pipeline.process_records([\n    {\"id\": \"A1\", \"status\": \"active\", \"val\": 42},\n    {\"id\": \"B2\", \"status\": \"idle\", \"val\": 10},\n    {\"id\": \"C3\", \"status\": \"active\", \"val\": 88.5},\n])\nprint(result)\n```\n\n### 2. Core Python Principles\n- **Dynamic Typing with Type Annotations:** Enhances readability and prevents runtime bugs with static linters.\n- **List Comprehensions & Generators:** Enables memory-efficient O(n) data processing with low overhead.\n- **Decorators and Context Managers:** Metaprogramming pattern for caching, logging, and resource cleanup.",
+    "spokenSummary": "Python is a high-level language prized for readable syntax, dynamic typing, and comprehensive libraries across web development, AI, and data science.",
+    "translations": {
+      "hi": {
+        "title": "पायथन प्रोग्रामिंग (Python Programming)",
+        "summary": "एक अत्यंत लोकप्रिय, सरल और शक्तिशाली प्रोग्रामिंग भाषा जो वेब विकास, डेटा साइंस और AI में प्रयुक्त होती है।",
+        "content": "### पायथन प्रोग्रामिंग (Python Programming) 🐍\n\n**पायथन** दुनिया की सबसे लोकप्रिय प्रोग्रामिंग भाषाओं में से एक है। इसकी मुख्य विशेषताएं हैं:\n- **सरल सिंटैक्स:** अंग्रेजी जैसी पठनीयता।\n- **मल्टी-पैराडाइम:** ऑब्जेक्ट ओरिएंटेड, प्रोसीजरल और फंक्शनल प्रोग्रामिंग का समर्थन।\n- **व्यापक लाइब्रेरी:** AI, मशीन लर्निंग (PyTorch, TensorFlow) और वेब डेवलपमेंट (FastAPI, Django)।",
+        "spokenSummary": "पायथन एक शक्तिशाली और आसान प्रोग्रामिंग भाषा है जिसका उपयोग आर्टिफिशियल इंटेलिजेंस, डेटा साइंस और वेबसाइट बनाने में किया जाता है।"
+      },
+      "mr": {
+        "title": "पायथन प्रोग्रामिंग भाषा (Python)",
+        "summary": "सोपी वाक्यरचना आणि प्रचंड क्षमतेमुळे डेटा सायन्स व एआय क्षेत्रात अग्रगण्य असलेली प्रोग्रॅमिंग भाषा.",
+        "content": "### पायथन प्रोग्रामिंग (Python) 🐍\n\n**पायथन** ही आधुनिक सॉफ्टवेअर आणि एआय युगातील सर्वात महत्त्वाची संगणकीय भाषा आहे.\n- **वैशिष्ट्ये:** समजायला सोपी, वाचनीय सिंटॅक्स, आणि विविध लायब्ररीज (उदा. NumPy, Pandas).\n- **वापर:** आर्टिफिशियल इंटेलिजेंस, मशीन लर्निंग, वेब डेव्हलपमेंट आणि ऑटोमेशन.",
+        "spokenSummary": "पायथन ही एक अत्यंत लोकप्रिय आणि सोपी प्रोग्रॅमिंग भाषा आहे जी एआय आणि सॉफ्टवेअर निर्मितीसाठी जगभरात वापरली जाते."
+      }
+    }
+  },
+  {
+    "id": "know_shivaji_maharaj",
+    "title": "Chhatrapati Shivaji Maharaj & Hindavi Swarajya",
+    "category": "history",
+    "keywords": [
+      "shivaji", "chhatrapati", "maharaj", "maratha", "swarajya", "hindavi",
+      "raigad", "rajgad", "pratapgad", "sindhudurg", "ganimi kava", "afzal khan",
+      "tanaji", "baji prabhu", "jijabai", "shahaji"
+    ],
+    "summary": "The visionary founder of the Maratha Empire (Hindavi Swarajya), pioneer of guerrilla warfare (Ganimi Kava), Father of the Indian Navy, and champion of benevolent governance.",
+    "content": "### Chhatrapati Shivaji Maharaj: Architect of Hindavi Swarajya 🚩\n\n**Chhatrapati Shivaji Maharaj** (19 February 1630 – 3 April 1680) was a legendary Indian sovereign warrior king and the visionary founder of the **Maratha Empire (Hindavi Swarajya)**.\n\n### 1. Foundations of Sovereignty\n- **Birthplace:** Shivneri Fort, near Junnar (Pune district, Maharashtra).\n- **Inspirational Mentorship:** Guided by his visionary mother **Rajmata Jijabai** and father Shahaji Raje Bhosale.\n- **Pledge of Swarajya:** At the young age of 16 at Raireshwar temple, Maharaj took the sacred vow to establish Swarajya (self-rule rooted in justice, religious tolerance, and people's welfare).\n\n### 2. Military Innovations & Fort Architecture\n- **Ganimi Kava (Guerrilla Tactics):** Mastered asymmetrical mountain warfare, utilizing speed, deception, terrain mastery, and surprise ambushes against overwhelmingly larger Mughal and Adilshahi armies.\n- **Fortress Mastery:** Conquered and fortified over 300 hill and sea forts, designating **Raigad Fort** as the capital of Swarajya.\n- **Father of the Indian Navy:** Built India's first modern naval armada with coastal fortresses like **Sindhudurg, Vijaydurg, and Suvarnadurg** to protect trade against European powers and the Siddis.\n\n### 3. Progressive Governance & Coronation (1674)\n- **Coronation (Rajyabhisheka):** Crowned as Chhatrapati at Raigad on 6 June 1674, restoring sovereign Indian royal authority.\n- **Ashta Pradhan Mandal:** Instituted an eight-minister administrative council ensuring departmental accountability.\n- **Peasant & Women Welfare:** Strict royal orders banned looting of civilian farmers, mandated religious freedom, and imposed the harshest punishments for disrespecting women of any faith.",
+    "spokenSummary": "Chhatrapati Shivaji Maharaj was the visionary 17th-century founder of the Maratha Empire and Hindavi Swarajya, master of guerrilla warfare, and Father of the Indian Navy.",
+    "translations": {
+      "hi": {
+        "title": "छत्रपति शिवाजी महाराज एवं हिन्दवी स्वराज्य",
+        "summary": "मराठा साम्राज्य के संस्थापक, गुरिल्ला युद्ध (गनिमी कावा) के प्रणेता और भारतीय नौसेना के जनक।",
+        "content": "### छत्रपति शिवाजी महाराज 🚩\n\n**छत्रपति शिवाजी महाराज** (1630–1680) भारतीय इतिहास के अद्वितीय युगपुरुष और **हिन्दवी स्वराज्य** के संस्थापक थे।\n\n### प्रमुख उपलब्धियां:\n1. **गनिमी कावा (गुरिल्ला युद्ध):** सह्याद्रि की पहाड़ियों में तेज़ आक्रमण और कूटनीति से विशाल मुग़ल व आदिलशाही सेनाओं को परास्त किया।\n2. **भारतीय नौसेना के जनक:** कोंकण तट की रक्षा हेतु सिंधुदुर्ग, विजयदुर्ग जैसे जलदुर्गों और शक्तिशाली नौसेना का निर्माण किया।\n3. **कल्याणकारी शासन:** अष्टप्रधान मंडल की स्थापना की और किसानों व महिलाओं के अधिकारों की रक्षा का कड़ा नियम बनाया।",
+        "spokenSummary": "छत्रपति शिवाजी महाराज हिन्दवी स्वराज्य के संस्थापक, अद्वितीय रणनीतिकार और भारतीय नौसेना के जनक थे।"
+      },
+      "mr": {
+        "title": "छत्रपती शिवाजी महाराज आणि हिंदवी स्वराज्य",
+        "summary": "हिंदवी स्वराज्याचे संस्थापक, गनिमी काव्याचे जनक, आणि प्रजाहितदक्ष युगप्रवर्तक छत्रपती.",
+        "content": "### छत्रपती शिवाजी महाराज: स्वराज्याचे शिल्पकार 🚩\n\n**छत्रपती शिवाजी महाराज** (१९ फेब्रुवारी १६३० – ३ एप्रिल १६८०) हे महाराष्ट्राचे आराध्य दैवत आणि **हिंदवी स्वराज्याचे** संस्थापक आहेत.\n\n### १. स्वराज्याची प्रतिज्ञा:\n- वयाच्या अवघ्या १६ व्या वर्षी रायरेश्वराच्या मंदिरात स्वराज्याची शपथ घेतली.\n- राजमाता जिजाऊंच्या मार्गदर्शनाखाली अठरापगड जाती-धर्माच्या मावळ्यांना एकत्र करून रयतेचे राज्य उभे केले.\n\n### २. युद्धकला आणि आरमार:\n- **गनिमी कावा:** सह्याद्रीच्या भौगोलिक रचनेचा वापर करून बलाढ्य शत्रूवर अचूक व वेगवान मात केली.\n- **भारतीय आरमाराचे जनक:** सिंधुदुर्ग, विजयदुर्ग, पद्मदुर्ग यांसारखे जलदुर्ग उभारून सागरी सीमांचे रक्षण केले.\n- **शिवराज्याभिषेक:** ६ जून १६७४ रोजी किल्ले रायगडावर छत्रपती म्हणून राज्याभिषेक झाला.",
+        "spokenSummary": "छत्रपती शिवाजी महाराज हे हिंदवी स्वराज्याचे संस्थापक, भारतीय आरमाराचे जनक आणि रयतेची काळजी घेणारे महान राजे होते."
+      }
+    }
+  },
+  {
+    "id": "know_constitution_ambedkar",
+    "title": "The Constitution of India & Dr. B.R. Ambedkar",
+    "category": "history",
+    "keywords": [
+      "constitution", "ambedkar", "samvidhan", "b.r. ambedkar", "babasaheb",
+      "preamble", "fundamental rights", "republic", "democracy", "26 january",
+      "26 november", "drafting committee", "law"
+    ],
+    "summary": "The supreme legal document of the Republic of India, drafted under the chairmanship of Dr. B.R. Ambedkar, establishing the world's largest constitutional democracy.",
+    "content": "### The Constitution of India & Dr. B.R. Ambedkar 📜\n\nThe **Constitution of India (भारतीय संविधान)** is the supreme law of the Republic of India. It lays down the legal framework delineating fundamental political code, governmental structures, procedures, powers, duties, and citizen rights.\n\n### 1. Architectural History\n- **Drafting Committee Chairman:** **Dr. Bhimrao Ramji Ambedkar (Babasaheb)**, revered as the Chief Architect and Father of the Indian Constitution.\n- **Constituent Assembly President:** Dr. Rajendra Prasad.\n- **Time Taken:** 2 years, 11 months, and 18 days of deliberative democratic debate.\n- **Adoption:** 26 November 1949 (celebrated annually as **Constitution Day / Samvidhan Divas**).\n- **Enactment:** 26 January 1950 (celebrated nationwide as **Republic Day**).\n\n### 2. The Sacred Preamble\nThe Preamble declares India to be a **SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC** guaranteeing JUSTICE, LIBERTY, EQUALITY, and FRATERNITY to all citizens.\n\n### 3. Fundamental Rights (Part III)\nArticles 12–35 guarantee Right to Equality, Freedom of Speech, Protection of Life and Liberty, and Right to Constitutional Remedies (termed by Dr. Ambedkar as the 'Heart and Soul of the Constitution').",
+    "spokenSummary": "The Constitution of India is the supreme law of the nation, crafted under Dr. B.R. Ambedkar and enacted on January 26, 1950, creating the world's largest democracy.",
+    "translations": {
+      "hi": {
+        "title": "भारतीय संविधान एवं डॉ. बी.आर. आंबेडकर",
+        "summary": "भारत का सर्वोच्च कानून, जिसके मुख्य शिल्पकार भारतरत्न डॉ. बाबासाहेब आंबेडकर थे।",
+        "content": "### भारत का संविधान एवं डॉ. बी.आर. आंबेडकर 📜\n\n**भारतीय संविधान** विश्व का सबसे बड़ा लिखित संविधान है।\n- **प्रारूप समिति के अध्यक्ष:** डॉ. भीमराव आंबेडकर (संविधान निर्माता)।\n- **स्वीकृति:** 26 नवंबर 1949 (संविधान दिवस)।\n- **लागू होने की तिथि:** 26 जनवरी 1950 (गणतंत्र दिवस)।\n- **मूल अधिकार:** समानता, स्वतंत्रता, शोषण के विरुद्ध अधिकार एवं संवैधानिक उपचारों का अधिकार।",
+        "spokenSummary": "भारतीय संविधान देश का सर्वोच्च कानून है। इसके प्रमुख निर्माता डॉ. भीमराव आंबेडकर थे और यह 26 जनवरी 1950 को लागू हुआ था।"
+      },
+      "mr": {
+        "title": "भारतीय संविधान आणि भारतरत्न डॉ. बाबासाहेब आंबेडकर",
+        "summary": "जगातील सर्वात मोठे लिखित संविधान आणि त्याचे मुख्य शिल्पकार डॉ. बाबासाहेब आंबेडकर.",
+        "content": "### भारतीय संविधान आणि डॉ. बाबासाहेब आंबेडकर 📜\n\n**भारतीय संविधान** हा भारताचा सर्वोच्च कायदा असून डॉ. बाबासाहेब आंबेडकर हे संविधानाच्या मसुदा समितीचे अध्यक्ष आणि मुख्य शिल्पकार आहेत.\n- **कालावधी:** २ वर्षे, ११ महिने, १८ दिवस.\n- **स्वीकृती:** २६ नोव्हेंबर १९४९ (संविधान दिन).\n- **अंमलबजावणी:** २६ जानेवारी १९५० (प्रजासत्ताक दिन).\n- **मूलभूत मूल्ये:** स्वातंत्र्य, समता, बंधुता आणि न्याय.",
+        "spokenSummary": "भारतीय संविधानाचे शिल्पकार डॉ. बाबासाहेब आंबेडकर आहेत. २६ जानेवारी १९५० रोजी हे संविधान लागू होऊन भारत एक सार्वभौम प्रजासत्ताक बनला."
+      }
+    }
+  },
+  {
+    "id": "know_isro_space",
+    "title": "ISRO & India's Space Exploration Achievements",
+    "category": "science",
+    "keywords": [
+      "isro", "space", "chandrayaan", "chandrayaan-3", "mangalyaan", "aditya-l1",
+      "gaganyaan", "vikram sarabhai", "moon", "mars", "satellite", "pslv", "gslv"
+    ],
+    "summary": "The Indian Space Research Organisation (ISRO), founded by Dr. Vikram Sarabhai, globally acclaimed for low-cost, high-precision interplanetary missions.",
+    "content": "### ISRO & The Indian Space Program 🚀\n\nThe **Indian Space Research Organisation (ISRO)** is India's national space agency, headquartered in Bengaluru, Karnataka. Operating under the Department of Space, ISRO is globally renowned for cost-efficient engineering and historic interplanetary milestones.\n\n### 1. Founding & Architectural Vision\n- **Founding Visionary:** **Dr. Vikram Sarabhai**, widely celebrated as the Father of the Indian Space Program.\n- **Establishment:** 15 August 1969.\n- **Primary Launch Facility:** Satish Dhawan Space Centre (SDSC) SHAR, Sriharikota, Andhra Pradesh.\n\n### 2. Crown Jewel Missions\n1. **Chandrayaan-3 (23 August 2023):**\n   - India became the **first nation to land near the Moon's South Pole** and the 4th country to achieve a soft lunar landing.\n   - Lander: *Vikram*, Rover: *Pragyan*.\n   - Landing point officially named **Shiv Shakti Point**; August 23 proclaimed as **National Space Day**.\n2. **Mangalyaan (Mars Orbiter Mission - MOM, 2013):**\n   - First nation in the world to reach Martian orbit on its maiden attempt, achieved on a historic budget (~$74M).\n3. **Aditya-L1 (2023):** India's premier solar observatory stationed at Sun-Earth Lagrangian Point L1 (~1.5 million km away).\n4. **Gaganyaan (Upcoming):** Indigenous human spaceflight mission aiming to send 3 astronauts to Low Earth Orbit (400 km).",
+    "spokenSummary": "ISRO is India's space agency, famous for landing Chandrayaan-3 on the Moon's South Pole, reaching Mars with Mangalyaan, and the Aditya-L1 solar mission.",
+    "translations": {
+      "hi": {
+        "title": "इसरो एवं भारतीय अंतरिक्ष कार्यक्रम (ISRO)",
+        "summary": "चंद्रयान-3, मंगलयान और आदित्य-एल1 जैसी ऐतिहासिक उपलब्धियों के साथ भारत की अंतरिक्ष एजेंसी।",
+        "content": "### भारतीय अंतरिक्ष अनुसंधान संगठन (ISRO) 🚀\n\n**इसरो (ISRO)** भारत की राष्ट्रीय अंतरिक्ष एजेंसी है।\n- **संस्थापक:** डॉ. विक्रम साराभाई (1969)।\n- **चंद्रयान-3:** 23 अगस्त 2023 को चंद्रमा के दक्षिणी ध्रुव पर उतरने वाला भारत विश्व का पहला देश बना (शिव शक्ति पॉइंट)।\n- **मंगलयान:** पहले ही प्रयास में मंगल की कक्षा में पहुँचने वाला भारत विश्व का पहला देश बना।\n- **आदित्य-एल1:** सूर्य का अध्ययन करने वाली भारत की पहली अंतरिक्ष वेधशाला।",
+        "spokenSummary": "इसरो भारत की अंतरिक्ष एजेंसी है जिसने चंद्रयान-3 को चंद्रमा के दक्षिणी ध्रुव पर उतारकर और मंगलयान भेजकर विश्व इतिहास रचा है।"
+      },
+      "mr": {
+        "title": "इस्रो (ISRO) आणि भारताची अंतराळ भरारी",
+        "summary": "चांद्रयान-३ द्वारे चंद्राच्या दक्षिण ध्रुवावर पाऊल ठेवणारी भारताची अग्रगण्य अंतराळ संस्था.",
+        "content": "### इस्रो (ISRO): भारताची अंतराळ मोहिमा 🚀\n\n- **संस्थापक:** डॉ. विक्रम साराभाई.\n- **चांद्रयान-३:** २३ ऑगस्ट २०२३ रोजी चंद्राच्या दक्षिण ध्रुवावर यशस्वी लँडिंग करणारा भारत हा जगातील पहिला देश ठरला (शिवशक्ती पॉईंट).\n- **मंगळयान:** पहिल्याच प्रयत्नात मंगळाच्या कक्षेत पोहोचून इतिहास रचला.\n- **आदित्य-एल १:** सूर्याचा अभ्यास करणारी भारताची स्वतंत्र वेधशाळा.",
+        "spokenSummary": "इस्रो ही भारताची अंतराळ संस्था आहे, जिने चांद्रयान-३ आणि मंगळयान मोहिमा यशस्वी करून जगाला भारताचे सामर्थ्य दाखवले."
+      }
+    }
+  },
+  {
+    "id": "know_creator_sgu",
+    "title": "Creator Lore - Piyush • 1st Year Student of SGU",
+    "category": "creator",
+    "keywords": [
+      "piyush", "creator", "maker", "developer", "who made you", "who created you",
+      "who is piyush", "sgu", "ghodawat", "sanjay ghodawat university", "vaani origin"
+    ],
+    "summary": "Vaani was conceived, designed, and engineered by Piyush, a passionate 1st year engineering innovator at Sanjay Ghodawat University (SGU), Kolhapur.",
+    "content": "### Creator Attribution & Imperial Heritage 👑\n\n**VAANI • IMPERIAL EDITION** is a sovereign voice AI companion conceived, architected, and engineered by **Piyush**, a 1st year student at **Sanjay Ghodawat University (SGU)**.\n\n### 1. Vision of the Creator\nPiyush designed Vaani to eliminate reliance on foreign voice assistants and provide an imperial, culturally resonant AI experience for India:\n- **Zero-Latency Voice & Type Interaction:** Studio-grade neural speech synthesis in 10 Indian languages.\n- **3D Royal Chrono-Orb:** A gyroscopic Web Audio reactive visualizer with luxury 24K Gold, Emerald, Sapphire, Ruby, Amethyst, and Cyan themes.\n- **Dual Persistence Architecture:** Built with an atomic ACID JSON local engine coupled with Supabase Cloud PostgreSQL.\n- **Temporal Panchang Intelligence:** Real-time Indian Standard Time (IST), lunar Tithis, Pakshas, and 365-day festival engine.\n\n### 2. Sanjay Ghodawat University (SGU)\n- **Institution:** Sanjay Ghodawat University (Kolhapur/Atigre, Maharashtra).\n- **Reputation:** A premier private university known for cutting-edge engineering disciplines, technological innovation, and student research.",
+    "spokenSummary": "I was conceived and engineered by Piyush, a first-year student of Sanjay Ghodawat University, SGU, as a sovereign Voice AI companion for India.",
+    "translations": {
+      "hi": {
+        "title": "निर्माता परिचय: पीयूष (SGU)",
+        "summary": "वाणी को SGU के प्रथम वर्ष के छात्र पीयूष द्वारा भारत के संप्रभु वॉयस एआई के रूप में विकसित किया गया है।",
+        "content": "### वाणी के निर्माता: पीयूष • प्रथम वर्ष, SGU 👑\n\nवाणी को **संजय घोडावत यूनिवर्सिटी (SGU)** के प्रथम वर्ष के प्रतिभाशाली छात्र **पीयूष** ने विकसित किया है।\n- **उद्देश्य:** भारत को अपनी 10 भाषाओं में बात करने वाला संप्रभु और राजसी वॉयस एआई साथी प्रदान करना।\n- **तकनीक:** 3D क्रोनो-ऑर्ब, न्यूरल स्पीच सिंथेसिस, और पंचांग बुद्धिमत्ता।",
+        "spokenSummary": "मुझे SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। मैं भारत का अपना वॉयस एआई साथी हूँ।"
+      },
+      "mr": {
+        "title": "निर्माते: पियूष • प्रथम वर्ष, SGU",
+        "summary": "वाणीची निर्मिती संजय घोडावत विद्यापीठ (SGU) मधील प्रथम वर्षाचे विद्यार्थी पियूष यांनी केली आहे.",
+        "content": "### वाणीचे निर्माते: पियूष • प्रथम वर्ष, SGU 👑\n\nवाणी • इम्पीरियल एडिशनची संपूर्ण रचना **संजय घोडावत विद्यापीठ (SGU)** मधील प्रथम वर्षाचे हुशार विद्यार्थी **पियूष** यांनी केली आहे।\n- **ध्येय:** भारतीय संस्कृती, १० भारतीय भाषा आणि अत्याधुनिक ३D तंत्रज्ञानाचा सुरेख संगम असणारे व्हॉईस एआय निर्माण करणे।",
+        "spokenSummary": "मला संजय घोडावत विद्यापीठ (SGU) चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी घडवले आहे."
+      }
+    }
+  },
+  {
+    "id": "know_indian_scientists",
+    "title": "Great Indian Scientists & Mathematicians",
+    "category": "science",
+    "keywords": [
+      "ramanujan", "kalam", "abdul kalam", "c.v. raman", "aryabhata", "scientists",
+      "homi bhabha", "raman effect", "mathematics", "zero", "missile man"
+    ],
+    "summary": "Tribute to India's greatest scientific minds: Srinivasa Ramanujan, Dr. A.P.J. Abdul Kalam, Sir C.V. Raman, and Aryabhata.",
+    "content": "### Legendary Indian Scientists & Mathematicians 🔬\n\nIndia has an unbroken, centuries-long legacy of groundbreaking mathematical and scientific discovery:\n\n### 1. Srinivasa Ramanujan (1887–1920)\n- **Genius of Infinite Series:** Self-taught mathematical prodigy whose intuitive theorems transformed number theory, continued fractions, and mock theta functions.\n- **Hardy-Ramanujan Number 1729:** The smallest number expressible as the sum of two cubes in two different ways (1³ + 12³ = 9³ + 10³).\n- **National Mathematics Day:** Celebrated annually on his birthday (December 22).\n\n### 2. Dr. A.P.J. Abdul Kalam (1931–2015)\n- **Missile Man of India:** Led India's Integrated Guided Missile Development Program (AGNI, PRITHVI) and the historic 1998 Pokhran-II nuclear tests.\n- **People's President:** Served as the 11th President of India (2002–2007), author of *Wings of Fire* and *India 2020*.\n\n### 3. Sir C.V. Raman (1888–1970)\n- **The Raman Effect:** Discovered inelastic scattering of photons in transparent media.\n- **Nobel Prize (1930):** First Asian to win the Nobel Prize in Physics. National Science Day celebrated on February 28.\n\n### 4. Aryabhata (476–550 CE)\n- **Ancient Visionary:** Formulated operations of Zero, calculated pi ≈ 3.1416, and explained Earth's axial rotation and solar/lunar eclipses.",
+    "spokenSummary": "India's scientific giants include Srinivasa Ramanujan in mathematics, Dr. A.P.J. Abdul Kalam the Missile Man, Nobel laureate C.V. Raman, and ancient astronomer Aryabhata.",
+    "translations": {
+      "hi": {
+        "title": "महान भारतीय वैज्ञानिक एवं गणितज्ञ",
+        "summary": "रामानुजन, डॉ. एपीजे अब्दुल कलाम, सी.वी. रमन और आर्यभट्ट जैसे युगप्रवर्तक वैज्ञानिक।",
+        "content": "### महान भारतीय वैज्ञानिक एवं विचारक 🔬\n\n1. **श्रीनिवास रामानुजन:** संख्या सिद्धांत और अनंत श्रेणियों के अद्वितीय गणितज्ञ (1729 रामानुजन नंबर)।\n2. **डॉ. ए.पी.जे. अब्दुल कलाम:** भारत के मिसाइल मैन और पूर्व राष्ट्रपति, जिन्होंने अग्नि और पृथ्वी मिसाइलें विकसित कीं।\n3. **सर सी.वी. रमन:** 1930 में भौतिकी का नोबेल पुरस्कार विजेता ('रमन प्रभाव' की खोज, 28 फरवरी राष्ट्रीय विज्ञान दिवस)।\n4. **आर्यभट्ट:** शून्य (0) के प्रणेता और पृथ्वी के घूर्णन की वैज्ञानिक व्याख्या करने वाले प्राचीन खगोलविद।",
+        "spokenSummary": "श्रीनिवास रामानुजन, डॉ. एपीजे अब्दुल कलाम, सी.वी. रमन और आर्यभट्ट भारत के वे महान वैज्ञानिक हैं जिन्होंने दुनिया को ज्ञान का प्रकाश दिया।"
+      },
+      "mr": {
+        "title": "महान भारतीय वैज्ञानिक आणि गणितज्ञ",
+        "summary": "श्रीनिवास रामानुजन, भारतरत्न डॉ. ए.पी.जे. अब्दुल कलाम आणि नोबेल विजेते डॉ. सी.व्ही. रमण.",
+        "content": "### भारताचे महान शास्त्रज्ञ 🔬\n\n- **श्रीनिवास रामानुजन:** गणितातील अद्वितीय प्रतिभावंत, ज्यांचे १७२९ हे हार्डी-रामानुजन नंबर प्रसिद्ध आहे.\n- **डॉ. ए.पी.जे. अब्दुल कलाम:** भारताचे मिसाईल मॅन आणि माजी राष्ट्रपती.\n- **डॉ. सी.व्ही. रमण:** 'रमण इफेक्ट' या संशोधनासाठी १९३० मध्ये भौतिकशास्त्राचे नोबेल पारितोषिक मिळवणारे पहिले आशियाई शास्त्रज्ञ.\n- **आर्यभट्ट:** शून्याची संकल्पना मांडणारे आणि पाय (π) ची अचूक किंमत सांगणारे थोर प्राचीन खगोलशास्त्रज्ञ.",
+        "spokenSummary": "डॉ. एपीजे अब्दुल कलाम, रामानुजन, सी.व्ही. रमन आणि आर्यभट्ट यांनी विज्ञानात भारताचे नाव जगात अजरामर केले."
+      }
+    }
+  },
+  {
+    "id": "know_calendar_panchang",
+    "title": "Indian Astronomical Calendar, Panchang & Shravan Maas",
+    "category": "culture",
+    "keywords": [
+      "calendar", "panchang", "tithi", "paksha", "shravan", "shukla", "krishna",
+      "nakshatra", "samvat", "hindu calendar", "somwar", "shiva"
+    ],
+    "summary": "The lunisolar Indian calendar based on astronomical calculations of the Moon and Sun, including Tithis, Pakshas, and the sacred holy month of Shravan.",
+    "content": "### Indian Astronomical Calendar & Panchang Science 🗓️\n\nThe traditional **Indian Lunisolar Calendar** is a sophisticated astronomical system aligning the lunar cycle (~354 days) with the solar year (~365.25 days) through periodic intercalary months (*Adhik Maas*).\n\n### 1. The Five Limbs of Panchang (पञ्चाङ्ग)\n1. **Tithi (Lunar Day):** The 12-degree angular separation between the Sun and Moon (30 tithis per month).\n2. **Vara (Solar Day):** The 7 days of the week (Ravivara to Shanivara).\n3. **Nakshatra (Lunar Mansion):** 27 stellar divisions of the zodiac traversed by the Moon (~13°20' each, from Ashwini to Revati).\n4. **Yoga (Angular Sum):** 27 mathematical combinations of Sun and Moon longitudinal positions.\n5. **Karana (Half Tithi):** 11 divisions corresponding to 6 degrees of angular difference.\n\n### 2. The Two Fortnights (Pakshas)\n- **Shukla Paksha (Bright Fortnight):** Waxing moon from Pratipada to Purnima (Full Moon).\n- **Krishna Paksha (Dark Fortnight):** Waning moon from Pratipada to Amavasya (New Moon).\n\n### 3. Sacred Month of Shravan (श्रावण मास)\n- **Significance:** The 5th month of the Hindu calendar, dedicated to **Lord Shiva** and the preservation of nature.\n- **Shravan Somwar:** Mondays observe devout fasting, spiritual introspection, and river water (*Jalabhishek*) offerings.\n- **Environmental Context:** Marks the height of the Indian monsoon (Varsha Ritu), replenishing rivers, aquifers, and agrarian fertility across India.",
+    "spokenSummary": "The Indian lunisolar calendar calculates time through Tithis, Nakshatras, and Pakshas. Shravan is the holy fifth month dedicated to Lord Shiva and the monsoon season.",
+    "translations": {
+      "hi": {
+        "title": "भारतीय पंचांग एवं पवित्र श्रावण मास",
+        "summary": "तिथि, पक्ष, नक्षत्र एवं भगवान शिव को समर्पित पवित्र श्रावण मास की खगोलीय एवं सांस्कृतिक समझ।",
+        "content": "### भारतीय पंचांग एवं श्रावण मास 🗓️\n\nभारतीय पंचांग सूर्य और चंद्रमा की खगोलीय गति पर आधारित है।\n- **पंचांग के पांच अंग:** तिथि, वार, नक्षत्र, योग और करण।\n- **पक्ष:** शुक्ल पक्ष (बढ़ता चंद्रमा) एवं कृष्ण पक्ष (घटता चंद्रमा)।\n- **श्रावण मास:** हिन्दू वर्ष का पाँचवाँ पवित्र महीना, जो भगवान शिव की आराधना और वर्षा ऋतु के स्वागत का प्रतीक है।",
+        "spokenSummary": "भारतीय पंचांग तिथि और नक्षत्रों पर आधारित खगोलीय प्रणाली है। श्रावण मास भगवान शिव की भक्ति और वर्षा ऋतु का पावन महीना है।"
+      },
+      "mr": {
+        "title": "भारतीय पंचांग आणि पवित्र श्रावण मास",
+        "summary": "तिथी, पक्ष, नक्षत्रे आणि महादेवाला समर्पित निसर्गरम्य श्रावण महिन्याची माहिती.",
+        "content": "### भारतीय पंचांग आणि श्रावण महिना 🗓️\n\n- **पंचांग:** तिथी, वार, नक्षत्र, योग आणि करण या पाच घटकांवर आधारित खगोलीय कालनिर्णय.\n- **दोन पक्ष:** शुक्ल पक्ष (पौर्णिमेकडे जाणारा) आणि कृष्ण पक्ष (अमावस्येकडे जाणारा).\n- **श्रावण मास:** महादेवाच्या उपासनेचा आणि हिरव्यागार निसर्गाचा पवित्र महिना. या महिन्यात श्रावणी सोमवारचे उपवास आणि सणांची रेलचेल असते.",
+        "spokenSummary": "भारतीय पंचांग तिथी आणि नक्षत्रांवर आधारलेले आहे. श्रावण हा सणांचा आणि महादेवाच्या उपासनेचा पवित्र महिना आहे।"
+      }
+    }
+  },
+  {
+    "id": "know_indian_geography",
+    "title": "Geography of India: States, Rivers & Topography",
+    "category": "geography",
+    "keywords": [
+      "geography", "india", "states", "capital", "ganga", "himalayas", "rivers",
+      "delhi", "maharashtra", "karnataka", "tamil nadu", "gujarat", "western ghats"
+    ],
+    "summary": "Comprehensive geographical overview of India: 28 states, 8 Union Territories, Himalayan mountain ranges, and sacred river systems.",
+    "content": "### Geography of India: Physical Landscapes & Sovereign Heritage 🗺️\n\nIndia (Bharat) is the world's 7th largest nation by land area (3.287 million km²) and the most populous, characterized by immense topographical and ecological diversity.\n\n### 1. Political Division\n- **28 Sovereign States & 8 Union Territories.**\n- **National Capital:** New Delhi.\n- **Commercial & Financial Capital:** Mumbai (Maharashtra).\n\n### 2. Major Physiographic Divisions\n1. **The Northern Himalayan Mountain Wall:** Contains the world's highest peaks, acting as a climatic barrier and perennial water source.\n2. **The Northern Indo-Gangetic Plains:** Highly fertile alluvial agrarian basins fed by the Ganga, Yamuna, and Brahmaputra river systems.\n3. **The Peninsular Plateau & Deccan:** Ancient crystalline plateau flanked by the Western Ghats (Sahyadri - a global biodiversity hotspot) and Eastern Ghats.\n4. **The Coastal Plains & Islands:** Fertile Konkan, Malabar, Coromandel coasts, and the Andaman & Nicobar and Lakshadweep archipelagoes.\n\n### 3. Sacred River Networks\n- **Himalayan Rivers:** Ganga (2,525 km), Yamuna, Brahmaputra, Indus.\n- **Peninsular Rivers:** Godavari (longest peninsular river - *Dakshin Ganga*), Krishna, Narmada, Tapti, and Kaveri.",
+    "spokenSummary": "India features 28 states, 8 Union Territories, the majestic Himalayas, fertile Indo-Gangetic plains, and major rivers including the Ganga and Godavari.",
+    "translations": {
+      "hi": {
+        "title": "भारत का भूगोल एवं राज्य (Geography of India)",
+        "summary": "28 राज्य, 8 केंद्र शासित प्रदेश, हिमालय, गंगा-यमुना एवं सह्याद्रि पर्वत शृंखलाएं।",
+        "content": "### भारत का भूगोल एवं नदियाँ 🗺️\n\n- **राजनीतिक संरचना:** 28 राज्य और 8 केंद्र शासित प्रदेश। राजधानी: नई दिल्ली।\n- **प्रमुख पर्वतमालाएं:** हिमालय (उत्तर में), सह्याद्रि / पश्चिमी घाट, अरावली और विंध्याचल।\n- **प्रमुख नदियाँ:** गंगा (सबसे पवित्र व मुख्य नदी), यमुना, ब्रह्मपुत्र, गोदावरी और नर्मदा।",
+        "spokenSummary": "भारत में 28 राज्य और 8 केंद्र शासित प्रदेश हैं। उत्तर में विशाल हिमालय और देश भर में गंगा, यमुना, गोदावरी जैसी पवित्र नदियाँ बहती हैं।"
+      },
+      "mr": {
+        "title": "भारताचा भूगोल आणि नद्या (Geography of India)",
+        "summary": "२८ राज्ये, ८ केंद्रशासित प्रदेश, सह्याद्री पर्वत आणि जीवनदायिनी नद्या.",
+        "content": "### भारताचा भूगोल आणि नैसर्गिक रचना 🗺️\n\n- **राज्ये व राजधानी:** २८ घटक राज्ये व ८ केंद्रशासित प्रदेश. देशाची राजधानी नवी दिल्ली व महाराष्ट्राची राजधानी मुंबई.\n- **पर्वतरांगा:** उत्तरेकडील उत्तुंग हिमालय आणि महाराष्ट्राचा कणा असणारा सह्याद्री पर्वत (पश्चिम घाट).\n- **प्रमुख नदियाँ:** गंगा, यमुना, ब्रह्मपुत्रा तसेच दक्षिणेकडील गोदावरी, कृष्णा आणि कावेरी.",
+        "spokenSummary": "भारतात २८ राज्ये आहेत. उत्तरेला हिमालय आणि महाराष्ट्रात सह्याद्री असून गंगा व गोदावरी या प्रमुख जीवनदायिनी नद्या आहेत."
+      }
+    }
+  },
+  {
+    "id": "know_health_nutrition",
+    "title": "Human Health, Balanced Nutrition & Wellness",
+    "category": "health",
+    "keywords": [
+      "health", "nutrition", "diet", "water", "exercise", "vitamins", "protein",
+      "sleep", "immune system", "mental health", "wellness", "calories"
+    ],
+    "summary": "Evidence-based principles of human physiology, daily hydration, macronutrient balance, sleep hygiene, and holistic wellness.",
+    "content": "### Human Health, Physiology & Nutritional Science 🍏\n\nMaintaining peak cognitive focus, physical stamina, and cellular longevity requires balancing nutritional biochemistry, cardiovascular activity, and circadian recovery.\n\n### 1. Macronutrient Architecture\n- **Proteins (4 kcal/g):** Composed of 20 amino acids (9 essential); builds muscle tissue, enzymes, neurotransmitters, and antibodies. Target: 0.8–1.2g per kg of body mass.\n- **Complex Carbohydrates (4 kcal/g):** Whole grains, legumes, and tubers providing slow-release glucose, fiber for microbiome health, and stable insulin response.\n- **Healthy Lipids (9 kcal/g):** Unsaturated fats (Omega-3 and Omega-6 fatty acids) essential for cell membrane integrity, vitamin absorption (A, D, E, K), and hormone regulation.\n\n### 2. Daily Wellness Pillars\n- **Hydration:** Consume 2.5 to 3.5 liters of clean water daily to facilitate metabolic excretion, joint lubrication, and cognitive clarity.\n- **Sleep Hygiene:** 7 to 8 hours of restorative sleep regulates cortisol, boosts human growth hormone, and clears neural metabolic waste.\n- **Physical Activity:** 150 minutes of moderate aerobic exercise weekly plus resistance training enhances metabolic rate and cardiovascular longevity.",
+    "spokenSummary": "Good health relies on balanced nutrition with proteins and complex carbs, drinking 2.5 to 3.5 liters of water daily, regular exercise, and 7 to 8 hours of sleep.",
+    "translations": {
+      "hi": {
+        "title": "मानव स्वास्थ्य एवं संतुलित पोषण (Health & Nutrition)",
+        "summary": "संतुलित आहार, पर्याप्त जल, नियमित व्यायाम और अच्छी नींद के वैज्ञानिक नियम।",
+        "content": "### स्वास्थ्य एवं संतुलित पोषण 🍏\n\n- **संतुलित आहार:** प्रोटीन (दालें, मेवे), जटिल कार्बोहाइड्रेट (अनाज), और स्वस्थ वसा का उचित अनुपात।\n- **जल का महत्व:** प्रतिदिन कम से कम 2.5 से 3.5 लीटर पानी पिएं।\n- **नींद व व्यायाम:** 7-8 घंटे की गहरी नींद और प्रतिदिन 30 मिनट का व्यायाम शरीर और मस्तिष्क दोनों को स्वस्थ रखता है।",
+        "spokenSummary": "अच्छे स्वास्थ्य के लिए संतुलित भोजन, रोज़ 3 लीटर पानी, 30 मिनट व्यायाम और 8 घंटे की नींद आवश्यक है।"
+      },
+      "mr": {
+        "title": "आरोग्य, आहार आणि निरोगी जीवनशैली",
+        "summary": "संतुलित आहार, पुरेसे पाणी, व्यायाम आणि चांगल्या झोपेचे महत्त्व.",
+        "content": "### आरोग्य आणि संतुलित आहार 🍏\n\n- **आहार:** शरीराला आवश्यक प्रथिने (Proteins), जीवनसत्त्वे (Vitamins) आणि चौरस अन्न.\n- **पाणी:** दररोज २.५ ते ३ लिटर पाणी पिणे आरोग्यासाठी अत्यंत गरजेचे आहे.\n- **नियमित व्यायाम व झोप:** रोज ३० मिनिटे व्यायाम आणि ७ ते ८ तासांची शांत झोप मानसिक व शारीरिक ताजेतवानेपणा टिकवून ठेवते.",
+        "spokenSummary": "निरोगी राहण्यासाठी पोषक आहार, भरपूर पाणी, नियमित व्यायाम आणि ७ ते ८ तासांची झोप सर्वात महत्त्वाची आहे."
+      }
+    }
+  }
+]
