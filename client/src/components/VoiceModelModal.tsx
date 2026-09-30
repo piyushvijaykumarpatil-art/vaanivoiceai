@@ -162,10 +162,10 @@ export const VoiceModelModal: React.FC<VoiceModelModalProps> = ({
               {VOICE_MODELS.map((model) => {
                 const isSelected = settings.modelId === model.id;
                 return (
-                  <button
+                  <div
                     key={model.id}
                     onClick={() => handleSelectModel(model)}
-                    className={`relative p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between ${
+                    className={`relative p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between cursor-pointer ${
                       isSelected
                         ? 'bg-white/15 shadow-xl scale-[1.01]'
                         : 'bg-black/30 hover:bg-white/5 border-white/10'
@@ -179,23 +179,47 @@ export const VoiceModelModal: React.FC<VoiceModelModalProps> = ({
                       <div className="flex items-center gap-2.5">
                         <span className="text-2xl">{model.avatar}</span>
                         <div>
-                          <div className="font-semibold text-sm text-white">{model.name}</div>
+                          <div className="font-semibold text-sm text-white flex items-center gap-1.5">
+                            <span>{model.name}</span>
+                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-slate-300 font-normal">
+                              {model.gender === 'female' ? '♀' : '♂'}
+                            </span>
+                          </div>
                           <div className="text-[11px] text-amber-300 font-mono">{model.tag}</div>
                         </div>
                       </div>
-                      {isSelected && (
-                        <div
-                          className="w-5 h-5 rounded-full flex items-center justify-center text-black"
-                          style={{ backgroundColor: primaryColor }}
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSelectModel(model);
+                            soundManager.speakText(model.sampleText, currentLanguage, {
+                              ...settings,
+                              modelId: model.id,
+                              pitch: model.pitch,
+                              rate: model.rate
+                            });
+                          }}
+                          className="p-1.5 rounded-lg bg-white/10 hover:bg-amber-400 hover:text-black text-slate-300 transition-colors"
+                          title={`Preview ${model.name}`}
                         >
-                          <Check className="w-3.5 h-3.5 stroke-[3]" />
-                        </div>
-                      )}
+                          <Play className="w-3.5 h-3.5 fill-current" />
+                        </button>
+                        {isSelected && (
+                          <div
+                            className="w-5 h-5 rounded-full flex items-center justify-center text-black"
+                            style={{ backgroundColor: primaryColor }}
+                          >
+                            <Check className="w-3.5 h-3.5 stroke-[3]" />
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <p className="mt-2 text-xs text-slate-300 leading-relaxed font-normal">
                       {model.description}
                     </p>
-                  </button>
+                  </div>
                 );
               })}
             </div>
@@ -241,7 +265,7 @@ export const VoiceModelModal: React.FC<VoiceModelModalProps> = ({
             </div>
 
             {/* Speed / Rate */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <div className="flex justify-between text-xs">
                 <span className="text-slate-300">Speech Rate (Pacing):</span>
                 <span className="font-mono text-amber-300">{settings.rate.toFixed(2)}x</span>
@@ -255,10 +279,27 @@ export const VoiceModelModal: React.FC<VoiceModelModalProps> = ({
                 onChange={(e) => handleRateChange(parseFloat(e.target.value))}
                 className="w-full h-1.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-amber-400"
               />
-              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-                <span>Slow & Thoughtful (0.75x)</span>
-                <span>Natural (1.0x)</span>
-                <span>Fast & Dynamic (1.35x)</span>
+              {/* Quick Speed Presets */}
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {[
+                  { label: '0.85x Slow', rate: 0.85 },
+                  { label: '1.0x Normal', rate: 1.0 },
+                  { label: '1.15x Fast', rate: 1.15 },
+                  { label: '1.30x Snappy', rate: 1.30 }
+                ].map((preset) => (
+                  <button
+                    key={preset.rate}
+                    type="button"
+                    onClick={() => handleRateChange(preset.rate)}
+                    className={`px-2.5 py-1 rounded-lg text-[10px] font-mono border transition-all ${
+                      Math.abs(settings.rate - preset.rate) < 0.04
+                        ? 'bg-amber-400 text-black border-amber-400 font-bold'
+                        : 'bg-white/5 text-slate-300 border-white/10 hover:bg-white/15'
+                    }`}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
               </div>
             </div>
           </div>

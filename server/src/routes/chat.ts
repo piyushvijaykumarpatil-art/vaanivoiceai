@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import { generateChatResponse } from '../services/gemini.js';
-import { sanitizeTextForTTS } from '../utils/textSanitizer.js';
+import { sanitizeTextForTTS, createSpokenSummaryForTTS } from '../utils/textSanitizer.js';
 import { localDb, SessionRecord } from '../db/acidEngine.js';
 
 export const chatRouter = Router();
@@ -31,7 +31,7 @@ chatRouter.post('/', async (req: Request, res: Response): Promise<void> => {
 
     // Generate intelligent AI response with multimodal support
     const aiResult = await generateChatResponse(message, language, history, image, clientKey);
-    const cleanSpoken = sanitizeTextForTTS(aiResult.reply);
+    const cleanSpoken = aiResult.cleanSpokenText || createSpokenSummaryForTTS(aiResult.reply);
 
     // Save to local ACID database session
     const existingSession = await localDb.getSessionById(sessionId);

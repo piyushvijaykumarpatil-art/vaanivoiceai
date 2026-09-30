@@ -31,7 +31,7 @@ class SoundManager {
   private isPlaying: boolean = false;
   private onStateChangeCallback: ((speaking: boolean) => void) | null = null;
   private simulatedInterval: any = null;
-  private keepAliveInterval: any = null;
+  private speechWatchdog: any = null;
   private simulatedFrequencies: Uint8Array = new Uint8Array(20).fill(0);
   private cachedVoices: SpeechSynthesisVoice[] = [];
   private voiceSettings: VoiceSettings;
@@ -280,14 +280,16 @@ class SoundManager {
     this.simulatedFrequencies = new Uint8Array(20).fill(0);
   }
 
-  private clearKeepAlive(): void {
-    if (this.keepAliveInterval) {
-      clearInterval(this.keepAliveInterval);
-      this.keepAliveInterval = null;
+  private clearWatchdog(): void {
+    if (this.speechWatchdog) {
+      clearTimeout(this.speechWatchdog);
+      this.speechWatchdog = null;
     }
   }
 
   public stopAudio(): void {
+    this.clearWatchdog();
+
     if (this.currentSource) {
       try {
         this.currentSource.stop();
@@ -316,7 +318,6 @@ class SoundManager {
       }
     }
 
-    this.clearKeepAlive();
     this.stopSimulatedFrequencies();
     this.isPlaying = false;
     if (this.onStateChangeCallback) {
@@ -326,7 +327,7 @@ class SoundManager {
 
   /**
    * Primary Vocalizer: Speaks text aloud using configured Voice Model and SpeechSynthesis.
-   * Directly drives the 3D Chrono-Orb and Waveform visualizers.
+   * Directly drives the 3D Chrono-Orb and Waveform visualizers with zero stutter.
    */
   public async speakText(
     text: string,
@@ -339,7 +340,7 @@ class SoundManager {
     this.stopAudio();
 
     const isIndic = /[\u0900-\u097F\u0C00-\u0C7F\u0B80-\u0BFF\u0C80-\u0CFF\u0A80-\u0AFF\u0980-\u09FF\u0A00-\u0A7F]/.test(text) ||
-      ['mr', 'hi', 'te', 'ta', 'kn', 'gu', 'bn', 'pa'].includes(language.toLowerCase());
+      ['mr', 'hi', 'te', 'ta', 'kn', 'gu', 'bn', 'pa', 'ml'].includes(language.toLowerCase());
 
     const settings: VoiceSettings = {
       ...this.voiceSettings,
@@ -348,16 +349,23 @@ class SoundManager {
 
     const activeModel = VOICE_MODELS.find(m => m.id === settings.modelId) || VOICE_MODELS[0];
 
+    // Clean text of noisy markdown for crystal-clear TTS pronunciation
+    const cleanToSpeak = text
+      .replace(/```[\s\S]*?```/g, '')
+      .replace(/[*#_~`>\[\]\(\)\{\}]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (!cleanToSpeak) return;
+
     // If SpeechSynthesis is available in browser
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       try {
-        if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
-          window.speechSynthesis.cancel();
-          await new Promise(r => setTimeout(r, 60));
-        }
+        window.speechSynthesis.cancel();
+        await new Promise(r => setTimeout(r, 40));
         window.speechSynthesis.resume();
 
-        const utterance = new SpeechSynthesisUtterance(text.trim());
+        const utterance = new SpeechSynthesisUtterance(cleanToSpeak);
         utterance.rate = Math.max(0.7, Math.min(1.5, settings.rate || activeModel.rate));
         utterance.pitch = Math.max(0.6, Math.min(1.4, settings.pitch || activeModel.pitch));
         utterance.volume = Math.max(0.2, Math.min(1.0, settings.volume ?? 1.0));
@@ -365,7 +373,7 @@ class SoundManager {
         const targetLang = LANG_CODE_MAP[language] || language || 'en-US';
         utterance.lang = targetLang;
 
-        // Smart Voice Matching
+        // Smart Voice Matching across all 8 personas
         const voices = this.getAvailableVoices();
         let selectedVoice: SpeechSynthesisVoice | undefined;
 
@@ -392,31 +400,31 @@ class SoundManager {
             });
           }
 
+          const isMalePersona = ['sovereign', 'scholar', 'blitz'].includes(activeModel.persona);
+
           if (matchingLangVoices.length > 0) {
-            if (activeModel.persona === 'sovereign') {
+            if (isMalePersona) {
               selectedVoice = matchingLangVoices.find(v => {
                 const name = v.name.toLowerCase();
-                return name.includes('male') || name.includes('david') || name.includes('mark') || name.includes('guy') || name.includes('ravi') || name.includes('hemant') || name.includes('madhur');
-              }) || matchingLangVoices[0];
-            } else if (activeModel.persona === 'imperial' || activeModel.persona === 'studio') {
-              selectedVoice = matchingLangVoices.find(v => {
-                const name = v.name.toLowerCase();
-                return name.includes('female') || name.includes('zira') || name.includes('samantha') || name.includes('swara') || name.includes('aarohi') || name.includes('kalpana') || name.includes('neerja');
+                return name.includes('male') || name.includes('david') || name.includes('mark') || name.includes('guy') || name.includes('ravi') || name.includes('hemant') || name.includes('madhur') || name.includes('prabhat');
               }) || matchingLangVoices[0];
             } else {
-              selectedVoice = matchingLangVoices[0];
+              selectedVoice = matchingLangVoices.find(v => {
+                const name = v.name.toLowerCase();
+                return name.includes('female') || name.includes('zira') || name.includes('samantha') || name.includes('swara') || name.includes('aarohi') || name.includes('kalpana') || name.includes('neerja') || name.includes('heera');
+              }) || matchingLangVoices[0];
             }
           } else if (!isIndic) {
-            // ONLY fallback to English voices if the text is English / Latin!
-            if (activeModel.persona === 'sovereign') {
+            // Fallback for English/Latin text
+            if (isMalePersona) {
               selectedVoice = voices.find(v => {
                 const name = v.name.toLowerCase();
-                return (name.includes('male') || name.includes('david') || name.includes('guy')) && v.lang.startsWith('en');
+                return (name.includes('male') || name.includes('david') || name.includes('guy') || name.includes('mark')) && v.lang.startsWith('en');
               });
-            } else if (activeModel.persona === 'imperial' || activeModel.persona === 'studio') {
+            } else {
               selectedVoice = voices.find(v => {
                 const name = v.name.toLowerCase();
-                return (name.includes('female') || name.includes('zira') || name.includes('samantha')) && v.lang.startsWith('en');
+                return (name.includes('female') || name.includes('zira') || name.includes('samantha') || name.includes('jenny') || name.includes('aria')) && v.lang.startsWith('en');
               });
             }
             if (!selectedVoice) {
@@ -425,9 +433,6 @@ class SoundManager {
           }
         }
 
-        // CRITICAL: Only assign utterance.voice if a voice was safely chosen
-        // For Devanagari text when no Indic voice is installed on Windows, leaving utterance.voice undefined
-        // allows the browser to utilize its online neural speech engine for the language tag!
         if (selectedVoice) {
           utterance.voice = selectedVoice;
         }
@@ -438,15 +443,17 @@ class SoundManager {
         }
         this.startSimulatedFrequencies();
 
-        this.keepAliveInterval = setInterval(() => {
-          if (this.isPlaying && typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
-            window.speechSynthesis.pause();
-            window.speechSynthesis.resume();
+        // Safety Watchdog: Ensures audio state NEVER hangs indefinitely
+        this.clearWatchdog();
+        const maxDurationMs = Math.max(5000, Math.min(25000, (cleanToSpeak.length / 7) * 1000 + 4000));
+        this.speechWatchdog = setTimeout(() => {
+          if (this.isPlaying) {
+            this.stopAudio();
           }
-        }, 5000);
+        }, maxDurationMs);
 
         utterance.onend = () => {
-          this.clearKeepAlive();
+          this.clearWatchdog();
           this.isPlaying = false;
           this.stopSimulatedFrequencies();
           if (this.onStateChangeCallback) {
@@ -456,14 +463,12 @@ class SoundManager {
 
         utterance.onerror = (e) => {
           console.warn('SpeechSynthesis event notice:', e);
-          this.clearKeepAlive();
+          this.clearWatchdog();
           this.isPlaying = false;
           this.stopSimulatedFrequencies();
           if (this.onStateChangeCallback) {
             this.onStateChangeCallback(false);
           }
-          // Attempt direct streaming fallback
-          this.playFromStream(text, language).catch(() => {});
         };
 
         window.speechSynthesis.speak(utterance);
@@ -474,7 +479,7 @@ class SoundManager {
     }
 
     // Direct streaming fallback
-    await this.playFromStream(text, language);
+    await this.playFromStream(cleanToSpeak, language);
   }
 
   /**
@@ -520,7 +525,16 @@ class SoundManager {
         this.onStateChangeCallback(true);
       }
 
+      this.clearWatchdog();
+      const watchdogMs = Math.round((decodedBuffer.duration * 1000) + 1200);
+      this.speechWatchdog = setTimeout(() => {
+        if (this.isPlaying && this.currentSource === source) {
+          this.stopAudio();
+        }
+      }, watchdogMs);
+
       source.onended = () => {
+        this.clearWatchdog();
         if (this.currentSource === source) {
           this.isPlaying = false;
           this.currentSource = null;

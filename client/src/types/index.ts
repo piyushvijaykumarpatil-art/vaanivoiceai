@@ -78,7 +78,7 @@ export interface FeedbackRecord {
 }
 
 export type VoiceGender = 'female' | 'male';
-export type VoicePersona = 'imperial' | 'sovereign' | 'studio' | 'natural';
+export type VoicePersona = 'imperial' | 'sovereign' | 'studio' | 'natural' | 'expressive' | 'scholar' | 'aurora' | 'blitz';
 
 export interface VoiceModelConfig {
   id: string;

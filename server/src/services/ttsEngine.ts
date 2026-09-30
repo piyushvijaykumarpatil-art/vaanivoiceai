@@ -1,5 +1,5 @@
 import https from 'https';
-import { sanitizeTextForTTS } from '../utils/textSanitizer.js';
+import { sanitizeTextForTTS, createSpokenSummaryForTTS } from '../utils/textSanitizer.js';
 
 export interface VoiceLanguageMap {
   primary: string;
@@ -21,7 +21,7 @@ export const LANGUAGE_VOICES: Record<string, VoiceLanguageMap> = {
 };
 
 const audioCache = new Map<string, { buffer: Buffer; contentType: string }>();
-const MAX_CACHE_SIZE = 120;
+const MAX_CACHE_SIZE = 150;
 
 export class TtsEngine {
   /**
@@ -36,7 +36,7 @@ export class TtsEngine {
     rate: string = '+0%',
     pitch: string = '+0Hz'
   ): Promise<{ buffer: Buffer; contentType: string }> {
-    const cleanText = sanitizeTextForTTS(text);
+    const cleanText = createSpokenSummaryForTTS(text, 280);
     if (!cleanText) {
       throw new Error('No clean text to speak');
     }
@@ -50,7 +50,7 @@ export class TtsEngine {
     }
 
     try {
-      // 1. Synthesize authentic spoken human voice audio
+      // 1. Synthesize authentic spoken human voice audio with sub-second parallel fetching
       const mp3Buffer = await this.synthesizeGoogleTts(cleanText, targetGoogleLang);
       const result = { buffer: mp3Buffer, contentType: 'audio/mpeg' };
 
@@ -74,17 +74,14 @@ export class TtsEngine {
   }
 
   /**
-   * Splits text on natural phonetic boundaries and synthesizes high-clarity MP3 audio stream.
+   * Splits text on natural phonetic boundaries and synthesizes high-clarity MP3 audio stream in parallel.
    */
   private async synthesizeGoogleTts(text: string, lang: string): Promise<Buffer> {
-    const chunks = this.splitIntoPhoneticChunks(text, 175);
-    const chunkBuffers: Buffer[] = [];
-
-    for (const chunk of chunks) {
-      const buf = await this.fetchSingleTtsChunk(chunk, lang);
-      chunkBuffers.push(buf);
-    }
-
+    const chunks = this.splitIntoPhoneticChunks(text, 180).slice(0, 2);
+    // Parallel fetching for ultra-low latency sub-second TTS
+    const chunkBuffers = await Promise.all(
+      chunks.map(chunk => this.fetchSingleTtsChunk(chunk, lang))
+    );
     return Buffer.concat(chunkBuffers);
   }
 
@@ -101,7 +98,7 @@ export class TtsEngine {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
             'Referer': 'https://translate.google.com/'
           },
-          timeout: 6000
+          timeout: 3500
         },
         res => {
           if (res.statusCode !== 200) {
@@ -115,7 +112,7 @@ export class TtsEngine {
 
       req.on('timeout', () => {
         req.destroy();
-        reject(new Error('TTS request timed out after 6000ms'));
+        reject(new Error('TTS request timed out after 3500ms'));
       });
       req.on('error', reject);
     });

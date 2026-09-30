@@ -176,7 +176,7 @@ export const VOICE_MODELS: VoiceModelConfig[] = [
     gender: 'female',
     persona: 'imperial',
     pitch: 1.08,
-    rate: 0.98,
+    rate: 1.02,
     avatar: '👑',
     description: 'Warm, melodious, royal and culturally resonant female cadence.',
     sampleText: 'Greetings, sovereign seeker. I am VAANI • IMPERIAL EDITION, made by Piyush • 1st year student of SGU.'
@@ -187,8 +187,8 @@ export const VOICE_MODELS: VoiceModelConfig[] = [
     tag: 'King • Deep Command',
     gender: 'male',
     persona: 'sovereign',
-    pitch: 0.84,
-    rate: 0.95,
+    pitch: 0.80,
+    rate: 1.0,
     avatar: '⚡',
     description: 'Deep, commanding, authoritative and powerful masculine timbre.',
     sampleText: 'Stand tall. I am Vaani Sovereign, your commanding voice AI companion.'
@@ -200,22 +200,70 @@ export const VOICE_MODELS: VoiceModelConfig[] = [
     gender: 'female',
     persona: 'studio',
     pitch: 1.0,
-    rate: 1.02,
+    rate: 1.06,
     avatar: '🔮',
-    description: 'Crisp, crystal-clear, modern studio-grade neural precision.',
-    sampleText: 'Studio Neural voice model online with ultra-low latency response.'
+    description: 'Crisp, crystal-clear, modern studio-grade neural precision with zero latency.',
+    sampleText: 'Studio Neural voice model online. Crystal-clear acoustic precision ready.'
+  },
+  {
+    id: 'voice-kavya',
+    name: 'Kavya Expressive',
+    tag: 'Warm & Friendly • Lively',
+    gender: 'female',
+    persona: 'expressive',
+    pitch: 1.14,
+    rate: 1.08,
+    avatar: '🎙️',
+    description: 'Cheerful, dynamic, and lively conversational tone for friendly everyday dialogue.',
+    sampleText: 'Hey there! I am Kavya. I love breaking down complex ideas simply and cheerfully!'
+  },
+  {
+    id: 'voice-vikram',
+    name: 'Vikram Scholar',
+    tag: 'Wise Scholar • Intellectual',
+    gender: 'male',
+    persona: 'scholar',
+    pitch: 0.76,
+    rate: 0.96,
+    avatar: '🏛️',
+    description: 'Calm, patient, philosophical, and intellectual resonance for deep reasoning.',
+    sampleText: 'Greetings. I am Vikram. Let us examine this topic systematically from first principles.'
+  },
+  {
+    id: 'voice-rhea',
+    name: 'Rhea Cyber Aurora',
+    tag: 'Futuristic • Smooth AI',
+    gender: 'female',
+    persona: 'aurora',
+    pitch: 1.04,
+    rate: 1.12,
+    avatar: '🌟',
+    description: 'Sleek, futuristic, soothing, and ambient high-tech companion voice.',
+    sampleText: 'Neural matrix synchronized. I am Rhea, your futuristic voice guide.'
   },
   {
     id: 'regional-maestro',
-    name: 'Regional Maestro',
+    name: 'Desi Regional',
     tag: 'Native Accent • Cultural',
     gender: 'female',
     persona: 'natural',
     pitch: 1.0,
-    rate: 1.0,
+    rate: 1.02,
     avatar: '🌐',
-    description: 'Native Indian phonetic inflection tailored for Marathi, Hindi, Telugu & more.',
+    description: 'Native Indian phonetic inflection tailored for Marathi, Hindi, Telugu, and Indian English.',
     sampleText: 'नमस्कार, मी वाणी आहे. पियूष यांनी मला अतिशय कुशलतेने तयार केले आहे.'
+  },
+  {
+    id: 'voice-blitz',
+    name: 'Blitz Rapid',
+    tag: 'Zero-Latency • Fast Briefing',
+    gender: 'male',
+    persona: 'blitz',
+    pitch: 1.0,
+    rate: 1.28,
+    avatar: '🏎️',
+    description: 'Snappy, high-tempo executive briefing voice designed for maximum productivity.',
+    sampleText: 'Blitz mode engaged. Rapid answers, zero delays. Ready for your query.'
   }
 ];
 

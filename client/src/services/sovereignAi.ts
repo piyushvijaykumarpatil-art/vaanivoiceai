@@ -172,17 +172,50 @@ export class SovereignAiEngine {
       }
       if (!rawText) return null;
 
-      // Prepare clean spoken text for TTS without markdown code blocks, backticks, or symbols
-      const cleanSpoken = rawText
-        .replace(/```[\s\S]*?```/g, ' [code snippet provided in chat transcript] ')
-        .replace(/`([^`]+)`/g, '$1')
-        .replace(/[*#_~]/g, '')
-        .trim();
+      // Prepare clean spoken text for TTS (concise 1-3 sentences max for fast, stutter-free speech)
+      const cleanSpoken = SovereignAiEngine.createSpokenSummary(rawText, 280);
 
       return { reply: rawText, cleanSpokenText: cleanSpoken, detectedLanguage: language };
     } catch {
       return null;
     }
+  }
+
+  /**
+   * Generates a concise spoken summary for fast zero-stuck speech synthesis
+   */
+  public static createSpokenSummary(text: string, maxChars: number = 280): string {
+    if (!text) return '';
+    const clean = text
+      .replace(/```[\s\S]*?```/g, '')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/[*#_~`>\[\]\(\)\{\}]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (clean.length <= maxChars) return clean;
+
+    const cutZone = clean.slice(0, maxChars);
+    const sentenceEndings = ['. ', '! ', '? ', '। '];
+    let bestCut = -1;
+
+    for (const end of sentenceEndings) {
+      const idx = cutZone.lastIndexOf(end);
+      if (idx > bestCut && idx >= 75) {
+        bestCut = idx;
+      }
+    }
+
+    if (bestCut !== -1) {
+      return cutZone.slice(0, bestCut + 1).trim();
+    }
+
+    const lastSpace = cutZone.lastIndexOf(' ');
+    if (lastSpace >= 75) {
+      return cutZone.slice(0, lastSpace).trim() + '.';
+    }
+
+    return cutZone.trim() + '.';
   }
 
   /**

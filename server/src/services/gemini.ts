@@ -5,6 +5,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getIndianCalendarContext, evaluateQuickMath } from './calendarService.js';
 import { localDb } from '../db/acidEngine.js';
 import { searchKnowledge, getKnowledgeContextForPrompt } from './knowledgeBase.js';
+import { createSpokenSummaryForTTS } from '../utils/textSanitizer.js';
 
 const CANDIDATE_MODELS = [
   'gemini-3.5-flash',
@@ -67,6 +68,7 @@ export interface ChatTurn {
 
 export interface ChatServiceResponse {
   reply: string;
+  cleanSpokenText?: string;
   detectedLanguage: string;
   domainCategory: string;
   calendarData?: any;
@@ -249,6 +251,7 @@ Formatting: Use clean ChatGPT-style Markdown with clear headings (###), bold hig
       if (responseText.trim().length > 0) {
         return {
           reply: responseText.trim(),
+          cleanSpokenText: createSpokenSummaryForTTS(responseText),
           detectedLanguage: language,
           domainCategory: image ? 'multimodal_analysis' : (knowledgeMatch ? 'grounded_knowledge' : 'general_expert'),
           calendarData: calendar
@@ -263,6 +266,7 @@ Formatting: Use clean ChatGPT-style Markdown with clear headings (###), bold hig
   if (knowledgeMatch) {
     return {
       reply: knowledgeMatch.localizedContent,
+      cleanSpokenText: knowledgeMatch.localizedSpoken,
       detectedLanguage: language,
       domainCategory: `knowledge_${knowledgeMatch.item.category}`,
       calendarData: calendar
@@ -311,6 +315,7 @@ As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive i
 
   return {
     reply: fallbackReply,
+    cleanSpokenText: createSpokenSummaryForTTS(fallbackReply),
     detectedLanguage: language,
     domainCategory: 'autonomous_reasoning',
     calendarData: calendar

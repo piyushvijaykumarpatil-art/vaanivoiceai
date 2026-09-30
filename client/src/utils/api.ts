@@ -39,15 +39,25 @@ export async function fetchTtsAudio(payload: {
   rate?: string;
   pitch?: string;
 }): Promise<ArrayBuffer> {
-  const res = await fetch(`${API_BASE}/tts`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-  if (!res.ok) {
-    throw new Error('TTS voice synthesis failed');
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 3500);
+
+  try {
+    const res = await fetch(`${API_BASE}/tts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    if (!res.ok) {
+      throw new Error('TTS voice synthesis failed');
+    }
+    return res.arrayBuffer();
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
   }
-  return res.arrayBuffer();
 }
 
 export async function getCalendarContext() {

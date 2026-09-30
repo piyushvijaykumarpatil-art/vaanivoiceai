@@ -74,6 +74,34 @@ function sanitizeTextForTTS(text) {
     .trim();
 }
 
+function createSpokenSummaryForTTS(text, maxChars = 280) {
+  const sanitized = sanitizeTextForTTS(text);
+  if (!sanitized) return '';
+  if (sanitized.length <= maxChars) return sanitized;
+
+  const cutZone = sanitized.slice(0, maxChars);
+  const sentenceEndings = ['. ', '! ', '? ', '। '];
+  let bestCut = -1;
+
+  for (const end of sentenceEndings) {
+    const idx = cutZone.lastIndexOf(end);
+    if (idx > bestCut && idx >= 75) {
+      bestCut = idx;
+    }
+  }
+
+  if (bestCut !== -1) {
+    return cutZone.slice(0, bestCut + 1).trim();
+  }
+
+  const lastSpace = cutZone.lastIndexOf(' ');
+  if (lastSpace >= 75) {
+    return cutZone.slice(0, lastSpace).trim() + '.';
+  }
+
+  return cutZone.trim() + '.';
+}
+
 const CANDIDATE_MODELS = ['gemini-3.5-flash', 'gemini-flash-lite-latest', 'gemini-3.8-flash'];
 
 function matchKnowledge(query, language) {
@@ -227,7 +255,7 @@ module.exports = async function handler(req, res) {
         }
 
         if (replyText && replyText.trim().length > 0) {
-          const cleanSpoken = sanitizeTextForTTS(replyText);
+          const cleanSpoken = createSpokenSummaryForTTS(replyText);
           return res.status(200).json({
             reply: replyText.trim(),
             cleanSpokenText: cleanSpoken,
@@ -294,7 +322,7 @@ As engineered by **Piyush • 1st year student of SGU**, I am equipped to dive i
 
     return res.status(200).json({
       reply: fallbackReply,
-      cleanSpokenText: sanitizeTextForTTS(fallbackReply),
+      cleanSpokenText: createSpokenSummaryForTTS(fallbackReply),
       detectedLanguage: language,
       domainCategory: 'autonomous_reasoning'
     });
