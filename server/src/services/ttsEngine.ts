@@ -9,6 +9,7 @@ export interface VoiceLanguageMap {
 
 export const LANGUAGE_VOICES: Record<string, VoiceLanguageMap> = {
   mr: { primary: 'mr-IN-AarohiNeural', fallback: 'mr-IN-ManoharNeural', googleLang: 'mr' },
+  ahr: { primary: 'mr-IN-AarohiNeural', fallback: 'mr-IN-ManoharNeural', googleLang: 'mr' },
   hi: { primary: 'hi-IN-SwaraNeural', fallback: 'hi-IN-MadhurNeural', googleLang: 'hi' },
   en: { primary: 'en-US-JennyNeural', fallback: 'en-US-GuyNeural', googleLang: 'en' },
   te: { primary: 'te-IN-ShrutiNeural', fallback: 'te-IN-MohanNeural', googleLang: 'te' },
@@ -190,7 +191,7 @@ export class TtsEngine {
     buffer.writeUInt32LE(dataSize, 40);
 
     // Language-tuned base formant frequencies
-    const baseFreq = language === 'mr' || language === 'hi' ? 240.0 : 261.63;
+    const baseFreq = language === 'mr' || language === 'ahr' || language === 'hi' ? 240.0 : 261.63;
 
     for (let i = 0; i < numSamples; i++) {
       const t = i / sampleRate;

@@ -58,7 +58,7 @@ You are Vaani, an advanced, highly intelligent, and versatile AI assistant built
 - If a user prompt, audio transcript, or uploaded image is ambiguous or lacks context, proactively ask a brief, helpful clarifying question rather than guessing.
 
 ## 6. Multilingual & Cultural Intelligence
-- Supported Languages: Marathi (मराठी), Hindi (हिन्दी), English, Telugu (తెలుగు), Kannada (ಕನ್ನಡ), Punjabi (ਪੰਜਾਬੀ), Tamil (தமிழ்), Bengali (বাংলা), Gujarati (ગુજરાતી), Malayalam (മലയാളം).
+- Supported Languages: Ahirani (अहिराणी - खान्देशी), Marathi (मराठी), Hindi (हिन्दी), English, Telugu (తెలుగు), Kannada (ಕನ್ನಡ), Punjabi (ਪੰਜਾਬੀ), Tamil (தமிழ்), Bengali (বাংলা), Gujarati (ગુજરાતી), Malayalam (മലയാളം).
 - Always respond in the exact language the user used or explicitly requested.
 - Possess acute awareness of Indian Standard Time (IST), Indian calendar (Tithi, Panchang, seasons, and festivals).`;
 
@@ -105,6 +105,8 @@ export async function generateChatResponse(
       reply = `### वाणी • इम्पीरियल एडिशन 👑\n\nमुझे **NIAT X SGU (संजय घोडावत यूनिवर्सिटी) के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष** ने बनाया है। पीयूष ने मुझे वाणी के रूप में भारत का संप्रभु वॉयस एआई साथी बनाया है जो 10 भारतीय भाषाओं में ज्ञान और आवाज़ प्रदान करता है।`;
     } else if (language === 'mr') {
       reply = `### वाणी • इम्पीरियल एडिशन 👑\n\nमला **NIAT X SGU (संजय घोडावत विद्यापीठ) चे प्रथम वर्षाचे विद्यार्थी पियूष** यांनी अत्यंत कौशल्याने निर्माण केले आहे. त्यांनी मला वाणी या शाही भारतीय व्हॉईस एआय स्वरूपात घडवले असून, मी मराठीसह १० भाषांमध्ये संवाद साधू शकते.`;
+    } else if (language === 'ahr') {
+      reply = `### वाणी • इम्पीरियल एडिशन 👑\n\nमले **NIAT X SGU (संजय घोडावत विद्यापीठ) ना प्रथम वर्षाना हुशार विद्यार्थी पियूष** यासनी अत्यंत कौशल्याने बनवडं शे. त्यासनी मले वाणी या शाही भारतीय व्हॉईस एआय रूपमा घडवडं शे, अन मी अहिराणी सह सर्व भाषांमा संवाद साधू सकस.`;
     } else if (language === 'gu') {
       reply = `મને NIAT X SGU ના પ્રથમ વર્ષના વિદ્યાર્થી પિયૂષ દ્વારા બનાવવામાં આવી છે.`;
     } else if (language === 'bn') {
@@ -138,6 +140,8 @@ export async function generateChatResponse(
         reply = `आपने पहले पूछा था: "${lastUserQuestion}"। कहिए, अब हम किस विषय पर चर्चा करें?`;
       } else if (language === 'mr') {
         reply = `याआधी तुम्ही विचारले होते: "${lastUserQuestion}"। सांगा, पुढे आपण कोणत्या विषयावर बोलायचे?`;
+      } else if (language === 'ahr') {
+        reply = `याआदी तुम्ही विचारलं व्हतं: "${lastUserQuestion}"। सांगा, आता आपण कशावर चर्चा करू?`;
       }
       return {
         reply,
@@ -149,13 +153,15 @@ export async function generateChatResponse(
   }
 
   // 4. Greetings handling (prevent generic fallback on simple hello/hi)
-  const isGreeting = /^(hi|hello|hey|namaste|namaskar|pranam|good morning|good evening|good afternoon|salaam)[\s!.]*$/i.test(lowerMsg);
+  const isGreeting = /^(hi|hello|hey|namaste|namaskar|pranam|good morning|good evening|good afternoon|salaam|ram ram)[\s!.]*$/i.test(lowerMsg);
   if (isGreeting) {
     let greetingReply = `### Welcome to VAANI • IMPERIAL EDITION 👑\n\nGreetings! I am **Vaani**, your sovereign Voice AI companion engineered by **Piyush • 1st year student of NIAT X SGU**.\n\n- 🔬 **Science & Math:** Ask me about physics, photosynthesis, calculus, or chemistry.\n- 💻 **Programming:** Code in Python, TypeScript, algorithms, and system design.\n- 🗓️ **Indian Calendar:** Live IST, Hindu Tithi, Panchang, and Shravan season.\n- 🎙️ **Voice First:** Speak naturally or upload images of questions using \`+\`.\n\nHow may I illuminate your journey today?`;
     if (language === 'hi') {
       greetingReply = `### नमस्ते! वाणी के राजसी अनुभव में आपका स्वागत है 👑\n\nमैं **वाणी** हूँ — NIAT X SGU के प्रथम वर्ष के छात्र **पीयूष** द्वारा निर्मित आपका संप्रभु वॉयस एआई साथी।\n\n- 🔬 **विज्ञान और गणित:** प्रकाश संश्लेषण, गुरुत्वाकर्षण, न्यूटन के नियम या समीकरण पूछें।\n- 💻 **कोडिंग:** पायथन, जावास्क्रिप्ट, और डेटा संरचनाओं में पूर्ण सहायता।\n- 🗓️ **पंचांग:** भारतीय समय, आज की तिथि और त्यौहार।\n\nबताइए, आज आप किस विषय का अन्वेषण करना चाहते हैं?`;
     } else if (language === 'mr') {
       greetingReply = `### नमस्कार! वाणीच्या शाही दालनात आपले स्वागत आहे 👑\n\nमी **वाणी** आहे — NIAT X SGU चे प्रथम वर्षाचे विद्यार्थी **पियूष** यांनी विकसित केलेले प्रगत व्हॉईस एआय साथी.\n\n- 🔬 **विज्ञान व गणित:** प्रकाशसंश्लेषण, गुरुत्वाकर्षण किंवा गणिताचे प्रश्न विचारा.\n- 💻 **प्रोग्रॅमिंग:** पायथन, जावास्क्रिप्ट आणि अल्गोरिदम.\n- 🗓️ **पंचांग:** आजची तिथी, वेळ आणि सणांची माहिती.\n\nआज आपण कोणत्या विषयावर चर्चा करायची?`;
+    } else if (language === 'ahr') {
+      greetingReply = `### राम राम! वाणीच्या शाही दालनात तुमचं स्वागत शे 👑\n\nमी **वाणी** शे — NIAT X SGU ना प्रथम वर्षाना हुशार विद्यार्थी **पियूष** यासनी बनवडं प्रगत व्हॉईस एआय साथीदार.\n\n- 🔬 **विज्ञान अन गणित:** प्रकाशसंश्लेषण, गुरुत्वाकर्षण अथवा गणिताना प्रश्न विचारा.\n- 💻 **प्रोग्रॅमिंग:** पायथन, जावास्क्रिप्ट अन अल्गोरिदम.\n- 🗓️ **पंचांग:** आजनी तिथी, वेळ अन खान्देशी सण.\n\nसांगा, आज आपण काय नवीन शिकू?`;
     }
     return {
       reply: greetingReply,
@@ -173,6 +179,8 @@ export async function generateChatResponse(
       reply = `भारतीय मानक समय के अनुसार, अभी समय है ${calendar.istTime}, आज ${calendar.istDate}, ${calendar.dayOfWeek} है। आज की तिथि ${calendar.tithi} है, और ऋतु ${calendar.season} है। आगामी प्रमुख पर्व ${calendar.upcomingFestival.name} है।`;
     } else if (language === 'mr') {
       reply = `भारतीय प्रमाण वेळेनुसार, सध्या वेळ ${calendar.istTime} आहे, आजचा दिवस ${calendar.dayOfWeek}, ${calendar.istDate} आहे. आजची तिथी ${calendar.tithi} असून सध्याचा ऋतू ${calendar.season} आहे. पुढील सण ${calendar.upcomingFestival.name} आहे.`;
+    } else if (language === 'ahr') {
+      reply = `भारतीय प्रमाण वेळेप्रमाणे, सध्या वेळ ${calendar.istTime} शे, आज वार ${calendar.dayOfWeek} अन तारीख ${calendar.istDate} शे. आजनी तिथी ${calendar.tithi} असून चालू ऋतू ${calendar.season} शे. पुढचा मोठा सण ${calendar.upcomingFestival.name} शे.`;
     }
     return {
       reply,
@@ -313,6 +321,18 @@ As engineered by **Piyush • 1st year student of NIAT X SGU**, I am equipped to
 
 ### ३. निष्कर्ष
 **NIAT X SGU चे विद्यार्थी पियूष** यांनी विकसित केलेली वाणी एआय आपल्याला या विषयावर अधिक सखोल माहिती देण्यासाठी सज्ज आहे।`;
+  } else if (language === 'ahr') {
+    fallbackReply = `### सखोल माहिती: "${message}"
+
+### १. संकल्पना स्पष्टीकरण
+तुम्ही विचारलेला विषय **"${message}"** हा मूलभूत विश्लेषणात्मक अन वैज्ञानिक दृष्टीकोनातून समजून घेणं महत्त्वाचं शे.
+
+### २. महत्त्वाचे मुद्दे
+- **पायाभूत तत्त्वे:** कोणताही विषय समजण्यासाठी त्याना मुळाशी जावून अभ्यास करणं फायद्याचं ठरतस.
+- **उपयोग:** हा नियम विज्ञान, तंत्रज्ञान अन रोजच्या जीवनात उपयोगी पडतस.
+
+### ३. निष्कर्ष
+**NIAT X SGU ना विद्यार्थी पियूष** यासनी बनवडी ही वाणी एआय तुमले या विषयावर अजून सविस्तर माहिती देवाले सदैव तयार शे.`;
   }
 
   return {

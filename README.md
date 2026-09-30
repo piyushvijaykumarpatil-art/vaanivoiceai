@@ -9,7 +9,7 @@
 
 ### 1. 👑 Creator Attribution & Royal Persona
 - **Prominent Attribution**: Honoring **Piyush • 1st Year Student of NIAT X SGU** across the top navigation bar, the imperial landing hero, and conversational identity responses.
-- **Conversational Identity**: When asked *"Who made you?"*, *"Who is your creator?"*, or *"Who is Piyush?"*, VAANI warmly and proudly acknowledges Piyush (1st Year Student of NIAT X SGU) in all 10 supported languages.
+- **Conversational Identity**: When asked *"Who made you?"*, *"Who is your creator?"*, or *"Who is Piyush?"*, VAANI warmly and proudly acknowledges Piyush (1st Year Student of NIAT X SGU) in all 11 supported languages.
 
 ### 2. 🎙️ Pure Type-to-Voice Interaction Model
 - **Zero Microphone Dependency**: Completely eliminates speech-to-text transcription latency, accent mismatches, and microphone permission barriers.
@@ -30,8 +30,9 @@ Instant theme switcher dynamically updates CSS variables, radial glows, glassmor
 5. 🔮 **Cyber Amethyst**: Mystic Purple Cosmic Aura (`#A855F7` / `#080411`)
 6. ⚡ **Titanium Cyan**: Aurora Titanium Cyber Brilliance (`#06B6D4` / `#030A0D`)
 
-### 5. 🌐 Multilingual Intelligence (9 Indian Languages + English)
+### 5. 🌐 Multilingual Intelligence (10 Indic Languages + English)
 Full conversational fluency and native scripts:
+- 🇮🇳 **Ahirani (अहिराणी - खान्देशी)** (`mr-IN-AarohiNeural` / `mr-IN-ManoharNeural`)
 - 🇮🇳 **Marathi (मराठी)** (`mr-IN-AarohiNeural` / `mr-IN-ManoharNeural`)
 - 🇮🇳 **Hindi (हिन्दी)** (`hi-IN-SwaraNeural` / `hi-IN-MadhurNeural`)
 - 🌐 **English** (`en-US-JennyNeural` / `en-US-GuyNeural`)
@@ -41,6 +42,7 @@ Full conversational fluency and native scripts:
 - 🇮🇳 **Tamil (தமிழ்)** (`ta-IN-PallaviNeural`)
 - 🇮🇳 **Bengali (বাংলা)** (`bn-IN-TanishaaNeural`)
 - 🇮🇳 **Gujarati (ગુજરાતી)** (`gu-IN-DhwaniNeural`)
+- 🇮🇳 **Malayalam (മലയാളം)** (`ml-IN-SobhanaNeural`)
 
 ### 6. 🧠 Google Assistant-Grade Memory & Indian Calendar Intelligence
 - **Multi-Turn Context Awareness**: Accurately resolves recall queries (*"What was our last chat?"*, *"What did I ask first?"*, *"pichhla sawal kya tha?"*, *"aadhi kay vicharlo hoto?"*).
@@ -96,7 +98,7 @@ vaani-imperial-edition/
     │       ├── WaveformVisualizer.tsx# 20-bar reactive equalizer
     │       ├── LuxuryDockInput.tsx   # Pure Type-to-Voice dock
     │       ├── ThemeSwitcher.tsx     # 1-Click luxury theme switcher
-    │       ├── LanguageSelector.tsx  # 10 Multilingual selector
+    │       ├── LanguageSelector.tsx  # 11 Multilingual selector
     │       ├── LiveHudClock.tsx      # Ticking IST & calendar HUD
     │       ├── CreatorBadge.tsx      # Piyush • NIAT badge & modal
     │       ├── DatabaseStudioModal.tsx# Supabase sync & backup manager

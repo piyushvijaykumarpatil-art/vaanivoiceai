@@ -3,6 +3,7 @@ import { CreatorBadge } from './CreatorBadge';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { LanguageSelector } from './LanguageSelector';
 import { LiveHudClock } from './LiveHudClock';
+import { SUPPORTED_LANGUAGES } from '../utils/constants';
 import type { LuxuryThemeId } from '../types';
 import { Sparkles, Settings, Volume2, Database, Calendar, Mic } from 'lucide-react';
 
@@ -105,7 +106,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
         <div className="w-full max-w-5xl space-y-3">
           <div className="flex items-center justify-between px-2">
             <span className="text-xs uppercase font-bold tracking-wider text-slate-400">
-              Select Sovereign Language (10 Available):
+              Select Sovereign Language ({SUPPORTED_LANGUAGES.length} Available):
             </span>
             <span className="text-xs text-amber-400 font-mono font-semibold flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />

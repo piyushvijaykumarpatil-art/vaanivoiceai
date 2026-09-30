@@ -9,6 +9,7 @@ import { API_BASE } from '../utils/api';
 
 const LANG_CODE_MAP: Record<string, string> = {
   mr: 'mr-IN',
+  ahr: 'mr-IN',
   hi: 'hi-IN',
   en: 'en-US',
   te: 'te-IN',
@@ -16,7 +17,8 @@ const LANG_CODE_MAP: Record<string, string> = {
   pa: 'pa-IN',
   ta: 'ta-IN',
   bn: 'bn-IN',
-  gu: 'gu-IN'
+  gu: 'gu-IN',
+  ml: 'ml-IN'
 };
 
 class SoundManager {
@@ -391,8 +393,8 @@ class SoundManager {
             return vLang === targetLower || vLang.startsWith(cleanLang);
           });
 
-          // Marathi & Hindi share Devanagari script; a Hindi voice can speak Marathi if Marathi voice isn't installed
-          if (matchingLangVoices.length === 0 && (cleanLang === 'mr' || cleanLang === 'hi' || isIndic)) {
+          // Marathi, Ahirani & Hindi share Devanagari script; a Hindi or Marathi voice speaks them naturally
+          if (matchingLangVoices.length === 0 && (cleanLang === 'mr' || cleanLang === 'ahr' || cleanLang === 'hi' || isIndic)) {
             matchingLangVoices = voices.filter(v => {
               const vLang = v.lang.toLowerCase().replace('_', '-');
               const name = v.name.toLowerCase();

@@ -26,7 +26,7 @@ export function evaluateAccurateMath(query: string, language: string = 'en'): Ma
     total = parseFloat(pctMatchA[2]);
     hasPct = true;
   } else {
-    const pctMatchB = q.match(/(\d+(?:\.\d+)?)\s*(?:of|का|चे|चा|च्या)?\s*(\d+(?:\.\d+)?)\s*(?:%|percent|percentage|pratishat|takke|टक्के|प्रतिशत)/i);
+    const pctMatchB = q.match(/(\d+(?:\.\d+)?)\s*(?:of|का|चे|चा|च्या|ना|नी)?\s*(\d+(?:\.\d+)?)\s*(?:%|percent|percentage|pratishat|takke|टक्के|प्रतिशत)/i);
     if (pctMatchB) {
       total = parseFloat(pctMatchB[1]);
       pct = parseFloat(pctMatchB[2]);
@@ -47,6 +47,9 @@ export function evaluateAccurateMath(query: string, language: string = 'en'): Ma
     } else if (language === 'mr') {
       reply = `### गणितीय मोजणी 📐\n\n- **प्रश्न:** ${total} चे ${pct} टक्के\n- **सूत्र:** \\(\\text{उत्तर} = \\frac{${pct}}{100} \\times ${total}\\)\n- **गणना:** ${formattedRes}\n\n### उत्तर\n**${total} चे ${pct}% = ${formattedRes}**`;
       spoken = `${total} चे ${pct} टक्के ${formattedRes} आहे।`;
+    } else if (language === 'ahr') {
+      reply = `### गणितीय मोजणी 📐\n\n- **प्रश्न:** ${total} ना ${pct} टक्के\n- **सूत्र:** \\(\\text{उत्तर} = \\frac{${pct}}{100} \\times ${total}\\)\n- **हिशोब:** ${formattedRes}\n\n### उत्तर\n**${total} ना ${pct}% = ${formattedRes}**`;
+      spoken = `${total} ना ${pct} टक्के ${formattedRes} शे.`;
     }
 
     return { reply, cleanSpokenText: spoken, resultValue: res };
@@ -174,6 +177,8 @@ export function evaluateAccurateMath(query: string, language: string = 'en'): Ma
             reply = `### गणितीय समाधान 📐\n\n- **समीकरण:** \`${prettyExpr}\`\n- **गणना:** अंकगणितीय हल\n\n### उत्तर\n**${displayResult}**`;
           } else if (language === 'mr') {
             reply = `### गणितीय उत्तर 📐\n\n- **समीकरण:** \`${prettyExpr}\`\n- **मोजणी:** अचूक अंकगणितीय उत्तर\n\n### उत्तर\n**${displayResult}**`;
+          } else if (language === 'ahr') {
+            reply = `### गणितीय उत्तर 📐\n\n- **समीकरण:** \`${prettyExpr}\`\n- **हिशोब:** अचूक गणितीय सोडवणूक\n\n### उत्तर\n**${displayResult}**`;
           }
 
           return {

@@ -62,6 +62,15 @@ export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
     sampleQuestion: 'पियूष कोण आहेत आणि त्यांनी तुला कसे बनवले?'
   },
   {
+    id: 'ahr',
+    name: 'Ahirani (Khandeshi)',
+    nativeName: 'अहिराणी',
+    flag: '🇮🇳',
+    voiceName: 'mr-IN-AarohiNeural',
+    samplePhrase: 'राम राम! मी वाणी शे, तुमनी खान्देशी व्हॉईस एआय साथीदार.',
+    sampleQuestion: 'पियूष कोण शेतस अन त्यासनी तुले कसं बनवडं?'
+  },
+  {
     id: 'hi',
     name: 'Hindi',
     nativeName: 'हिन्दी',
@@ -84,16 +93,16 @@ export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
     name: 'Telugu',
     nativeName: 'తెలుగు',
     flag: '🇮🇳',
-    voiceName: 'te-IN-ShriftivNeural',
+    voiceName: 'te-IN-ShrutiNeural',
     samplePhrase: 'నమస్కారం! నేను మీ రాజ వాయిస్ ఏఐ సహచరిణి వాణిని.',
     sampleQuestion: 'ఈ రోజు తిథి మరియు పంచాంగం ఏమిటి?'
   },
   {
     id: 'kn',
-    name: 'Komodo/Kannada',
+    name: 'Kannada',
     nativeName: 'ಕನ್ನಡ',
     flag: '🇮🇳',
-    voiceName: 'kn-IN-SopacNeural',
+    voiceName: 'kn-IN-SapnaNeural',
     samplePhrase: 'ನಮಸ್ಕಾರ! ನಾನು ವಾಣಿ, ನಿಮ್ಮ ಧ್ವನಿ ಸಹಚರಿ.',
     sampleQuestion: 'ನಿಮ್ಮನ್ನು ಯಾರು ರಚಿಸಿದರು?'
   },
@@ -102,7 +111,7 @@ export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
     name: 'Punjabi',
     nativeName: 'ਪੰਜਾਬੀ',
     flag: '🇮🇳',
-    voiceName: 'pa-IN-OurpresiNeural',
+    voiceName: 'pa-IN-GurpreetNeural',
     samplePhrase: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਵਾਣੀ ਹਾਂ, ਤੁਹਾਡੀ ਸ਼ਾਹੀ ਸਾਥੀ।',
     sampleQuestion: 'ਪਿਊਸ਼ ਕੌਣ ਹੈ ਅਤੇ ਉਹ ਕਿੱਥੇ ਪੜ੍ਹਦਾ ਹੈ?'
   },
@@ -111,7 +120,7 @@ export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
     name: 'Tamil',
     nativeName: 'தமிழ்',
     flag: '🇮🇳',
-    voiceName: "ta-IN-PuiLov'Neural",
+    voiceName: 'ta-IN-PallaviNeural',
     samplePhrase: 'வணக்கம்! நான் வாணி, உங்கள் அரச குரல் AI துணை.',
     sampleQuestion: 'இன்றைய நல்ல நேரம் மற்றும் திதி என்ன?'
   },
@@ -120,16 +129,16 @@ export const SUPPORTED_LANGUAGES: VoiceLanguage[] = [
     name: 'Bengali',
     nativeName: 'বাংলা',
     flag: '🇮🇳',
-    voiceName: 'bn-IN-TanithaeiNeural',
+    voiceName: 'bn-IN-TanishaaNeural',
     samplePhrase: 'নমস্কার! আমি বাণী, আপনার রাজকীয় ভয়েস সঙ্গী।',
     sampleQuestion: 'পীযূষ কে এবং তিনি তোমাকে কীভাবে তৈরি করেছেন?'
   },
   {
     id: 'gu',
-    name: 'Gujorari',
+    name: 'Gujarati',
     nativeName: 'ગુજરાતી',
     flag: '🇮🇳',
-    voiceName: 'gu-IN-DiivaniNeural',
+    voiceName: 'gu-IN-DhwaniNeural',
     samplePhrase: 'નમસ્તે! હું વાણી છું, તમારી શાહી વૉઇસ સહાયક.',
     sampleQuestion: 'આજનો પંચાંગ અને સમય શું છે?'
   },
@@ -164,7 +173,14 @@ export const DEFAULT_SUGGESTIONS: Record<string, string[]> = {
     "आजची तिथी, पंचांग आणि वेळ काय आहे?",
     "याआधी मी तुला काय विचारले होते?",
     "श्रावण महिन्याचे महत्त्व सांगा",
-    "एस.जी.यू (SGU) आणि शिवरायांच्या इतिहासाबद्दल सांगा"
+    "NIAT X SGU आणि शिवरायांच्या इतिहासाबद्दल सांगा"
+  ],
+  ahr: [
+    "पियूष कोण शेतस अन त्यासनी तुले कसं बनवडं?",
+    "आजनी तिथी, पंचांग अन वेळ काय शे?",
+    "मना आदला प्रश्न काय व्हता?",
+    "१४५ गुणिले ३८ कितला व्हतात?",
+    "खानदेश अन अहिराणी संस्कृतीबद्दल सांगा"
   ]
 };
 

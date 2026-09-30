@@ -247,13 +247,23 @@ export class SovereignAiEngine {
       q.includes('niat');
 
     if (isCreatorQuery) {
+      if (language === 'ahr') {
+        const reply = `### वाणी • इम्पीरियल एडिशन (VAANI) 👑
+
+मी वाणी शे — मले **NIAT X SGU ना प्रथम वर्षाना हुशार विद्यार्थी पियूष** यासनी अत्यंत कौशल्याने डिझाइन अन विकसित करेल शे.
+
+- **निर्माता:** पियूष • प्रथम वर्ष, NIAT X SGU
+- **वैशिष्ट्ये:** रिअल-टाइम व्हॉईस ट्रान्सक्रिप्शन, 3D क्रोनो-ऑर्ब, अन अहिराणी सह ११ भारतीय भाषांमा संभाषण.
+- **ध्येय:** ChatGPT अन Gemini शी स्पर्धा करणारी स्वतंत्र भारतीय व्हॉईस एआय प्रणाली.`;
+        return { reply, cleanSpokenText: 'मले NIAT X SGU ना प्रथम वर्षाना विद्यार्थी पियूष यासनी बनवडं शे. मी तुमनी मदत करवाले सदैव तयार शे.', detectedLanguage: 'ahr' };
+      }
       if (language === 'mr') {
         const reply = `### वाणी • इम्पीरियल एडिशन (VAANI)
 
 मी वाणी आहे — मला **NIAT X SGU चे प्रथम वर्षाचे विद्यार्थी पियूष** यांनी अत्यंत कौशल्याने डिझाइन आणि विकसित केले आहे.
 
 - **निर्माते:** पियूष • प्रथम वर्ष, NIAT X SGU
-- **वैशिष्ट्ये:** रिअल-टाइम व्हॉईस ट्रान्सक्रिप्शन, 3D क्रोनो-ऑर्ब, आणि भारतीय बहुभाषिक बुद्धिमत्ता.
+- **वैशिष्ट्ये:** रिअल-टाइम व्हॉईस ट्रान्सक्रिप्शन, 3D क्रोनो-ऑर्ब, आणि भारतीय बहुभाषिक बुद्धिमत्ता (११ भाषा).
 - **ध्येय:** ChatGPT आणि Google Gemini ला स्पर्धा देणारी स्वतंत्र भारतीय व्हॉईस एआय प्रणाली.`;
         return { reply, cleanSpokenText: 'मला NIAT X SGU चे प्रथम वर्षाचे विद्यार्थी पियूष यांनी बनवले आहे. मी आपली सेवा करण्यास सदैव सज्ज आहे.', detectedLanguage: 'mr' };
       }
@@ -263,7 +273,7 @@ export class SovereignAiEngine {
 मैं वाणी हूँ — मुझे **NIAT X SGU के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष** ने बनाया है।
 
 - **निर्माता:** पीयूष • प्रथम वर्ष के छात्र, NIAT X SGU
-- **क्षमताएं:** लाइव माइक्रोफोन ट्रांसक्रिप्शन, न्यूरल 3D क्रोनो-ऑर्ब, एवं 10 भारतीय भाषाओं का ज्ञान।
+- **क्षमताएं:** लाइव माइक्रोफोन ट्रांसक्रिप्शन, न्यूरल 3D क्रोनो-ऑर्ब, एवं अहिराणी सहित 11 भारतीय भाषाओं का ज्ञान।
 - **उद्देश्य:** चैटजीपीटी (ChatGPT) के समान भारत का अपना संप्रभु वॉयस एआई साथी।`;
         return { reply, cleanSpokenText: 'मुझे NIAT X SGU के प्रथम वर्ष के छात्र पीयूष ने बनाया है। मैं आपकी हर प्रकार की सहायता के लिए तैयार हूँ।', detectedLanguage: 'hi' };
       }
@@ -272,7 +282,7 @@ export class SovereignAiEngine {
 I am **Vaani**, an advanced ChatGPT-rivaling Voice AI companion proudly conceived, designed, and engineered by **Piyush • 1st year student of NIAT X SGU**.
 
 - **Creator:** Piyush • 1st Year Student of NIAT X SGU
-- **Core Architecture:** Real-time Web Speech API with auto-silence stop, 3D Chrono-Orb, studio neural voices, and omnidisciplinary knowledge.
+- **Core Architecture:** Real-time Web Speech API with auto-silence stop, 3D Chrono-Orb, studio neural voices, and omnidisciplinary knowledge across 11 sovereign languages.
 - **Mission:** A sovereign, world-class Indian Voice AI experience across all domains of human knowledge.`;
       return { reply, cleanSpokenText: 'I was made by Piyush, a 1st year student of NIAT X SGU. I am your sovereign Voice AI companion.', detectedLanguage: 'en' };
     }
@@ -290,6 +300,17 @@ I am **Vaani**, an advanced ChatGPT-rivaling Voice AI companion proudly conceive
       q.includes('panchang');
 
     if (isTimeQuery) {
+      if (language === 'ahr') {
+        const reply = `### भारतीय प्रमाण वेळ व पंचांग HUD
+
+- **सध्याची वेळ (IST):** \`${time}\`
+- **तारीख:** **${date}** (${day})
+- **तिथी:** शुक्ल पक्ष चालू
+- **वेळ क्षेत्र:** आशिया/कोलकाता (UTC +5:30)
+
+सर्व खान्देशी व भारतीय कालगणना अचूक समक्रमित शेतस.`;
+        return { reply, cleanSpokenText: `भारतीय प्रमाण वेळेप्रमाणे, सध्या वेळ ${time} शे, आज वार ${day} अन तारीख ${date} शे.`, detectedLanguage: 'ahr' };
+      }
       const reply = `### Indian Standard Time & Calendar HUD
 
 - **Current Time (IST):** \`${time}\`
@@ -536,6 +557,27 @@ What intellectual domain shall we explore together?`;
     }
 
     // 8. General Knowledge / Deep Reasoning
+    if (language === 'ahr') {
+      const ahrReply = `### ज्ञान अन्वेषण: "${query}"
+
+### १. संकल्पना आढावा
+तुम्ही विचारलेला विषय **"${query}"** हा मूलभूत विश्लेषणात्मक आणि वैज्ञानिक दृष्टिकोनातून समजून घेणं महत्त्वाचं शे.
+
+### २. सविस्तर विश्लेषण
+- **पायाभूत तत्त्वे:** कोणताही विषय समजण्यासाठी त्याला लहान भागांमध्ये विभागून अभ्यास करणं फायद्याचं ठरतस.
+- **उपयोग:** हा नियम विज्ञान, तंत्रज्ञान आणि रोजच्या व्यवहारात समान लागू पडतस.
+- **मल्टीमॉडल क्षमता:** गणित, कोडिंग अथवा आकृत्यांच्या सखोल विश्लेषणासाठी तुम्ही \`+\` बटण दाबून फोटो अपलोड करू सकस.
+
+### ३. निष्कर्ष
+**NIAT X SGU ना हुशार विद्यार्थी पियूष** यासनी बनवडी ही वाणी एआय तुमले या विषयावर अजून सविस्तर माहिती देवाले सदैव तयार शे.`;
+      return {
+        reply: ahrReply,
+        cleanSpokenText: `मी विचारलेल्या विषयाचा सखोल अभ्यास करेल शे. पियूष यासनी बनवडी ही वाणी तुमनी सेवेमा सदैव हजर शे.`,
+        detectedLanguage: 'ahr',
+        isGenericFallback: true
+      };
+    }
+
     const reply = `### Universal Knowledge Synthesis: "${query}"
 
 ### 1. Conceptual Overview

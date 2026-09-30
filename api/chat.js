@@ -40,7 +40,7 @@ You are Vaani, an advanced, highly intelligent, and versatile AI assistant built
 - Text-to-Speech (TTS): Responses are structured so they can also be cleanly read aloud via speech synthesis when requested.
 
 ## 5. Multilingual & Cultural Intelligence
-- Supported Languages: Marathi (मराठी), Hindi (हिन्दी), English, Telugu (తెలుగు), Kannada (ಕನ್ನಡ), Punjabi (ਪੰਜਾਬੀ), Tamil (தமிழ்), Bengali (বাংলা), Gujarati (ગુજરાતી), Malayalam (മലയാളം).
+- Supported Languages: Ahirani (अहिराणी - खान्देशी), Marathi (मराठी), Hindi (हिन्दी), English, Telugu (తెలుగు), Kannada (ಕನ್ನಡ), Punjabi (ਪੰਜਾਬੀ), Tamil (தமிழ்), Bengali (বাংলা), Gujarati (ગુજરાતી), Malayalam (മലയാളം).
 - Always respond in the exact language the user used or explicitly requested.`;
 
 function getIndianCalendarContext() {
@@ -169,7 +169,7 @@ function evaluateAccurateMath(query, language = 'en') {
     total = parseFloat(pctMatchA[2]);
     hasPct = true;
   } else {
-    const pctMatchB = q.match(/(\d+(?:\.\d+)?)\s*(?:of|का|चे|चा|च्या)?\s*(\d+(?:\.\d+)?)\s*(?:%|percent|percentage|pratishat|takke|टक्के|प्रतिशत)/i);
+    const pctMatchB = q.match(/(\d+(?:\.\d+)?)\s*(?:of|का|चे|चा|च्या|ना|नी)?\s*(\d+(?:\.\d+)?)\s*(?:%|percent|percentage|pratishat|takke|टक्के|प्रतिशत)/i);
     if (pctMatchB) {
       total = parseFloat(pctMatchB[1]);
       pct = parseFloat(pctMatchB[2]);
@@ -190,6 +190,9 @@ function evaluateAccurateMath(query, language = 'en') {
     } else if (language === 'mr') {
       reply = `### गणितीय मोजणी 📐\n\n- **प्रश्न:** ${total} चे ${pct} टक्के\n- **सूत्र:** \\(\\text{उत्तर} = \\frac{${pct}}{100} \\times ${total}\\)\n- **गणना:** ${formattedRes}\n\n### उत्तर\n**${total} चे ${pct}% = ${formattedRes}**`;
       spoken = `${total} चे ${pct} टक्के ${formattedRes} आहे।`;
+    } else if (language === 'ahr') {
+      reply = `### गणितीय मोजणी 📐\n\n- **प्रश्न:** ${total} ना ${pct} टक्के\n- **सूत्र:** \\(\\text{उत्तर} = \\frac{${pct}}{100} \\times ${total}\\)\n- **हिशोब:** ${formattedRes}\n\n### उत्तर\n**${total} ना ${pct}% = ${formattedRes}**`;
+      spoken = `${total} ना ${pct} टक्के ${formattedRes} शे.`;
     }
 
     return { reply, cleanSpokenText: spoken, resultValue: res };
@@ -302,6 +305,8 @@ function evaluateAccurateMath(query, language = 'en') {
             reply = `### गणितीय समाधान 📐\n\n- **समीकरण:** \`${prettyExpr}\`\n- **गणना:** अंकगणितीय हल\n\n### उत्तर\n**${displayResult}**`;
           } else if (language === 'mr') {
             reply = `### गणितीय उत्तर 📐\n\n- **समीकरण:** \`${prettyExpr}\`\n- **मोजणी:** अचूक अंकगणितीय उत्तर\n\n### उत्तर\n**${displayResult}**`;
+          } else if (language === 'ahr') {
+            reply = `### गणितीय उत्तर 📐\n\n- **समीकरण:** \`${prettyExpr}\`\n- **हिशोब:** अचूक गणितीय सोडवणूक\n\n### उत्तर\n**${displayResult}**`;
           }
 
           return {
@@ -351,11 +356,13 @@ module.exports = async function handler(req, res) {
 
     // 1. Check Creator Query
     if (lower.includes('piyush') || lower.includes('who made') || lower.includes('who created') || lower.includes('creator') || lower.includes('developer') || lower.includes('sgu') || lower.includes('niat') || lower.includes('sanjay ghodawat')) {
-      let reply = `I was proudly made by **Piyush • 1st year student of NIAT X SGU (National Institute of Advanced Technologies X Sanjay Ghodawat University)**. He created me as VAANI • IMPERIAL EDITION, a sovereign ChatGPT-rivaling Voice AI companion equipped with live audio transcription, 3D Chrono-Orb, and multilingual knowledge.`;
+      let reply = `I was proudly made by **Piyush • 1st year student of NIAT X SGU (National Institute of Advanced Technologies X Sanjay Ghodawat University)**. He created me as VAANI • IMPERIAL EDITION, a sovereign ChatGPT-rivaling Voice AI companion equipped with live audio transcription, 3D Chrono-Orb, and multilingual knowledge across 11 sovereign languages.`;
       if (language === 'hi') {
-        reply = `मुझे **NIAT X SGU (संजय घोडावत यूनिवर्सिटी) के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष** ने बनाया है। उन्होंने मुझे वाणी (VAANI) के रूप में एक संपूर्ण भारतीय आवाज और ज्ञान साथी के रूप में विकसित किया है।`;
+        reply = `मुझे **NIAT X SGU (संजय घोडावत यूनिवर्सिटी) के प्रथम वर्ष के प्रतिभाशाली छात्र पीयूष** ने बनाया है। उन्होंने मुझे वाणी (VAANI) के रूप में अहिराणी सहित 11 भारतीय भाषाओं में एक संपूर्ण भारतीय आवाज और ज्ञान साथी के रूप में विकसित किया है।`;
       } else if (language === 'mr') {
-        reply = `मला **NIAT X SGU (संजय घोडावत विद्यापीठ) चे प्रथम वर्षाचे विद्यार्थी पियूष** यांनी बनवले आहे. त्यांनी मला वाणी या शाही भारतीय व्हॉईस एआय स्वरूपात निर्माण केले आहे.`;
+        reply = `मला **NIAT X SGU (संजय घोडावत विद्यापीठ) चे प्रथम वर्षाचे विद्यार्थी पियूष** यांनी बनवले आहे. त्यांनी मला वाणी या शाही भारतीय व्हॉईस एआय स्वरूपात निर्माण केले असून, मी अहिराणीसह ११ भाषांमध्ये संवाद साधू शकते.`;
+      } else if (language === 'ahr') {
+        reply = `मले **NIAT X SGU (संजय घोडावत विद्यापीठ) ना प्रथम वर्षाना हुशार विद्यार्थी पियूष** यासनी अत्यंत कौशल्याने बनवडं शे. त्यासनी मले वाणी या शाही भारतीय व्हॉईस एआय रूपमा घडवडं शे, अन मी अहिराणी सह सर्व ११ भाषांमा संवाद साधू सकस.`;
       }
       return res.status(200).json({
         reply,
@@ -366,12 +373,14 @@ module.exports = async function handler(req, res) {
     }
 
     // 2. Check Greetings
-    if (/^(hi|hello|hey|namaste|namaskar|pranam|good morning|good evening)[\s!.]*$/i.test(lower)) {
+    if (/^(hi|hello|hey|namaste|namaskar|pranam|good morning|good evening|ram ram)[\s!.]*$/i.test(lower)) {
       let reply = `### Welcome to VAANI • IMPERIAL EDITION 👑\n\nGreetings! I am **Vaani**, your sovereign Voice AI companion engineered by **Piyush • 1st year student of NIAT X SGU**.\n\n- 🔬 **Science & Math:** Ask about physics, photosynthesis, calculus, or chemistry.\n- 💻 **Programming:** Python, TypeScript, algorithms, and system design.\n- 🎙️ **Voice AI:** Speak naturally or upload images of questions using \`+\`.\n\nHow may I illuminate your thoughts today?`;
       if (language === 'hi') {
         reply = `### नमस्ते! वाणी के राजसी अनुभव में आपका स्वागत है 👑\n\nमैं **वाणी** हूँ — NIAT X SGU के प्रथम वर्ष के छात्र **पीयूष** द्वारा निर्मित आपका संपूर्ण वॉयस एआई साथी। विज्ञान, गणित, कोडिंग या पंचांग से जुड़ा कोई भी प्रश्न पूछें।`;
       } else if (language === 'mr') {
         reply = `### नमस्कार! वाणीच्या शाही दालनात आपले स्वागत आहे 👑\n\nमी **वाणी** आहे — NIAT X SGU चे प्रथम वर्षाचे विद्यार्थी **पियूष** यांनी विकसित केलेले प्रगत व्हॉईस एआय साथी. सांगा, आज आपण कोणत्या विषयावर बोलायचे?`;
+      } else if (language === 'ahr') {
+        reply = `### राम राम! वाणीच्या शाही दालनात तुमचं स्वागत शे 👑\n\nमी **वाणी** शे — NIAT X SGU ना प्रथम वर्षाना हुशार विद्यार्थी **पियूष** यासनी बनवडं प्रगत व्हॉईस एआय साथीदार. सांगा, आज आपण काय नवीन शिकू?`;
       }
       return res.status(200).json({
         reply,
@@ -496,6 +505,18 @@ As engineered by **Piyush • 1st year student of NIAT X SGU**, I am equipped to
 
 ### ३. निष्कर्ष
 **NIAT X SGU चे विद्यार्थी पियूष** यांनी विकसित केलेली वाणी एआई सखोल माहिती देण्यासाठी सज्ज आहे.`;
+    } else if (language === 'ahr') {
+      fallbackReply = `### सखोल माहिती: "${message}"
+
+### १. संकल्पना स्पष्टीकरण
+तुम्ही विचारलेला विषय **"${message}"** हा मूलभूत विश्लेषणात्मक अन वैज्ञानिक दृष्टीकोनातून समजून घेणं महत्त्वाचं शे.
+
+### २. महत्त्वाचे मुद्दे
+- **पायाभूत तत्त्वे:** कोणताही विषय समजण्यासाठी त्याना मुळाशी जावून अभ्यास करणं फायद्याचं ठरतस.
+- **उपयोग:** हा नियम विज्ञान, तंत्रज्ञान अन रोजच्या जीवनात उपयोगी पडतस.
+
+### ३. निष्कर्ष
+**NIAT X SGU ना हुशार विद्यार्थी पियूष** यासनी बनवडी ही वाणी एआय तुमले या विषयावर अजून सविस्तर माहिती देवाले सदैव तयार शे.`;
     }
 
     return res.status(200).json({
